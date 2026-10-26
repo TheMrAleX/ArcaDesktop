@@ -49,8 +49,12 @@ int main(int argc,char **argv){
             }
             if(++*step<pages.size()+16)return;
             auto player=window->findChild<QMediaPlayer*>("mediaPlayer");
-            if(!issues->isEmpty()||!player||player->error()!=QMediaPlayer::NoError||player->position()<100||!player->videoSink()||player->videoSink()->videoSize().isEmpty()){
-                qCritical()<<"SMOKE: fallo"<<*issues<<(player?player->errorString():"sin reproductor");app.exit(1);return;
+            const bool decoded=player&&player->error()==QMediaPlayer::NoError&&player->position()>=100&&player->videoSink()&&!player->videoSink()->videoSize().isEmpty();
+            if(issues->isEmpty()&&!decoded&&*step<pages.size()+48)return;
+            if(!issues->isEmpty()||!decoded){
+                qCritical()<<"SMOKE: fallo"<<*issues<<(player?player->errorString():"sin reproductor");
+                if(player)qCritical()<<"Estado:"<<player->mediaStatus()<<"posición:"<<player->position()<<"duración:"<<player->duration()<<"vídeo:"<<(player->videoSink()?player->videoSink()->videoSize():QSize());
+                app.exit(1);return;
             }
             qInfo()<<"SMOKE OK: 10 pantallas y vídeo decodificado";app.exit(0);
         });timer->start();

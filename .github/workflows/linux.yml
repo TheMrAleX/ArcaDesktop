@@ -33,6 +33,9 @@ jobs:
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y git cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev libqt6sql6-sqlite qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window ffmpeg dpkg-dev file python3
+      - name: Pantalla de prueba Ubuntu Qt 6.4
+        if: matrix.distro == 'ubuntu-24.04'
+        run: DEBIAN_FRONTEND=noninteractive apt-get install -y xvfb xauth libgl1-mesa-dri
       - name: Dependencias Fedora
         if: matrix.distro == 'fedora'
         run: dnf install -y git cmake ninja-build gcc-c++ qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel ffmpeg-free rpm-build python3
@@ -51,7 +54,7 @@ jobs:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
           QT_MEDIA_BACKEND: ffmpeg
-        run: python3 scripts/ci-run.py python3 scripts/smoke.py build/arca
+        run: python3 scripts/ci-run.py bash scripts/smoke-ci.sh build/arca ${{ matrix.distro }}
       - name: Paquete Debian y Ubuntu
         if: matrix.family == 'deb'
         run: |
@@ -93,7 +96,7 @@ jobs:
             test "$(stat -c %a /usr/bin/arca)" = 755
             directory_mode=$(stat -c %a /usr/bin)
             test "$((8#$directory_mode & 5))" = 5
-            python3 scripts/smoke.py /usr/bin/arca
+            bash scripts/smoke-ci.sh /usr/bin/arca "${{ matrix.distro }}"
           ' > install-check.log 2>&1; then
             cat install-check.log
             python3 - <<'PY'

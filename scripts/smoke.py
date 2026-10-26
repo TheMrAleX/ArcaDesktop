@@ -15,6 +15,8 @@ with tempfile.TemporaryDirectory(prefix="arca-smoke-") as tmp:
         "-t", "10", "-c:v", "mpeg4", "-pix_fmt", "yuv420p", str(media / "Prueba.2024.mp4"),
     ], check=True)
     env = os.environ.copy()
-    env.update(QT_QPA_PLATFORM="offscreen", QT_QUICK_BACKEND="software", QT_MEDIA_BACKEND="ffmpeg",
-               XDG_DATA_HOME=tmp, XDG_CONFIG_HOME=tmp, XDG_CACHE_HOME=tmp, XDG_RUNTIME_DIR=tmp)
+    env.setdefault("QT_QPA_PLATFORM", "offscreen")
+    env.setdefault("QT_QUICK_BACKEND", "software")
+    env.setdefault("QT_MEDIA_BACKEND", "ffmpeg")
+    env.update(XDG_DATA_HOME=tmp, XDG_CONFIG_HOME=tmp, XDG_CACHE_HOME=tmp, XDG_RUNTIME_DIR=tmp)
     subprocess.run([str(binary), "--smoke-test", str(media)], env=env, check=True, timeout=45)
