@@ -82,9 +82,20 @@ jobs:
         run: pacman -U --noconfirm build/*.pkg.tar.zst
       - name: Verificar instalación
         run: |
-          test "$(stat -c %a /usr/bin/arca)" = 755
-          test "$(stat -c %a /usr/bin)" = 755
-          python3 scripts/smoke.py /usr/bin/arca
+          if ! bash -ec '
+            stat -c "%a %n" /usr/bin/arca /usr/bin
+            test "$(stat -c %a /usr/bin/arca)" = 755
+            test "$(stat -c %a /usr/bin)" = 755
+            python3 scripts/smoke.py /usr/bin/arca
+          ' > install-check.log 2>&1; then
+            cat install-check.log
+            echo '### Error al verificar el paquete instalado' >> "$GITHUB_STEP_SUMMARY"
+            echo '```text' >> "$GITHUB_STEP_SUMMARY"
+            cat install-check.log >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          cat install-check.log
       - uses: actions/upload-artifact@v4
         with:
           name: arca-${{ matrix.distro }}-x86_64
