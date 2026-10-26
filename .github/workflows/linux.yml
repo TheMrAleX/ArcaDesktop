@@ -26,7 +26,7 @@ jobs:
         if: matrix.distro == 'debian'
         run: |
           apt-get update
-          apt-get install -y git cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev qt6-svg-dev libqt6sql6-sqlite qt6-svg-plugins qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window ffmpeg dpkg-dev python3
+          apt-get install -y git cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev qt6-svg-dev libqt6sql6-sqlite qt6-svg-plugins qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window ffmpeg dpkg-dev file python3
       - name: Dependencias Fedora
         if: matrix.distro == 'fedora'
         run: dnf install -y git cmake ninja-build gcc-c++ qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel qt6-qtsvg-devel ffmpeg-free rpm-build python3
@@ -50,7 +50,15 @@ jobs:
         if: matrix.distro == 'debian'
         run: |
           cd build
-          cpack -G DEB
+          if ! cpack -G DEB > packaging.log 2>&1; then
+            cat packaging.log
+            echo '### Error de empaquetado Debian' >> "$GITHUB_STEP_SUMMARY"
+            echo '```text' >> "$GITHUB_STEP_SUMMARY"
+            cat packaging.log >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          cat packaging.log
       - name: Paquete Fedora
         if: matrix.distro == 'fedora'
         run: |

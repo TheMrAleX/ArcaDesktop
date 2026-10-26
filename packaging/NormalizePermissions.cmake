@@ -1,0 +1,11 @@
+# CPack must not preserve the build worker's private umask on system directories.
+if(NOT CPACK_TEMPORARY_DIRECTORY OR NOT IS_DIRECTORY "${CPACK_TEMPORARY_DIRECTORY}/usr")
+    message(FATAL_ERROR "Expected an isolated CPack staging directory")
+endif()
+file(GLOB_RECURSE entries LIST_DIRECTORIES true "${CPACK_TEMPORARY_DIRECTORY}/usr/*")
+list(APPEND entries "${CPACK_TEMPORARY_DIRECTORY}/usr")
+foreach(entry IN LISTS entries)
+    if(IS_DIRECTORY "${entry}")
+        file(CHMOD "${entry}" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+    endif()
+endforeach()
