@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import shutil
 
 binary = Path(sys.argv[1]).resolve()
 with tempfile.TemporaryDirectory(prefix="arca-smoke-") as tmp:
@@ -14,6 +15,8 @@ with tempfile.TemporaryDirectory(prefix="arca-smoke-") as tmp:
         "ffmpeg", "-v", "error", "-f", "lavfi", "-i", "testsrc=size=320x180:rate=24",
         "-t", "10", "-c:v", "mpeg4", "-pix_fmt", "yuv420p", str(media / "Prueba.2024.mp4"),
     ], check=True)
+    for season, episode in [(1, 1), (1, 2), (2, 1)]:
+        shutil.copyfile(media / "Prueba.2024.mp4", media / f"Serie.S{season:02d}E{episode:02d}.mp4")
     env = os.environ.copy()
     env.setdefault("QT_QPA_PLATFORM", "offscreen")
     env.setdefault("QT_QUICK_BACKEND", "software")

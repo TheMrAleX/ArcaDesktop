@@ -6,10 +6,10 @@ Arca para Linux: biblioteca multimedia local escrita en **C++17 y Qt Quick**, si
 
 ## Instalar en Linux Mint 22.x / Ubuntu 24.04
 
-Descarga el archivo `arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb` de Releases. Es el paquete para Mint 22.x (incluido 22.3 Zena), cuya base es Ubuntu Noble. El paquete con `debian` en el nombre está compilado para Debian 13 y requiere versiones diferentes de Qt.
+Descarga el archivo `arca-desktop-0.2.0-ubuntu-24.04-x86_64.deb` de Releases. Es el paquete para Mint 22.x (incluido 22.3 Zena), cuya base es Ubuntu Noble. El paquete con `debian` en el nombre está compilado para Debian 13 y requiere versiones diferentes de Qt.
 
 ```sh
-sudo apt install ./arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb
+sudo apt install ./arca-desktop-0.2.0-ubuntu-24.04-x86_64.deb
 ```
 
 ## Compilar en Debian, Ubuntu 24.04 y Mint 22.x
@@ -34,6 +34,10 @@ Con Qt 6.4 se selecciona GStreamer, su backend estable. Las versiones posteriore
 ## Uso
 
 Añade una carpeta y elige Películas, Series o Detectar sola. El escaneo no modifica archivos multimedia. Las coincidencias dudosas se corrigen desde Revisar; una corrección de numeración puede aplicarse a la carpeta. Los metadatos `.nfo`, `poster.jpg`, `folder.jpg` y `fanart.jpg` se leen localmente. Los perfiles tienen progreso independiente.
+
+«Continuar» muestra un único episodio por serie: el último abierto si está sin terminar o el siguiente al último visto. Ocultar una tarjeta la mantiene fuera hasta que vuelvas a reproducirla. La ficha tiene selector de temporada, y Biblioteca permite filtrar por género y año y ordenar por título, año o fecha de incorporación. La numeración corrida entre carpetas de temporadas se corrige automáticamente cuando hay contexto suficiente; las dudas van a Revisar.
+
+En Perfiles puedes elegir sus carpetas visibles. En Ajustes puedes evitar spoilers globalmente y cambiar la política de cada serie desde su ficha. Las elecciones de audio, subtítulos y retardo son independientes por perfil; el siguiente episodio hereda la elección de idioma de la serie.
 
 En el reproductor: espacio pausa, flechas saltan diez segundos, F cambia a pantalla completa y Esc vuelve. El panel Pistas permite cambiar audio y subtítulos, abrir un SRT/ASS y ajustar tamaño y retardo del texto externo.
 

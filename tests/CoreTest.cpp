@@ -3,6 +3,7 @@
 #include <QtTest>
 #include <QTemporaryDir>
 #include <QFile>
+#include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -50,6 +51,69 @@ private slots:
     }
     void settingsSurviveRestart(){QTemporaryDir dir;{Library db(dir.path());db.setSetting("scanOnOpen",false);db.setSetting("resume",false);db.setSetting("resumeRewindSeconds",7);}Library restored(dir.path());QVERIFY(!restored.setting("resume",true).toBool());QCOMPARE(restored.setting("resumeRewindSeconds",3).toInt(),7);}
     void backupRollsBackAllRows(){QTemporaryDir dir;Library db(dir.path());QFile file(dir.path()+"/bad.json");QVERIFY(file.open(QIODevice::WriteOnly));file.write(R"({"format":"arca-desktop","version":1,"profiles":[{"id":8,"name":"No debe quedar"}],"progress":[{"profile":999,"path":"x","position":0,"duration":100}]})");file.close();QVERIFY(!db.importBackup(QUrl::fromLocalFile(file.fileName())));QCOMPARE(db.profiles().size(),1);}
+    void profileVisibilityAndSpoilersPersist() {
+        QTemporaryDir storage,media;
+        QFile file(media.path()+"/Serie.S01E01.El.secreto.mkv");QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");file.close();
+        int folder=0;
+        {
+            Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+            folder=db.folders().first().toMap().value("id").toInt();const auto path=db.files().first().toMap().value("path").toString();
+            db.setSetting("spoilerFree",true);QVERIFY(db.media(path).value("spoilerHidden").toBool());QVERIFY(db.media(path).value("episodeTitle").toString().isEmpty());
+            db.saveProgress(path,10000,100000);db.reload();QVERIFY(!db.media(path).value("spoilerHidden").toBool());QCOMPARE(db.continuing().size(),1);
+            db.hideContinue(path,true);QVERIFY(db.continuing().isEmpty());
+            db.setShowSpoilers("serie",0);QVERIFY(!db.media(path).value("spoilerEnabled").toBool());db.setShowSpoilers("serie",-1);QVERIFY(db.media(path).value("spoilerEnabled").toBool());
+            db.setFolderVisible(folder,false);QVERIFY(db.files().isEmpty());QVERIFY(db.shows().isEmpty());QVERIFY(!db.folders().first().toMap().value("visible").toBool());
+            db.createProfile("Segundo");db.selectProfile(db.profiles().last().toMap().value("id").toInt());QCOMPARE(db.files().size(),1);QVERIFY(db.continuing().isEmpty());db.selectProfile(1);QVERIFY(db.files().isEmpty());
+        }
+        Library restored(storage.path());QVERIFY(restored.files().isEmpty());restored.showAllFolders();QCOMPARE(restored.files().size(),1);QVERIFY(restored.continuing().isEmpty());
+    }
+    void absoluteNumberingMatchesAndroid() {
+        QList<Names::EpisodeRef> episodes;
+        for(int n=1;n<=30;++n)episodes.append({"aang",1,n,true});
+        for(int n=31;n<=60;++n)episodes.append({"aang",2,n,true});
+        for(int n=61;n<=81;++n)episodes.append({"aang",3,n,true});
+        auto offsets=Names::absoluteOffsets(episodes);
+        QCOMPARE(offsets.value({"aang",2}).offset,30);QVERIFY(offsets.value({"aang",2}).sure);
+        QCOMPARE(offsets.value({"aang",3}).offset,60);QVERIFY(offsets.value({"aang",3}).sure);
+        QVERIFY(!offsets.contains({"aang",1}));
+        episodes.clear();for(int n=31;n<=60;++n)episodes.append({"alone",2,n,true});
+        offsets=Names::absoluteOffsets(episodes);QCOMPARE(offsets.value({"alone",2}).offset,30);QVERIFY(!offsets.value({"alone",2}).sure);
+        episodes.clear();for(int n=5;n<=10;++n)episodes.append({"explicit",2,n,false});QVERIFY(Names::absoluteOffsets(episodes).isEmpty());
+    }
+    void playbackChoicesArePerProfileAndInheritedBySeries() {
+        QTemporaryDir storage,media;
+        for(int n=1;n<=2;++n){QFile file(media.path()+QString("/Serie.S01E0%1.mkv").arg(n));QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");}
+        Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+        QCOMPARE(db.files().size(),2);const auto first=db.files()[0].toMap().value("path").toString(),second=db.files()[1].toMap().value("path").toString();
+        QCOMPARE(db.nextEpisode(first).value("path").toString(),second);QVERIFY(db.nextEpisode(second).isEmpty());
+        db.setPlaybackSetting("audioChoice",first,"es||3");db.setPlaybackSetting("subDelay",first,0.4);
+        QCOMPARE(db.playbackSetting("audioChoice",second).toString(),QString("es||3"));
+        db.createProfile("Segundo");db.selectProfile(db.profiles().last().toMap().value("id").toInt());
+        QVERIFY(db.playbackSetting("audioChoice",first).toString().isEmpty());QCOMPARE(db.playbackSetting("subDelay",first,0).toInt(),0);
+        db.setPlaybackSetting("audioChoice",first,"en||7");db.selectProfile(1);
+        QCOMPARE(db.playbackSetting("audioChoice",first).toString(),QString("es||3"));QCOMPARE(db.playbackSetting("subDelay",first).toDouble(),0.4);
+    }
+    void scanRenumbersAndManualRuleWins() {
+        QTemporaryDir storage,media;
+        const auto first=media.path()+"/Aang/Temporada 1",second=media.path()+"/Aang/Temporada 2";
+        QDir().mkpath(first);QDir().mkpath(second);
+        for(const auto &path:QStringList{first+"/30.mkv",second+"/31.mkv",second+"/32.mkv",second+"/33.mkv"}){QFile file(path);QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");}
+        Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+        auto episode=db.media(second+"/31.mkv");QCOMPARE(episode.value("episode").toInt(),1);QCOMPARE(episode.value("rawEpisode").toInt(),31);QVERIFY(episode.value("confidence").toInt()>=88);
+        QVERIFY(QFile::remove(first+"/30.mkv"));db.scan();QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+        episode=db.media(second+"/31.mkv");QCOMPARE(episode.value("episode").toInt(),1);QCOMPARE(episode.value("confidence").toInt(),65);
+        db.correct(second+"/31.mkv","Aang",5,9,true);QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+        episode=db.media(second+"/32.mkv");QCOMPARE(episode.value("season").toInt(),5);QCOMPARE(episode.value("episode").toInt(),10);QCOMPARE(episode.value("confidence").toInt(),100);
+    }
+    void episodeNfoKeepsShowIdentity() {
+        QTemporaryDir storage,media;
+        QFile file(media.path()+"/Serie.S01E01.mkv");QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");file.close();
+        QFile nfo(media.path()+"/Serie.S01E01.nfo");QVERIFY(nfo.open(QIODevice::WriteOnly));nfo.write("<episodedetails><title>El secreto</title><plot>Sinopsis del episodio</plot><genre>Drama</genre><genre>Misterio</genre></episodedetails>");nfo.close();
+        Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
+        auto episode=db.media(file.fileName());QCOMPARE(episode.value("title").toString(),QString("Serie"));QCOMPARE(episode.value("episodeTitle").toString(),QString("El secreto"));QCOMPARE(episode.value("genres").toString(),QString("Drama · Misterio"));
+        db.setSetting("spoilerFree",true);QVERIFY(db.media(file.fileName()).value("episodeOverview").toString().isEmpty());
+        db.accept(file.fileName());db.setSetting("spoilerFree",false);QCOMPARE(db.media(file.fileName()).value("episodeTitle").toString(),QString("El secreto"));
+    }
 };
 QTEST_GUILESS_MAIN(CoreTest)
 #include "CoreTest.moc"

@@ -119,6 +119,30 @@ QString resolveCompactGroup(const QList<int> &numbers) {
     for (int n : unique) { if (n%10 == 0) return "SEE"; see.insert(n/100); sse.insert(n/10); }
     return sse.size() < see.size() ? "SSE" : "SEE";
 }
+QMap<QPair<QString,int>,Renumber> absoluteOffsets(const QList<EpisodeRef> &episodes) {
+    QMap<QString,QMap<int,QList<EpisodeRef>>> shows;
+    for(const auto &episode:episodes)shows[episode.show][episode.season].append(episode);
+    QMap<QPair<QString,int>,Renumber> output;
+    for(auto show=shows.cbegin();show!=shows.cend();++show) {
+        const auto &seasons=show.value();
+        for(auto season=seasons.cbegin();season!=seasons.cend();++season) {
+            if(season.key()<2)continue;
+            QSet<int> unique;
+            bool fromFolder=true;
+            for(const auto &episode:season.value()){unique.insert(episode.episode);fromFolder=fromFolder&&episode.seasonFromFolder;}
+            if(unique.isEmpty())continue;
+            auto bounds=std::minmax_element(unique.cbegin(),unique.cend());
+            const int first=*bounds.first,last=*bounds.second;
+            if(first<=1)continue;
+            if(seasons.contains(season.key()-1)) {
+                int previous=0;for(const auto &episode:seasons[season.key()-1])previous=qMax(previous,episode.episode);
+                if(first==previous+1)output.insert({show.key(),season.key()},{previous,true});
+            } else if(fromFolder&&unique.size()>=3&&last-first+1<=unique.size()*3/2+1)
+                output.insert({show.key(),season.key()},{first-1,false});
+        }
+    }
+    return output;
+}
 Result parse(const QString &name, const QStringList &dirs, const QString &kind, const QString &root, const QString &rule, bool ignoreSamples) {
     Result r;
     if (name.startsWith('.') || (ignoreSamples && rx(R"((?<![a-z])(sample|muestra)(?![a-z]))").match(name).hasMatch())) {

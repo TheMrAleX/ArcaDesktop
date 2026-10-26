@@ -14,25 +14,30 @@ ApplicationWindow {
     property string libraryTab: "Películas"
     property string filter: "Todo"
     property bool descending: false
+    property int orderBy: 0
+    property string selectedGenre: ""
+    property string selectedYear: ""
+    property int selectedSeason: -1
+    property bool episodeDescending: false
     property string searchScope: "Todo"
     property string folderPath: ""
     property var allFiles: library.files
     property var movies: allFiles.filter(f => f.kind === "MOVIE" && f.confidence >= 80)
     property var episodes: allFiles.filter(f => f.kind === "EPISODE" && f.confidence >= 80)
     property var review: allFiles.filter(f => f.kind !== "IGNORED" && (f.confidence < 80 || f.kind === "UNKNOWN"))
-    property var shows: groupShows(episodes)
-    property var continuing: allFiles.filter(f => !f.watched && f.position > 5000 && f.available).sort((a,b) => b.updated-a.updated)
+    property var shows: library.shows
+    property var continuing: library.continuing
+    property var genres: Array.from(new Set(movies.concat(shows).reduce((all,f)=>all.concat((f.genres || "").split(" · ")),[]).filter(s=>s.length))).sort()
+    property var years: Array.from(new Set(movies.concat(shows).map(f=>String(f.year || "")).filter(s=>s.length))).sort().reverse()
+    property var selectedEpisodes: episodes.filter(f=>f.showKey===selected.showKey && (selectedSeason<0 || f.season===selectedSeason)).sort((a,b)=>episodeDescending ? b.season-a.season || b.episode-a.episode : a.season-b.season || a.episode-b.episode)
     property var hero: continuing.length ? continuing[0] : movies.length ? movies.slice().sort((a,b) => b.mtime-a.mtime)[0] : episodes.length ? episodes[0] : ({})
     property bool isPlayer: page === "Reproductor"
     function key(s) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim() }
-    function groupShows(items) {
-        let map = {}; let out = []
-        for (let f of items) { let k = key(f.title); if (!map[k]) { map[k] = Object.assign({},f,{episodeCount:0}); out.push(map[k]) } map[k].episodeCount++ }
-        return out
-    }
     function duration(ms) { let s=Math.floor((ms||0)/1000); return Math.floor(s/3600)>0 ? Math.floor(s/3600)+":"+String(Math.floor(s/60)%60).padStart(2,"0")+":"+String(s%60).padStart(2,"0") : Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
-    function open(f) { selected=f; page="Detalles" }
+    function open(f) { selected=f.kind==="EPISODE" ? shows.find(s=>s.showKey===f.showKey)||f : f; selectedSeason=f.season>=0?f.season:-1; page="Detalles" }
+    function refreshSelected() { if(selected.path)selected=selected.isShow ? shows.find(s=>s.showKey===selected.showKey)||library.media(selected.path) : library.media(selected.path) }
     function play(f, restart) {
+        if(f.isShow)f=library.media(f.path)
         if (!f.available) { unavailable.open(); return }
         playing=Object.assign({},f,{startPosition: restart || !library.setting("resume",true) ? 0 : Math.max(0,(f.position||0)-Number(library.setting("resumeRewindSeconds",3))*1000)})
         page="Reproductor"
@@ -41,15 +46,18 @@ ApplicationWindow {
     function catalog() {
         let items = libraryTab === "Series" ? shows : movies
         if(filter === "Sin ver") items=items.filter(f=>!f.watched)
-        if(filter === "En curso") items=items.filter(f=>!f.watched && f.position>5000)
+        if(filter === "En curso") items=items.filter(f=>f.isShow ? f.inProgress : !f.watched && f.position>5000)
         if(filter === "4K") items=items.filter(f=>f.width>=3200)
-        return descending ? items.slice().reverse() : items
+        if(selectedGenre)items=items.filter(f=>(f.genres || "").split(" · ").indexOf(selectedGenre)>=0)
+        if(selectedYear)items=items.filter(f=>String(f.year)===selectedYear)
+        items=items.slice().sort((a,b)=>orderBy===1 ? (a.year||0)-(b.year||0) : orderBy===2 ? a.mtime-b.mtime : a.title.localeCompare(b.title))
+        return descending ? items.reverse() : items
     }
     Shortcut { sequence: "Alt+Left"; onActivated: root.back() }
     Shortcut { sequence: "Ctrl+O"; onActivated: chooseFolder.open() }
     Shortcut { sequence: "Ctrl+F"; onActivated: root.page="Buscar" }
     onClosing: function(close) { if(isPlayer && playerLoader.item) playerLoader.item.persist() }
-    Connections {target:library;function onChanged(){if(root.selected.path)root.selected=library.media(root.selected.path)}}
+    Connections {target:library;function onChanged(){root.refreshSelected()}}
 
     FolderDialog { id: chooseFolder; title: "Elige una carpeta multimedia"; onAccepted: folderKind.open() }
     Dialog {
@@ -127,7 +135,7 @@ ApplicationWindow {
             id: pageLoader; Layout.fillWidth:true; Layout.fillHeight:true; visible:!root.isPlayer
             sourceComponent: root.page==="Bienvenida" ? welcomePage : root.page==="Inicio" ? homePage : root.page==="Biblioteca" ? catalogPage : root.page==="Buscar" ? searchPage : root.page==="Detalles" ? detailPage : root.page==="Carpetas" ? foldersPage : root.page==="Archivos" || root.page==="Revisar" ? filesPage : root.page==="Perfiles" ? profilesPage : settingsPage
         }
-        Loader { id: playerLoader; Layout.fillWidth:true; Layout.fillHeight:true; active:root.isPlayer; visible:active; sourceComponent: Player { media:root.playing; onClosed: {library.reload();root.page="Detalles";root.selected=library.media(root.playing.path)} onPlayNext: function(file){root.playing=Object.assign({},file,{startPosition:0})} } }
+        Loader { id: playerLoader; Layout.fillWidth:true; Layout.fillHeight:true; active:root.isPlayer; visible:active; sourceComponent: Player { media:root.playing; onClosed: {library.reload();root.page="Detalles";root.refreshSelected()} onPlayNext: function(file){root.playing=Object.assign({},file,{startPosition:0})} } }
     }
     component Heading: Text { color:"#F4F5F7"; font.family:"Bricolage Grotesque"; font.bold:true; font.pixelSize:28; wrapMode:Text.Wrap }
     component Muted: Text { color:"#A8AEB8"; font.pixelSize:13; wrapMode:Text.Wrap }
@@ -161,6 +169,26 @@ ApplicationWindow {
             Pill { text:"Corregir"; onClicked:{correction.file=file;correction.open()} }
         }
         onClicked:root.open(file)
+    }
+    component EpisodeLine: ItemDelegate {
+        required property var file
+        implicitHeight:94
+        background:Rectangle {radius:14;color:parent.hovered?"#232733":file.position>5000&&!file.watched?"#1E2330":"#15181D";border.width:parent.activeFocus?2:1;border.color:parent.activeFocus?"#8B9CFF":"#262A32"
+            Rectangle {anchors {left:parent.left;bottom:parent.bottom} height:3;color:"#FF9E7A";radius:2;width:parent.width*Math.min(1,(file.position||0)/Math.max(1,file.progressDuration||file.duration||1))}
+        }
+        contentItem:RowLayout {
+            spacing:16
+            Rectangle {Layout.preferredWidth:108;Layout.preferredHeight:61;radius:11;color:"#252A3B";clip:true
+                Image {anchors.fill:parent;source:file.spoilerHidden?"":file.still||file.poster||"";asynchronous:true;fillMode:Image.PreserveAspectCrop;sourceSize.width:216}
+                Text {anchors.centerIn:parent;text:"E"+String(file.episode).padStart(2,"0");color:"#A8AEB8";visible:file.spoilerHidden||!(file.still||file.poster)}
+            }
+            ColumnLayout {Layout.fillWidth:true
+                Text {Layout.fillWidth:true;text:"E"+String(file.episode).padStart(2,"0")+" · "+(file.episodeTitle||"Episodio "+file.episode);color:"#F4F5F7";font.bold:true;elide:Text.ElideRight}
+                Text {Layout.fillWidth:true;text:!file.available?"Archivo no disponible":file.watched?"Visto":file.position>5000?"Quedan "+root.duration((file.progressDuration||file.duration)-file.position):"Sin ver · "+root.duration(file.duration);color:file.position>5000&&!file.watched?"#FF9E7A":"#A8AEB8";font.pixelSize:12;elide:Text.ElideRight}
+            }
+            Pill {text:file.watched?"Sin ver":"Visto";onClicked:library.markWatched(file.path,!file.watched)}
+        }
+        onClicked:root.play(file,false)
     }
     Component {
         id:welcomePage
@@ -205,7 +233,7 @@ ApplicationWindow {
                     ColumnLayout { visible:root.continuing.length>0;Layout.fillWidth:true;spacing:14
                         Heading {text:"Continuar viendo";font.pixelSize:23}
                         ListView { Layout.fillWidth:true;Layout.preferredHeight:112;orientation:ListView.Horizontal;spacing:12;clip:true;model:root.continuing
-                            delegate:ItemDelegate { required property var modelData;width:290;height:105;onClicked:root.play(modelData,false);background:Rectangle {color:"#1A1E29";radius:14;border.color:parent.activeFocus?"#8B9CFF":"#2A2D35"} contentItem:ColumnLayout { Text {text:modelData.title;color:"white";font.bold:true;Layout.fillWidth:true;elide:Text.ElideRight} Muted {text:modelData.kind==="EPISODE"?"T"+modelData.season+" · E"+modelData.episode:"Película"} Muted {text:"Quedan "+root.duration((modelData.progressDuration||modelData.duration)-modelData.position);color:"#FF9E7A"} } }
+                            delegate:ItemDelegate { required property var modelData;width:320;height:112;onClicked:root.play(modelData,false);background:Rectangle {color:"#1A1E29";radius:14;border.color:parent.activeFocus?"#8B9CFF":"#2A2D35"} contentItem:RowLayout { ColumnLayout {Layout.fillWidth:true;Text {text:modelData.title;color:"white";font.bold:true;Layout.fillWidth:true;elide:Text.ElideRight} Muted {text:modelData.kind==="EPISODE"?"T"+modelData.season+" · E"+modelData.episode:"Película"} Muted {text:modelData.position>5000?"Quedan "+root.duration((modelData.progressDuration||modelData.duration)-modelData.position):"Siguiente episodio";color:"#FF9E7A"} } Pill {text:"Ocultar";leftPadding:10;rightPadding:10;onClicked:library.hideContinue(modelData.path,true)} } }
                         }
                     }
                     PosterShelf {title:"Películas";items:root.movies}
@@ -220,7 +248,12 @@ ApplicationWindow {
         ColumnLayout { anchors.fill:parent;anchors.margins:32;spacing:18
             Heading {text:"Biblioteca"}
             RowLayout { Repeater {model:["Películas","Series","Carpetas"];Pill {required property string modelData;text:modelData;selected:root.libraryTab===modelData;onClicked:{if(modelData==="Carpetas")root.page="Carpetas";else root.libraryTab=modelData}}} }
-            RowLayout { Repeater {model:["Todo","Sin ver","En curso","4K"];Pill {required property string modelData;text:modelData;selected:root.filter===modelData;onClicked:root.filter=modelData}} Item {Layout.fillWidth:true} Pill {text:root.descending?"Z → A":"A → Z";onClicked:root.descending=!root.descending} }
+            Flow {Layout.fillWidth:true;spacing:8;Repeater {model:["Todo","Sin ver","En curso","4K"];Pill {required property string modelData;text:modelData;selected:root.filter===modelData;onClicked:root.filter=modelData}}
+                ComboBox {model:["Todos los géneros"].concat(root.genres);onActivated:root.selectedGenre=currentIndex?currentText:""}
+                ComboBox {model:["Todos los años"].concat(root.years);onActivated:root.selectedYear=currentIndex?currentText:""}
+                ComboBox {model:["Título","Año","Añadidos recientemente"];currentIndex:root.orderBy;onActivated:{root.orderBy=currentIndex;root.descending=currentIndex===2}}
+                Pill {text:root.descending?"Descendente":"Ascendente";onClicked:root.descending=!root.descending}
+            }
             Muted {text:root.catalog().length+" títulos"}
             EmptyState {visible:!root.movies.length&&!root.shows.length}
             GridView {Layout.fillWidth:true;Layout.fillHeight:true;clip:true;cellWidth:180;cellHeight:312;model:root.catalog();delegate:Poster {required property var modelData;media:modelData;onClicked:root.open(modelData)} ScrollBar.vertical:ScrollBar{}}
@@ -251,23 +284,28 @@ ApplicationWindow {
                         ColumnLayout {Layout.fillWidth:true;spacing:16
                             Overline {text:root.selected.kind==="EPISODE"?"SERIE":"PELÍCULA"}
                             Heading {text:root.selected.title||"";font.pixelSize:38;Layout.fillWidth:true}
-                            Muted {text:(root.selected.year||"Local")+" · "+root.duration(root.selected.duration)}
+                            Muted {text:root.selected.isShow ? root.selected.seasons.length+" temporadas · "+root.selected.episodeCount+" episodios · "+root.selected.watchedCount+" vistos" : (root.selected.year||"Local")+" · "+root.duration(root.selected.duration)}
                             Muted {visible:root.selected.position>0;text:"Te quedaste en "+root.duration(root.selected.position);color:"#FF9E7A"}
                             Flow {Layout.fillWidth:true;spacing:8
-                                Pill {text:root.selected.position>0?"Reanudar":"Reproducir";primary:true;onClicked:root.play(root.selected,false)}
+                                Pill {text:root.selected.position>0?"Reanudar":root.selected.isShow?"Ver T"+root.selected.season+" · E"+root.selected.episode:"Reproducir";primary:true;onClicked:root.play(root.selected,false)}
                                 Pill {text:"Desde el inicio";onClicked:root.play(root.selected,true)}
                                 Pill {text:root.selected.watched?"Marcar sin ver":"Marcar visto";onClicked:{library.markWatched(root.selected.path,!root.selected.watched);root.selected=library.media(root.selected.path)}}
                                 Pill {text:"Corregir";onClicked:{correction.file=root.selected;correction.open()}}
                                 Pill {text:"Buscar metadatos";onClicked:{metadataQuery.text=root.selected.fileTitle||root.selected.title;metadataDialog.open();library.findMetadata(metadataQuery.text,root.selected.kind==="EPISODE")}}
+                                Pill {text:"Mostrar en Continuar";visible:root.selected.updated>0;onClicked:library.hideContinue(root.selected.path,false)}
                             }
                         }
                     }
                     Muted {Layout.fillWidth:true;text:root.selected.plot||"Sin sinopsis. Puedes añadir metadatos locales con un archivo .nfo."}
                     Muted {Layout.fillWidth:true;text:root.selected.genres||""}
                     Heading {text:root.selected.kind==="EPISODE"?"Episodios":"Ficha técnica";font.pixelSize:23}
-                    Repeater { model:root.selected.kind==="EPISODE"?root.episodes.filter(f=>root.key(f.title)===root.key(root.selected.title)):[]
-                        FileLine {required property var modelData;file:modelData}
+                    RowLayout {visible:!!root.selected.isShow;Switch {text:"Evitar spoilers en esta serie";checked:root.selected.spoilerEnabled||false;palette.windowText:"#C2C8D0";onToggled:library.setShowSpoilers(root.selected.showKey,checked?1:0)} Pill {text:"Usar ajuste general";onClicked:library.setShowSpoilers(root.selected.showKey,-1)}}
+                    Flow {visible:!!root.selected.isShow;Layout.fillWidth:true;spacing:8
+                        Pill {text:"Todas";selected:root.selectedSeason<0;onClicked:root.selectedSeason=-1}
+                        Repeater {model:root.selected.seasons||[];Pill {required property var modelData;text:modelData===0?"Especiales":"Temporada "+modelData;selected:root.selectedSeason===modelData;onClicked:root.selectedSeason=modelData}}
+                        Pill {text:root.episodeDescending?"Más recientes primero":"Orden de emisión";onClicked:root.episodeDescending=!root.episodeDescending}
                     }
+                    ListView {id:episodeList;visible:!!root.selected.isShow;Layout.fillWidth:true;Layout.preferredHeight:Math.min(500,root.selectedEpisodes.length*104);clip:true;spacing:10;reuseItems:true;model:root.selectedEpisodes;delegate:EpisodeLine {required property var modelData;file:modelData;width:episodeList.width} ScrollBar.vertical:ScrollBar{}}
                     Text {Layout.fillWidth:true;text:root.selected.name||"";font.family:"monospace";font.pixelSize:13;color:"#C2C8D0";wrapMode:Text.WrapAnywhere}
                     Muted {text:(root.selected.codec||"Códec desconocido")+" · "+(root.selected.width||0)+" × "+(root.selected.height||0)+" · "+((root.selected.size||0)/1073741824).toFixed(2)+" GB"}
                     Repeater {model:(root.selected.probe||{}).streams||[];Muted {required property var modelData;text:(modelData.codec_type||"")+" · "+(modelData.codec_name||"")+" · "+((modelData.tags||{}).language||"Idioma desconocido")+(modelData.channels?" · "+modelData.channels+" canales":"")}}
@@ -301,15 +339,19 @@ ApplicationWindow {
     }
     Component {
         id:profilesPage
-        ColumnLayout {anchors.fill:parent;anchors.margins:32;spacing:18
+        ScrollView {clip:true;contentWidth:availableWidth;leftPadding:32;rightPadding:32;topPadding:32;bottomPadding:32
+        ColumnLayout {width:parent.width;spacing:18
             Heading {text:"Perfiles y copia del progreso"}
             Muted {text:"Cada perfil guarda su propio progreso. Todo se queda en este equipo."}
             Repeater {model:library.profiles;Pill {required property var modelData;text:modelData.name;selected:library.profile===modelData.name;onClicked:library.selectProfile(modelData.id)}}
             RowLayout {TextField {id:profileName;placeholderText:"Nombre del perfil";color:"white"} Pill {text:"Añadir perfil";onClicked:{library.createProfile(profileName.text);profileName.clear()}}}
+            Heading {text:"Carpetas visibles para "+library.profile;font.pixelSize:22;Layout.topMargin:12}
+            Repeater {model:library.folders;CheckBox {required property var modelData;Layout.fillWidth:true;text:modelData.path;font.family:"monospace";font.pixelSize:12;checked:modelData.visible;palette.windowText:"#C2C8D0";onToggled:library.setFolderVisible(modelData.id,checked);ToolTip.visible:hovered;ToolTip.text:modelData.path}}
+            Pill {text:"Mostrar todas las carpetas, también las nuevas";onClicked:library.showAllFolders()}
             Heading {text:"Copia de seguridad";font.pixelSize:22;Layout.topMargin:20}
             RowLayout {Pill {text:"Exportar progreso";onClicked:exportDialog.open()} Pill {text:"Importar y unir";onClicked:importDialog.open()}}
             Muted {text:"La importación conserva el progreso más reciente por archivo y perfil."}
-            Item {Layout.fillHeight:true}
+        }
         }
     }
     Component {
@@ -324,7 +366,12 @@ ApplicationWindow {
                     Repeater {model:[{key:"scanOnOpen",label:"Explorar al abrir la app"},{key:"ignoreSamples",label:"Ignorar muestras y extras"},{key:"resume",label:"Reanudar donde lo dejé"},{key:"autoNext",label:"Siguiente episodio automático"}]
                         Switch {required property var modelData;text:modelData.label;checked:library.setting(modelData.key,true);palette.windowText:"#F4F5F7";onToggled:library.setSetting(modelData.key,checked)}
                     }
+                    Switch {text:"Evitar spoilers de episodios sin ver";checked:library.setting("spoilerFree",false);palette.windowText:"#F4F5F7";onToggled:library.setSetting("spoilerFree",checked)}
                     RowLayout {Muted {text:"Segundos atrás al reanudar"} SpinBox {from:0;to:10;value:library.setting("resumeRewindSeconds",3);onValueModified:library.setSetting("resumeRewindSeconds",value)}}
+                    RowLayout {Muted {text:"Segundos al avanzar o retroceder"} SpinBox {from:1;to:60;value:library.setting("skipSeconds",10);onValueModified:library.setSetting("skipSeconds",value)}}
+                    Heading {text:"Subtítulos y audio";font.pixelSize:22}
+                    Muted {text:"Idiomas preferidos, por orden (por ejemplo: es,en)"}
+                    TextField {text:library.setting("languages","es,en");placeholderText:"es,en";color:"white";onEditingFinished:library.setSetting("languages",text.trim().toLowerCase())}
                     Heading {text:"Perfiles y progreso";font.pixelSize:22}
                     Pill {text:"Perfiles y copia de seguridad";onClicked:root.page="Perfiles"}
                     Heading {text:"Metadatos de internet";font.pixelSize:22}

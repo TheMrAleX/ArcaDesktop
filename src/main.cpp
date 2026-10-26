@@ -45,7 +45,7 @@ int main(int argc,char **argv){
             auto window=engine.rootObjects().first();
             const QStringList pages{"Bienvenida","Inicio","Biblioteca","Buscar","Carpetas","Revisar","Perfiles","Ajustes","Detalles","Archivos"};
             if(*step<pages.size()){
-                window->setProperty("selected",library.files().first());
+                window->setProperty("selected",pages[*step]=="Detalles"&&!library.shows().isEmpty()?library.shows().first():library.files().first());
                 window->setProperty("page",pages[*step]);++*step;return;
             }
             if(*step==pages.size()){

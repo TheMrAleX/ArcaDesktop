@@ -1,14 +1,20 @@
-Port nativo de Arca para Linux con C++17 y Qt Quick. Versión inicial en pruebas; aún no alcanza paridad 1:1 con Android.
+Arca Desktop 0.2.0: continúa el port nativo en C++17/Qt de Arca Android. Sigue siendo una versión en pruebas; la paridad 1:1 completa está pendiente.
 
-Incluye biblioteca local, películas y series, reconocimiento de nombres, correcciones por carpeta, perfiles, progreso, copias JSON y reproductor integrado con pistas de audio y subtítulos. Lee carátulas y metadatos .nfo locales. Permite buscar metadatos en TMDB con una clave propia; esta integración no está verificada en línea.
+- «Continuar» agrupa cada serie y propone el episodio correcto, siguiendo la lógica de Android. Ocultar una tarjeta dura hasta que vuelvas a reproducirla y es independiente por perfil.
+- Fichas con selector de temporada, recuento de vistos y lista de episodios virtualizada.
+- Biblioteca con filtros de género y año, además de visto, en curso y 4K; orden por título, año o incorporación.
+- Carpetas visibles por perfil y protección de spoilers global o específica por serie.
+- Numeración corrida entre temporadas: corrección con contexto suficiente y confirmación de los casos dudosos. Las reglas manuales tienen prioridad.
+- Idiomas preferidos, recuperación de pistas por idioma si cambia el ID, subtítulos forzados y elección por perfil heredada por los siguientes episodios.
+- Subtítulos externos elegidos, tamaño y retardo recordados; salto de reproducción configurable y doble clic lateral para saltar.
+- Corrección de NFO de episodios para mantener el nombre de la serie y sus géneros.
 
-Corrección de instalación: se elimina la dependencia de `qt6-svg-plugins` y se incluye el icono PNG. Las instrucciones de compilación ya no solicitan ese paquete.
-En Ubuntu 24.04/Mint 22, Qt 6.4 utiliza GStreamer y sus plugins se instalan como dependencias del DEB.
+Se mantiene el paquete específico para Mint 22/Ubuntu 24.04, con GStreamer en Qt 6.4 y sin dependencia del plugin SVG.
 
 Paquetes x86_64:
 
-- **Linux Mint 22.x (incluido 22.3 Zena) y Ubuntu 24.04:** `arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb`.
-- **Debian 13:** `arca-desktop-0.1.1-debian-x86_64.deb`.
+- **Linux Mint 22.x (incluido 22.3 Zena) y Ubuntu 24.04:** `arca-desktop-0.2.0-ubuntu-24.04-x86_64.deb`.
+- **Debian 13:** `arca-desktop-0.2.0-debian-x86_64.deb`.
 - **Fedora 43:** el archivo `.rpm`.
 - **Arch:** el archivo `.pkg.tar.zst`.
 

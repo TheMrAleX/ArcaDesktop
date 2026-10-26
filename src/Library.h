@@ -15,6 +15,8 @@ class Library : public QObject {
     Q_PROPERTY(QVariantList files READ files NOTIFY changed)
     Q_PROPERTY(QVariantList folders READ folders NOTIFY changed)
     Q_PROPERTY(QVariantList profiles READ profiles NOTIFY changed)
+    Q_PROPERTY(QVariantList shows READ shows NOTIFY changed)
+    Q_PROPERTY(QVariantList continuing READ continuing NOTIFY changed)
     Q_PROPERTY(QString profile READ profile NOTIFY changed)
     Q_PROPERTY(bool scanning READ scanning NOTIFY scanningChanged)
     Q_PROPERTY(bool paused READ paused NOTIFY scanningChanged)
@@ -29,6 +31,8 @@ public:
     QVariantList files() const { return m_files; }
     QVariantList folders() const { return m_folders; }
     QVariantList profiles() const { return m_profiles; }
+    QVariantList shows() const { return m_shows; }
+    QVariantList continuing() const { return m_continuing; }
     QString profile() const;
     bool scanning() const { return m_scanning; }
     bool paused() const { return m_paused; }
@@ -52,6 +56,17 @@ public:
     Q_INVOKABLE void accept(const QString &path);
     Q_INVOKABLE void createProfile(const QString &name);
     Q_INVOKABLE void selectProfile(int id);
+    Q_INVOKABLE void setFolderVisible(int id, bool visible);
+    Q_INVOKABLE void showAllFolders();
+    Q_INVOKABLE void hideContinue(const QString &path, bool hidden);
+    Q_INVOKABLE void setShowSpoilers(const QString &key, int mode);
+    Q_INVOKABLE QVariant playbackSetting(const QString &name, const QString &path, const QVariant &fallback = {}) const;
+    Q_INVOKABLE void setPlaybackSetting(const QString &name, const QString &path, const QVariant &value);
+    Q_INVOKABLE QString trackLanguage(const QVariant &value) const;
+    Q_INVOKABLE QString trackLanguageName(const QVariant &value) const;
+    Q_INVOKABLE QString encodeTrack(const QVariantMap &track) const;
+    Q_INVOKABLE int pickTrack(const QVariantList &options, const QString &saved) const;
+    Q_INVOKABLE int preferredTrack(const QVariantList &options, bool forcedOnly = false) const;
     Q_INVOKABLE bool exportBackup(const QUrl &url);
     Q_INVOKABLE bool importBackup(const QUrl &url);
     Q_INVOKABLE QVariantMap nextEpisode(const QString &path) const;
@@ -74,6 +89,7 @@ private:
     QString m_connection, m_dataDir, m_error, m_scanStatus;
     QSettings *m_settings;
     QVariantList m_files, m_folders, m_profiles;
+    QVariantList m_shows, m_continuing;
     bool m_scanning = false, m_paused = false;
     struct ScanState;
     std::shared_ptr<ScanState> m_scanState;
