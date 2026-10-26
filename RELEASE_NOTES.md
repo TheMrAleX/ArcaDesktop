@@ -3,6 +3,7 @@ Port nativo de Arca para Linux con C++17 y Qt Quick. Versión inicial en pruebas
 Incluye biblioteca local, películas y series, reconocimiento de nombres, correcciones por carpeta, perfiles, progreso, copias JSON y reproductor integrado con pistas de audio y subtítulos. Lee carátulas y metadatos .nfo locales. Permite buscar metadatos en TMDB con una clave propia; esta integración no está verificada en línea.
 
 Corrección de instalación: se elimina la dependencia de `qt6-svg-plugins` y se incluye el icono PNG. Las instrucciones de compilación ya no solicitan ese paquete.
+En Ubuntu 24.04/Mint 22, Qt 6.4 utiliza GStreamer y sus plugins se instalan como dependencias del DEB.
 
 Paquetes x86_64:
 

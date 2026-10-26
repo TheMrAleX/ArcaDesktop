@@ -11,6 +11,11 @@
 #include <QDebug>
 
 int main(int argc,char **argv){
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
+    // The FFmpeg backend in Qt 6.4 is a technology preview. Use its stable
+    // GStreamer backend on Ubuntu 24.04 / Mint 22 unless explicitly overridden.
+    if(qEnvironmentVariableIsEmpty("QT_MEDIA_BACKEND"))qputenv("QT_MEDIA_BACKEND","gstreamer");
+#endif
     QGuiApplication app(argc,argv);
     app.setOrganizationName("TheMrAleX");app.setApplicationName("Arca");app.setApplicationVersion(ARCA_VERSION);
     QQuickStyle::setStyle("Basic");

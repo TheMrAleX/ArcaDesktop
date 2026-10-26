@@ -16,6 +16,8 @@ sudo apt install ./arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb
 
 ```sh
 sudo apt install cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev libqt6sql6-sqlite ffmpeg qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window
+# En Mint 22.x / Ubuntu 24.04, Qt 6.4 usa GStreamer:
+sudo apt install gstreamer1.0-libav gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-gl
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
 ctest --test-dir build --output-on-failure
@@ -27,6 +29,7 @@ Arch: `base-devel cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg ffm
 
 Qt mínimo: 6.4. Los módulos QML y el plugin SQLite deben estar instalados también en ejecución. Los paquetes usan las bibliotecas de la distribución.
 El icono de la interfaz está incluido como PNG, por lo que compilar y ejecutar Arca no requiere un plugin SVG.
+Con Qt 6.4 se selecciona GStreamer, su backend estable. Las versiones posteriores usan el backend predeterminado de Qt. Los paquetes DEB añaden automáticamente los plugins GStreamer cuando hacen falta.
 
 ## Uso
 
