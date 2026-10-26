@@ -71,6 +71,20 @@ jobs:
           chown -R builder .
           runuser -u builder -- bash -c 'cd packaging/arch && makepkg --noconfirm --cleanbuild'
           cp packaging/arch/*.pkg.tar.zst build/
+      - name: Instalar Debian
+        if: matrix.distro == 'debian'
+        run: apt-get install -y ./build/*.deb
+      - name: Instalar Fedora
+        if: matrix.distro == 'fedora'
+        run: dnf install -y ./build/*.rpm
+      - name: Instalar Arch
+        if: matrix.distro == 'arch'
+        run: pacman -U --noconfirm build/*.pkg.tar.zst
+      - name: Verificar instalación
+        run: |
+          test "$(stat -c %a /usr/bin/arca)" = 755
+          test "$(stat -c %a /usr/bin)" = 755
+          python3 scripts/smoke.py /usr/bin/arca
       - uses: actions/upload-artifact@v4
         with:
           name: arca-${{ matrix.distro }}-x86_64
