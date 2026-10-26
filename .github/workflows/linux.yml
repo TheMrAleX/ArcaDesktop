@@ -89,6 +89,12 @@ jobs:
             python3 scripts/smoke.py /usr/bin/arca
           ' > install-check.log 2>&1; then
             cat install-check.log
+            python3 - <<'PY'
+          from pathlib import Path
+          message = Path('install-check.log').read_text()[:6000]
+          message = message.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+          print('::error title=Diagnóstico del paquete instalado::' + message)
+          PY
             echo '### Error al verificar el paquete instalado' >> "$GITHUB_STEP_SUMMARY"
             echo '```text' >> "$GITHUB_STEP_SUMMARY"
             cat install-check.log >> "$GITHUB_STEP_SUMMARY"
