@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Arca
+Comment=Tu cine, en tus carpetas
+Exec=arca
+Icon=io.github.TheMrAleX.Arca
+Terminal=false
+Categories=AudioVideo;Video;Player;
+StartupNotify=true

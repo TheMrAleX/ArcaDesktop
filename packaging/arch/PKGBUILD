@@ -1,0 +1,21 @@
+pkgname=arca-desktop
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Arca: biblioteca multimedia local nativa para Linux'
+arch=('x86_64')
+url='https://github.com/TheMrAleX/ArcaDesktop'
+# Upstream has not published a software license yet.
+license=('LicenseRef-Proprietary')
+depends=('qt6-base' 'qt6-declarative' 'qt6-multimedia-ffmpeg' 'qt6-svg' 'ffmpeg')
+makedepends=('cmake' 'ninja')
+options=('!debug')
+
+build() {
+    cmake -S "$startdir/../.." -B "$srcdir/build" -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=OFF
+    cmake --build "$srcdir/build" --parallel 2
+}
+
+package() {
+    DESTDIR="$pkgdir" cmake --install "$srcdir/build"
+}
