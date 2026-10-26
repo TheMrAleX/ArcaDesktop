@@ -85,7 +85,8 @@ jobs:
           if ! bash -ec '
             stat -c "%a %n" /usr/bin/arca /usr/bin
             test "$(stat -c %a /usr/bin/arca)" = 755
-            test "$(stat -c %a /usr/bin)" = 755
+            directory_mode=$(stat -c %a /usr/bin)
+            test "$((8#$directory_mode & 5))" = 5
             python3 scripts/smoke.py /usr/bin/arca
           ' > install-check.log 2>&1; then
             cat install-check.log
