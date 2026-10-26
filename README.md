@@ -4,20 +4,29 @@ Arca para Linux: biblioteca multimedia local escrita en **C++17 y Qt Quick**, si
 
 **Port inicial en desarrollo. Aún no es un port 1:1.** Las diferencias concretas están en [docs/PARITY.md](docs/PARITY.md).
 
-## Compilar en Debian
+## Instalar en Linux Mint 22.x / Ubuntu 24.04
+
+Descarga el archivo `arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb` de Releases. Es el paquete para Mint 22.x (incluido 22.3 Zena), cuya base es Ubuntu Noble. El paquete con `debian` en el nombre está compilado para Debian 13 y requiere versiones diferentes de Qt.
 
 ```sh
-sudo apt install cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev qt6-svg-dev libqt6sql6-sqlite qt6-svg-plugins ffmpeg qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window
+sudo apt install ./arca-desktop-0.1.1-ubuntu-24.04-x86_64.deb
+```
+
+## Compilar en Debian, Ubuntu 24.04 y Mint 22.x
+
+```sh
+sudo apt install cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev libqt6sql6-sqlite ffmpeg qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
 ctest --test-dir build --output-on-failure
 ./build/arca
 ```
 
-Fedora: `gcc-c++ cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel qt6-qtsvg-devel ffmpeg-free`.
-Arch: `base-devel cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg qt6-svg ffmpeg`.
+Fedora: `gcc-c++ cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel ffmpeg-free`.
+Arch: `base-devel cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg ffmpeg`.
 
 Qt mínimo: 6.4. Los módulos QML y el plugin SQLite deben estar instalados también en ejecución. Los paquetes usan las bibliotecas de la distribución.
+El icono de la interfaz está incluido como PNG, por lo que compilar y ejecutar Arca no requiere un plugin SVG.
 
 ## Uso
 
@@ -37,7 +46,7 @@ cpack -G RPM  # Fedora, con rpm-build instalado
 
 En Arch, desde `packaging/arch`, ejecutar `makepkg` como usuario normal. El PKGBUILD empaqueta este checkout.
 
-El workflow [Linux](.github/workflows/linux.yml) compila y prueba cada distribución por separado. Un tag `v*` publica una release únicamente si pasan los tres jobs. Los tags con sufijo (por ejemplo `v0.1.0-alpha.1`) crean prereleases. Adjunta DEB, RPM, paquete Arch y SHA256SUMS.
+El workflow [Linux](.github/workflows/linux.yml) compila, instala y prueba Debian 13, Ubuntu 24.04, Fedora y Arch por separado. Un tag `v*` publica una release únicamente si pasan los cuatro jobs. Los tags con sufijo crean prereleases. Adjunta los dos DEB con el nombre de su distribución, RPM, paquete Arch y SHA256SUMS.
 
 ## Procedencia
 

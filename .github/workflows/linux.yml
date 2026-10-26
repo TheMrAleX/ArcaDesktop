@@ -15,39 +15,45 @@ jobs:
         include:
           - distro: debian
             image: debian:trixie
+            family: deb
+          - distro: ubuntu-24.04
+            image: ubuntu:24.04
+            family: deb
           - distro: fedora
             image: fedora:43
+            family: rpm
           - distro: arch
             image: archlinux:base-devel
+            family: arch
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     steps:
-      - name: Dependencias Debian
-        if: matrix.distro == 'debian'
+      - name: Dependencias Debian y Ubuntu
+        if: matrix.family == 'deb'
         run: |
           apt-get update
-          apt-get install -y git cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev qt6-svg-dev libqt6sql6-sqlite qt6-svg-plugins qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window ffmpeg dpkg-dev file python3
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev libqt6sql6-sqlite qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window ffmpeg dpkg-dev file python3
       - name: Dependencias Fedora
         if: matrix.distro == 'fedora'
-        run: dnf install -y git cmake ninja-build gcc-c++ qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel qt6-qtsvg-devel ffmpeg-free rpm-build python3
+        run: dnf install -y git cmake ninja-build gcc-c++ qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel ffmpeg-free rpm-build python3
       - name: Dependencias Arch
         if: matrix.distro == 'arch'
-        run: pacman -Syu --noconfirm git cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg qt6-svg ffmpeg python
+        run: pacman -Syu --noconfirm git cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg ffmpeg python
       - uses: actions/checkout@v4
       - name: Configurar y compilar
         run: |
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-          cmake --build build --parallel 2
+          python3 scripts/ci-run.py cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DARCA_PACKAGE_PLATFORM=${{ matrix.distro }}
+          python3 scripts/ci-run.py cmake --build build --parallel 2
       - name: Pruebas de lógica y persistencia
-        run: ctest --test-dir build --output-on-failure
+        run: python3 scripts/ci-run.py ctest --test-dir build --output-on-failure
       - name: Pruebas de pantallas y reproducción
         env:
           QT_QPA_PLATFORM: offscreen
           QT_QUICK_BACKEND: software
           QT_MEDIA_BACKEND: ffmpeg
-        run: python3 scripts/smoke.py build/arca
-      - name: Paquete Debian
-        if: matrix.distro == 'debian'
+        run: python3 scripts/ci-run.py python3 scripts/smoke.py build/arca
+      - name: Paquete Debian y Ubuntu
+        if: matrix.family == 'deb'
         run: |
           cd build
           if ! cpack -G DEB > packaging.log 2>&1; then
@@ -71,8 +77,8 @@ jobs:
           chown -R builder .
           runuser -u builder -- bash -c 'cd packaging/arch && makepkg --noconfirm --cleanbuild'
           cp packaging/arch/*.pkg.tar.zst build/
-      - name: Instalar Debian
-        if: matrix.distro == 'debian'
+      - name: Instalar Debian y Ubuntu
+        if: matrix.family == 'deb'
         run: apt-get install -y ./build/*.deb
       - name: Instalar Fedora
         if: matrix.distro == 'fedora'

@@ -104,7 +104,7 @@ ApplicationWindow {
         color: "#0C0E12"
         ColumnLayout {
             anchors { fill: parent; margins: 14 } spacing: 8
-            RowLayout { Layout.bottomMargin: 32; Image { source: "qrc:/assets/arca.svg"; sourceSize.width: 42; Layout.preferredWidth: 42; Layout.preferredHeight: 42 } Text { text: "arca"; color: "white"; font.family: "Bricolage Grotesque"; font.pixelSize: 28; font.bold: true } }
+            RowLayout { Layout.bottomMargin: 32; Image { source: "qrc:/assets/arca.png"; sourceSize.width: 42; Layout.preferredWidth: 42; Layout.preferredHeight: 42 } Text { text: "arca"; color: "white"; font.family: "Bricolage Grotesque"; font.pixelSize: 28; font.bold: true } }
             Repeater { model: ["Inicio","Buscar","Biblioteca","Carpetas","Revisar","Ajustes"]
                 Pill { required property string modelData; Layout.fillWidth: true; text: modelData === "Revisar" && root.review.length ? modelData+" · "+root.review.length : modelData; selected: root.page === modelData; onClicked: {root.page=modelData;root.filter="Todo"} }
             }
@@ -168,7 +168,7 @@ ApplicationWindow {
             ColumnLayout { width:parent.width; spacing:24
                 Item { Layout.preferredHeight:70 }
                 ColumnLayout { Layout.alignment:Qt.AlignHCenter; Layout.maximumWidth:640; Layout.margins:40; spacing:24
-                    Image { source:"qrc:/assets/arca.svg"; Layout.preferredWidth:64;Layout.preferredHeight:64 }
+                    Image { source:"qrc:/assets/arca.png"; Layout.preferredWidth:64;Layout.preferredHeight:64 }
                     Heading { text:"Tu cine,\nen tus carpetas.";font.pixelSize:52 }
                     Muted { Layout.fillWidth:true; text:"Dile dónde están tus archivos. Yo los ordeno, saco las temporadas y los episodios de cada nombre, y recuerdo por dónde ibas.";font.pixelSize:16 }
                     Heading { text:"Permiso de lectura";font.pixelSize:19 }

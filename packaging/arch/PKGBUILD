@@ -1,12 +1,12 @@
 pkgname=arca-desktop
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc='Arca: biblioteca multimedia local nativa para Linux'
 arch=('x86_64')
 url='https://github.com/TheMrAleX/ArcaDesktop'
 # Upstream has not published a software license yet.
 license=('LicenseRef-Proprietary')
-depends=('qt6-base' 'qt6-declarative' 'qt6-multimedia-ffmpeg' 'qt6-svg' 'ffmpeg')
+depends=('qt6-base' 'qt6-declarative' 'qt6-multimedia-ffmpeg' 'ffmpeg')
 makedepends=('cmake' 'ninja')
 options=('!debug')
 
