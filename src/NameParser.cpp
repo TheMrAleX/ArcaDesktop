@@ -14,18 +14,18 @@ static const QString weak = R"(esp|spa|spanish|castellano|cast|lat|latino|vose|v
 static const auto technical = rx("(?<![\\p{L}\\p{N}])(" + strong + ")(?![\\p{L}\\p{N}])");
 static const auto junk = rx("(?<![\\p{L}\\p{N}])(" + strong + "|" + weak + ")(?![\\p{L}\\p{N}])");
 static const auto years = rx(R"((?<!\d)((?:19|20)\d{2})(?!\d))");
-static const auto parenYear = rx(R"(\(((?:19|20)\d{2})\))");
+static const auto parenYear = rx(R"([(\[]((?:19|20)\d{2})[)\]])");
 static const auto sxe = rx(R"((?<![\p{L}\p{N}])S(\d{1,2})[ ._-]?E(\d{1,3})(?:[ ._-]?(?:E|-E?)(\d{1,3}))?(?!\d))");
 static const auto nxn = rx(R"((?<![\p{L}\p{N}])(\d{1,2})x(\d{2,3})(?:[-x](\d{2,3}))?(?!\d))");
-static const auto spanish = rx(R"(temporada\s*(\d{1,2}).*?(?:cap[ií]tulo|cap\.?|episodio)\s*(\d{1,3}))");
-static const auto spaced = rx(R"((?<![\p{L}\p{N}])S(\d{1,2})\s+E?(\d{1,3})(?!\d))");
-static const auto capCompact = rx(R"((?<![\p{L}])cap\.?\s*(\d{3,4})(?!\d))");
+static const auto spanish = rx(R"(Temporada\s*(\d{1,2}).{0,40}?(?:Cap(?:[ií]tulo)?|Episodio|Ep)\.?\s*(\d{1,3})(?!\d))");
+static const auto spaced = rx(R"((?<![\p{L}\p{N}])(?:S|Season|Temp(?:orada)?\.?)\s*(\d{1,2})\s*(?:E|Ep(?:isod(?:e|io))?\.?|Cap(?:[ií]tulo)?\.?)\s*(\d{1,3})(?!\d))");
+static const auto capCompact = rx(R"((?<![\p{L}])Cap(?:[ií]tulo)?\.?\s*(\d{3,4})(?!\d))");
 static const auto sCompact = rx(R"((?<![\p{L}\p{N}])S(\d{3,4})(?!\d))");
 static const auto bareCompact = rx(R"((?<![\p{L}\p{N}])(\d{3})(?![\p{L}\p{N}]))");
-static const auto episodeOnly = rx(R"((?<![\p{L}])(?:e|ep|cap|capitulo|capítulo|episodio|episode)\s*\.?\s*(\d{1,3})(?!\d))");
+static const auto episodeOnly = rx(R"((?<![\p{L}\p{N}])(?:E|Ep|Episod(?:e|io)|Cap(?:[ií]tulo)?)\.?\s*(\d{1,3})(?!\d))");
 static const auto onlyNumber = rx(R"(^\s*(\d{1,3})\s*$)");
 static const auto leadingNumber = rx(R"(^\s*(\d{1,3})(?:\s*[-.]\s*|\s+)(.*)$)");
-static const auto dashNumber = rx(R"(\s*-\s*(\d{1,3})(?!\d))");
+static const auto dashNumber = rx(R"(\s-\s(\d{1,3})(?:v\d)?(?:\s|$))");
 static bool plausible(int year) { return year >= 1900 && year <= QDate::currentDate().year() + 1; }
 
 QString key(QString value) {
@@ -70,9 +70,9 @@ bool ignoredDir(const QString &name) {
     return name.startsWith('.') || ignored.contains(name.trimmed().toLower());
 }
 int seasonFromDir(const QString &name) {
-    if (rx(R"(^(specials?|especiales?|extras?|ovas?)$)").match(name.trimmed()).hasMatch()) return 0;
+    if (rx(R"(^(specials|especiales|season 0+|temporada 0+)$)").match(name.trimmed()).hasMatch()) return 0;
     auto m = rx(R"(^\s*(\d{1,2})\s*$)").match(name);
-    if (!m.hasMatch()) m = rx(R"((?:temporada|season|libro|book|vol(?:umen)?\.?|[st])\s*(\d{1,2})(?!\d))").match(name);
+    if (!m.hasMatch()) m = rx(R"(^(?:season|temporada|temp|series|serie|staffel|saison|libro|book|parte|part|vol|volumen|volume|s|t)\.?\s*[._-]?\s*(\d{1,2})(?:\D.*)?$)").match(name);
     return m.hasMatch() ? m.captured(1).toInt() : -1;
 }
 static QPair<QString,int> titleYear(const QString &value) {
@@ -102,7 +102,7 @@ int plainNumber(const QString &name) {
 }
 int numberHint(const QString &name) {
     const auto norm = normalize(QFileInfo(name).completeBaseName());
-    auto m = episodeOnly.match(norm);
+    auto m = rx(R"((?<![\p{L}])(?:e|ep|cap|capitulo|capítulo|episodio|episode)\s*\.?\s*(\d{1,3})(?![\p{N}]))").match(norm);
     if (!m.hasMatch()) m = rx(R"((?<![\p{L}\p{N}])(\d{1,3})(?![\p{L}\p{N}]))").match(norm);
     return m.captured(1).toInt();
 }
@@ -112,6 +112,17 @@ bool plainNumbering(const QList<int> &numbers) {
     if (distinct.size() < 3 || distinct.size()*4 < numbers.size()*3) return false;
     auto bounds = std::minmax_element(distinct.begin(), distinct.end());
     return *bounds.second - *bounds.first + 1 <= distinct.size()*2;
+}
+QMap<int,Result> plainNumberingFixes(const QList<QPair<QString,Result>> &files,const QString &directory,const QString &fallback) {
+    QList<QPair<int,int>> candidates;QList<int> numbers;
+    for(int i=0;i<files.size();++i){const auto &entry=files[i];const auto &p=entry.second;const bool bare=p.compactNumber&&p.compactToken==QString::number(p.compactNumber);bool open=p.kind==Kind::Unknown?!p.yearHint:p.kind==Kind::Episode?p.confidence<80||bare:p.kind==Kind::Movie?!p.year&&!p.yearHint&&onlyNumber.match(normalize(QFileInfo(entry.first).completeBaseName())).hasMatch():false;const int number=open?plainNumber(entry.first):0;if(number){candidates.append({i,number});numbers<<number;}}
+    if(!plainNumbering(numbers))return {};
+    QString title;int most=0;QHash<QString,int> titles;
+    for(const auto &candidate:candidates){const auto &name=files[candidate.first].second.title;if(!name.isEmpty()&&!onlyNumber.match(name.trimmed()).hasMatch()){int count=++titles[name];if(count>most){most=count;title=name;}}}
+    if(title.isEmpty())title=titleYear(directory.isNull()?fallback:directory).first;
+    if(title.trimmed().isEmpty()||onlyNumber.match(title.trimmed()).hasMatch())return {};
+    QMap<int,Result> output;const int season=seasonFromDir(directory);
+    for(const auto &candidate:candidates){auto p=files[candidate.first].second;p.kind=Kind::Episode;p.title=title;p.season=season>=0?season:1;p.episode=candidate.second;p.episodeEnd=0;p.confidence=86;p.reason.clear();p.compactToken.clear();p.compactNumber=0;p.altSeason=-1;p.altEpisode=0;p.seasonFromFolder=season>=0;output[candidate.first]=p;}return output;
 }
 QString resolveCompactGroup(const QList<int> &numbers) {
     QSet<int> unique(numbers.begin(), numbers.end()), see, sse;
@@ -157,12 +168,14 @@ Result parse(const QString &name, const QStringList &dirs, const QString &kind, 
     auto show = titleYear(showDir);
     auto hint = years.globalMatch(norm);
     while (hint.hasNext()) { int y=hint.next().captured(1).toInt(); if (plausible(y)) r.yearHint=y; }
+    const auto parenthesizedHint=parenYear.match(base);if(parenthesizedHint.hasMatch())r.yearHint=parenthesizedHint.captured(1).toInt();
     auto movie = [&]() {
         auto t = titleYear(base); r.kind=Kind::Movie; r.title=t.first; r.year=t.second; r.confidence=t.second ? (parenYear.match(base).hasMatch()?96:94) : 82;
-        if ((r.title.isEmpty() || QSet<QString>{"movie","pelicula","video","film"}.contains(key(r.title)) || onlyNumber.match(r.title).hasMatch()) && !dirs.isEmpty()) {
+        if (!r.year && (r.title.isEmpty() || QSet<QString>{"movie","pelicula","video","film"}.contains(key(r.title)) || onlyNumber.match(r.title).hasMatch()) && !dirs.isEmpty()) {
             auto d=titleYear(dirs.last()); r.title=d.first; r.year=d.second; r.confidence=d.second?90:80;
-        } else if (!r.year && !dirs.isEmpty()) { auto d=titleYear(dirs.last()); if (d.second && key(d.first)==key(r.title)) {r.year=d.second;r.confidence=92;} }
+        } else if (!r.year && !dirs.isEmpty()) { auto d=titleYear(dirs.last()); if (d.second && key(d.first)==key(r.title)) {r.title=d.first;r.year=d.second;r.confidence=92;} }
         if (r.title.isEmpty()) {r.kind=Kind::Unknown;r.confidence=0;r.reason="El nombre no dice nada";}
+        r.yearHint=r.year;
         if (kind != "MOVIES") {r.confidence=r.year ? qMin(r.confidence,88):60; if (!r.year) r.reason="No sé si es una película o un episodio";}
         return r;
     };
@@ -170,7 +183,7 @@ Result parse(const QString &name, const QStringList &dirs, const QString &kind, 
     int start=-1,end=0;
     for (const auto &pattern : {sxe,nxn,spanish,spaced}) {
         auto m=pattern.match(norm);
-        if (m.hasMatch()) {start=m.capturedStart();end=m.capturedEnd();r.season=m.captured(1).toInt();r.episode=m.captured(2).toInt();r.episodeEnd=m.captured(3).toInt();r.confidence=pattern.pattern()==sxe.pattern()?98:95;break;}
+        if (m.hasMatch()) {start=m.capturedStart();end=m.capturedEnd();r.season=m.captured(1).toInt();r.episode=m.captured(2).toInt();r.episodeEnd=m.captured(3).toInt()>r.episode?m.captured(3).toInt():0;r.confidence=pattern.pattern()==sxe.pattern()?98:pattern.pattern()==spaced.pattern()?93:95;break;}
     }
     auto compact = [&](const QRegularExpressionMatch &m, const QString &prefix, int confidence) {
         int n=m.captured(1).toInt();
@@ -187,7 +200,7 @@ Result parse(const QString &name, const QStringList &dirs, const QString &kind, 
     if(start<0) {auto m=capCompact.match(masked);if(m.hasMatch())compact(m,"Cap.",70);}
     if(start<0) {auto m=sCompact.match(masked);if(m.hasMatch())compact(m,"S",62);}
     if(start<0) {auto m=episodeOnly.match(masked);if(m.hasMatch()){start=m.capturedStart();end=m.capturedEnd();r.season=dirSeason;r.episode=m.captured(1).toInt();r.confidence=dirSeason>=0?90:40;r.seasonFromFolder=dirSeason>=0;}}
-    if(start<0 && dirSeason>=0) for(const auto &p:{onlyNumber,leadingNumber,dashNumber}) {auto m=p.match(masked);if(m.hasMatch()){start=m.capturedStart();end=m.capturedEnd(1);r.season=dirSeason;r.episode=m.captured(1).toInt();r.confidence=85;r.seasonFromFolder=true;break;}}
+    if(start<0 && dirSeason>=0) for(const auto &p:{onlyNumber,leadingNumber,dashNumber}) {auto m=p.match(masked);if(m.hasMatch()){start=m.capturedStart();end=m.capturedEnd(1);r.season=dirSeason;r.episode=m.captured(1).toInt();r.confidence=p.pattern()==onlyNumber.pattern()?85:p.pattern()==leadingNumber.pattern()?80:82;r.seasonFromFolder=true;break;}}
     if(start<0){auto m=bareCompact.match(masked);if(m.hasMatch())compact(m,"",55);}
     if(start<0){auto m=dashNumber.match(masked);if(m.hasMatch()){start=m.capturedStart();end=m.capturedEnd(1);r.season=1;r.episode=m.captured(1).toInt();r.confidence=60;r.reason="Parece un episodio; asumo temporada 1";}}
     if(start>=0){
@@ -196,13 +209,13 @@ Result parse(const QString &name, const QStringList &dirs, const QString &kind, 
         r.title=useDir?show.first:fileTitle;r.year=useDir?show.second:0;
         if(r.title.isEmpty())r.title=titleYear(root).first;
         r.episodeTitle=clean(norm.mid(end));
-        if(!r.episodeTitle.contains(rx("\\p{L}"))||rx("^("+weak+")$").match(r.episodeTitle).hasMatch())r.episodeTitle.clear();
+        if(r.episodeTitle.size()<2||!r.episodeTitle.contains(rx("\\p{L}"))||rx("^("+weak+")$").match(r.episodeTitle).hasMatch())r.episodeTitle.clear();
         r.kind=r.season>=0?Kind::Episode:Kind::Unknown;
-        if(r.season<0){r.confidence=30;r.reason=QString("Veo el episodio %1 pero no la temporada").arg(r.episode);}
+        if(r.season<0){r.year=0;r.episodeTitle.clear();r.confidence=30;r.reason=QString("Veo el episodio %1 pero no la temporada").arg(r.episode);}
         if(r.title.isEmpty()){r.confidence=qMin(r.confidence,40);r.reason="No sé de qué serie es";}
         return r;
     }
-    if(kind=="SERIES"){r.title=clean(norm);r.reason=r.yearHint?QString("Sin coincidencia · parece una película de %1").arg(r.yearHint):"Sin temporada ni episodio en el nombre";return r;}
+    if(kind=="SERIES"){r.title=clean(norm);auto without=r.title;without.remove(rx(R"(\s*\(?((?:19|20)\d{2})\)?$)"));if(!without.trimmed().isEmpty())r.title=without.trimmed();r.reason=r.yearHint?QString("Sin coincidencia · parece una película de %1").arg(r.yearHint):"Sin temporada ni episodio en el nombre";return r;}
     return movie();
 }
 }

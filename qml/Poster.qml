@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 
 ItemDelegate {
     id: card
@@ -11,10 +12,12 @@ ItemDelegate {
     contentItem: ColumnLayout {
         spacing: 8
         Rectangle {
+            id:cover
+            layer.enabled:true;layer.effect:OpacityMask {maskSource:Rectangle {width:cover.width;height:cover.height;radius:12}}
             Layout.fillWidth: true; Layout.preferredHeight: 236
             radius: 12; clip: true
             color: Qt.hsla((card.media.title.length * 0.071) % 1,0.24,0.17,1)
-            Image { anchors.fill: parent; source: card.media.poster || ""; fillMode: Image.PreserveAspectCrop; asynchronous: true; sourceSize.width: 320; cache: true }
+            Image { anchors.fill: parent; source: card.media.poster || card.media.thumb || ""; fillMode: Image.PreserveAspectCrop; asynchronous: true; sourceSize.width: 320; cache: true }
             Rectangle { anchors.fill: parent; color: "transparent"; gradient: Gradient { GradientStop { position: 0.35; color: "transparent" } GradientStop { position: 1; color: "#D90A0B0E" } } }
             Text { anchors { left: parent.left; right: parent.right; bottom: parent.bottom; margins: 14 } text: card.media.title; font.family: "Bricolage Grotesque"; font.pixelSize: 23; font.bold: true; color: "white"; wrapMode: Text.Wrap; maximumLineCount: 4; elide: Text.ElideRight; visible: !card.media.poster }
             Rectangle { visible: !!card.media.watched; anchors { top: parent.top; right: parent.right; margins: 8 } width: 48; height: 26; radius: 13; color: "#173D32"; Text { anchors.centerIn: parent; text: "Visto"; color: "#6FE3C4"; font.pixelSize: 11 } }

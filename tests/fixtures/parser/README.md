@@ -1,0 +1,1 @@
+Resultados de NameParser.kt de TheMrAleX/Arca, commit 5182d49f9b14d639d44d602a84045d453f6565ed, ejecutado sin Android con Kotlin 2.1.20. Combina los nombres de sus 33 pruebas con contextos de carpeta y tipos de biblioteca. Los valores se generan desde Kotlin; no desde el parser C++.

@@ -22,6 +22,7 @@ int seasonFromDir(const QString &name);
 int plainNumber(const QString &name);
 int numberHint(const QString &name);
 bool plainNumbering(const QList<int> &numbers);
+QMap<int,Result> plainNumberingFixes(const QList<QPair<QString,Result>> &files,const QString &directory,const QString &fallback);
 QString resolveCompactGroup(const QList<int> &numbers);
 struct EpisodeRef { QString show; int season; int episode; bool seasonFromFolder; };
 struct Renumber { int offset; bool sure; };

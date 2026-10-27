@@ -4,6 +4,7 @@
 #include <QSet>
 #include <QHash>
 #include <algorithm>
+#include <tuple>
 
 QString Catalog::showKey(const QVariantMap &file) {
     return Names::key(file.value("fileTitle", file.value("title")).toString());
@@ -13,7 +14,15 @@ QString Catalog::continueKey(const QVariantMap &file) {
     return file.value("kind") == "EPISODE" ? "s:" + showKey(file) : "m:" + file.value("path").toString();
 }
 
-Catalog::View Catalog::build(const QVariantList &files, const QVariantMap &hidden) {
+QVariantList Catalog::markDuplicates(QVariantList files){
+    QHash<QString,QList<int>> groups;
+    for(int i=0;i<files.size();++i){auto file=files[i].toMap();file["duplicate"]=false;file["hasDuplicates"]=false;files[i]=file;if(file.value("hidden").toBool()||file.value("confidence").toInt()<80)continue;const auto kind=file.value("kind").toString();if(kind!="EPISODE"&&kind!="MOVIE")continue;const auto key=file.value("folder").toString()+'|'+kind+'|'+showKey(file)+'|'+(kind=="MOVIE"?file.value("year").toString():file.value("season").toString()+'|'+file.value("episode").toString());groups[key]<<i;}
+    auto rank=[](const QVariantMap &file){return std::make_tuple(file.value("preferred").toBool(),file.value("height").toInt(),file.value("size").toLongLong());};
+    for(const auto &group:groups){if(group.size()<2)continue;int best=group.first();for(int i:group)if(rank(files[i].toMap())>rank(files[best].toMap()))best=i;for(int i:group){auto file=files[i].toMap();file["duplicate"]=i!=best;file["hasDuplicates"]=true;file["duplicateCount"]=group.size();files[i]=file;}}
+    return files;
+}
+Catalog::View Catalog::build(const QVariantList &input, const QVariantMap &hidden) {
+    const auto files=markDuplicates(input);
     View view;
     QMap<QString, QVariantList> grouped;
     auto appendContinue = [&](QVariantMap file, qint64 lastPlayed) {
@@ -25,7 +34,7 @@ Catalog::View Catalog::build(const QVariantList &files, const QVariantMap &hidde
     };
     for (const auto &value : files) {
         auto file = value.toMap();
-        if (file.value("confidence").toInt() < 80) continue;
+        if (file.value("confidence").toInt() < 80||file.value("hidden").toBool()||file.value("duplicate").toBool()) continue;
         if (file.value("kind") == "EPISODE") grouped[showKey(file)].append(file);
         else if (file.value("kind") == "MOVIE" && !file.value("watched").toBool() && file.value("position").toLongLong() > 5000)
             appendContinue(file, file.value("updated").toLongLong());
@@ -47,8 +56,8 @@ Catalog::View Catalog::build(const QVariantList &files, const QVariantMap &hidde
             if (!seen.contains(key)) { seen.insert(key,unique.size()); unique.append(file); }
             else {
                 const auto previous=unique[seen[key]].toMap();
-                if(file.value("updated").toLongLong()>previous.value("updated").toLongLong() ||
-                   (file.value("updated")==previous.value("updated") && file.value("available").toBool()&&!previous.value("available").toBool()))unique[seen[key]]=file;
+                const auto rank=[](const QVariantMap &f){return std::make_tuple(f.value("preferred").toBool(),f.value("height").toInt(),f.value("size").toLongLong());};
+                if(rank(file)>rank(previous))unique[seen[key]]=file;
             }
         }
         episodes = unique;

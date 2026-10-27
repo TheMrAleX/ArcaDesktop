@@ -25,6 +25,11 @@ class Library : public QObject {
     Q_PROPERTY(bool onboarded READ onboarded NOTIFY changed)
     Q_PROPERTY(QVariantList matches READ matches NOTIFY matchesChanged)
     Q_PROPERTY(bool searching READ searching NOTIFY matchesChanged)
+    Q_PROPERTY(QVariantMap metadataJobs READ metadataJobs NOTIFY metadataChanged)
+    Q_PROPERTY(QVariantMap absolutePrompt READ absolutePrompt NOTIFY metadataChanged)
+    Q_PROPERTY(QVariantList artwork READ artwork NOTIFY artworkChanged)
+    Q_PROPERTY(QVariantList pendingFolders READ pendingFolders NOTIFY changed)
+    Q_PROPERTY(QString backupStatus READ backupStatus NOTIFY changed)
 public:
     explicit Library(const QString &dataDir = {}, QObject *parent = nullptr);
     ~Library() override;
@@ -41,6 +46,12 @@ public:
     bool onboarded() const;
     QVariantList matches() const { return m_matches; }
     bool searching() const { return m_searching; }
+    QString thumbnailDirectory() const { return m_dataDir+"/thumbs"; }
+    QVariantMap metadataJobs() const { return m_metadataJobs; }
+    QVariantMap absolutePrompt() const { return m_absolutePrompt; }
+    QVariantList artwork() const { return m_artwork; }
+    QVariantList pendingFolders() const { return m_pendingFolders; }
+    QString backupStatus() const { return m_backupStatus; }
     Q_INVOKABLE void finishWelcome();
     Q_INVOKABLE QVariant setting(const QString &key, const QVariant &fallback = {}) const;
     Q_INVOKABLE void setSetting(const QString &key, const QVariant &value);
@@ -52,9 +63,17 @@ public:
     Q_INVOKABLE void saveProgress(const QString &path, qint64 position, qint64 duration);
     Q_INVOKABLE void markWatched(const QString &path, bool watched);
     Q_INVOKABLE void reload();
-    Q_INVOKABLE void correct(const QString &path, const QString &title, int season, int episode, bool folderRule);
+    Q_INVOKABLE void correct(const QString &path, const QString &title, int season, int episode, bool folderRule, int year = -1);
     Q_INVOKABLE void accept(const QString &path);
+    Q_INVOKABLE void acceptSafeGuesses();
+    Q_INVOKABLE void setCompactRule(int folder, const QString &reading);
+    Q_INVOKABLE void setFileHidden(const QString &path, bool hidden);
+    Q_INVOKABLE void preferFile(const QString &path);
+    Q_INVOKABLE void resetDecision(const QString &path);
     Q_INVOKABLE void createProfile(const QString &name);
+    Q_INVOKABLE void editProfile(int id, const QString &name, const QString &color);
+    Q_INVOKABLE void deleteProfile(int id);
+    Q_INVOKABLE void clearPendingBackup();
     Q_INVOKABLE void selectProfile(int id);
     Q_INVOKABLE void setFolderVisible(int id, bool visible);
     Q_INVOKABLE void showAllFolders();
@@ -67,20 +86,36 @@ public:
     Q_INVOKABLE QString encodeTrack(const QVariantMap &track) const;
     Q_INVOKABLE int pickTrack(const QVariantList &options, const QString &saved) const;
     Q_INVOKABLE int preferredTrack(const QVariantList &options, bool forcedOnly = false) const;
-    Q_INVOKABLE bool exportBackup(const QUrl &url);
-    Q_INVOKABLE bool importBackup(const QUrl &url);
+    Q_INVOKABLE bool exportBackup(const QUrl &url, bool folders = true, bool decisions = true, bool settings = true);
+    Q_INVOKABLE bool importBackup(const QUrl &url, bool folders = true, bool decisions = true, bool settings = true);
+    Q_INVOKABLE QVariantMap inspectBackup(const QUrl &url);
+    Q_INVOKABLE void bindImportedFolder(const QString &reference, const QUrl &url, const QString &kind);
     Q_INVOKABLE QVariantMap nextEpisode(const QString &path) const;
     Q_INVOKABLE QVariantMap media(const QString &path) const;
     Q_INVOKABLE QVariantList externalSubtitles(const QString &path) const;
     Q_INVOKABLE QVariantList readSubtitles(const QUrl &url) const;
     Q_INVOKABLE void findMetadata(const QString &title, bool series);
     Q_INVOKABLE void useMetadata(const QString &path, int id, bool series);
+    Q_INVOKABLE void downloadMetadata(const QString &path, const QString &query = {});
+    Q_INVOKABLE void resolveAbsolute(int mode);
+    Q_INVOKABLE void findArtwork(const QString &path, bool backdrop);
+    Q_INVOKABLE void chooseArtwork(const QString &path, const QString &remote, bool backdrop);
+    Q_INVOKABLE qint64 cacheSize() const;
+    Q_INVOKABLE void clearMetadata();
+    void applySeasonMetadata(const QString &showKey, const QVariantMap &season, const QVariantMap &english = {});
+    void applySeriesDetails(const QString &showKey, const QVariantMap &details);
+    using MetadataTransport = std::function<void(const QUrl &, std::function<void(QVariant)>)>;
+    void setMetadataTransport(MetadataTransport transport) { m_metadataTransport=std::move(transport); }
 signals:
+    void filesPrepared();
     void changed();
     void scanningChanged();
     void scanStatusChanged();
     void errorChanged();
     void matchesChanged();
+    void metadataChanged();
+    void artworkChanged();
+    void metadataChoicesReady(const QString &path);
 private:
     void fail(const QString &message);
     bool exec(const QString &sql, const QVariantList &args = {});
@@ -102,4 +137,24 @@ private:
     int m_searchGeneration = 0;
     void tmdb(const QString &endpoint, const QVariantMap &parameters, std::function<void(QVariantMap)> done);
     void cacheImage(const QString &path, const QString &key, const QString &remote);
+    void setMetadataJob(const QString &key, const QVariantMap &state);
+    void fetchSeasons(const QString &showKey, int id, int generation);
+    void findAlternative(const QString &showKey, int id, const QVariantList &counts, int generation);
+    void fetchJson(const QUrl &url, std::function<void(QVariant)> done);
+    QVariantList rawFiles() const;
+    QVariantMap m_metadataJobs,m_absolutePrompt;
+    QVariantList m_artwork,m_pendingArt;
+    QHash<QString,int> m_metadataGeneration;
+    int m_cacheEpoch=0;
+    QHash<QString,QVariantList> m_imageWaiters;
+    QTimer m_artTimer;
+    void flushArtwork();
+    MetadataTransport m_metadataTransport;
+    QVariantMap buildBackup(bool folders,bool decisions,bool settings) const;
+    bool restoreBackup(QVariantMap data,bool folders,bool decisions,bool settings,bool pending = false);
+    void applyPendingBackups();
+    void refreshPendingFolders();
+    QVariantList m_pendingFolders;
+    QString m_backupStatus;
+    bool m_rescanRequested=false;
 };

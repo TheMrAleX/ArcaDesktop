@@ -1,0 +1,1712 @@
+Esta es una lista de los episodios del [[anime]] ''[[Yu-Gi-Oh! GX]]''. Este terminó en Japón en su 4.ª temporada con un total de 180 episodios. En [[Latinoamérica]] y [[Estados Unidos]] solo se emitió hasta el episodio 155.
+
+== Descripción ==
+
+* Yu-Gi-Oh! GX
+* Yu-Gi-Oh! GX - Despertar de las Bestias Sagradas
+* Yu-Gi-Oh! GX - Sociedad de la Luz
+* Yu-Gi-Oh! GX - Torneo GX
+* Yu-Gi-Oh! GX - La Búsqueda por el Dragón Arcoíris
+* Yu-Gi-Oh! GX - Hacia las Sombras
+
+== Primera temporada ==
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | N.º !! Título<br>Título oficial en inglés / Título oficial en japonés !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="EB2C2C"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=01
+ |Título=El próximo rey de los juegos (Jaden vs. Dr. Crowler)
+ |AltTítulo=The next king of games / (遊戯を継ぐ者) 
+ |FechadeEmisiónorig=6 de octubre de 2004
+ |ResumenBreve= Jaden Yuki se dirige atrasado a los exámenes de admisión de la Academia de Duelos, pero antes de llegar se topa con [[Yugi Muto]], quien le entrega una carta especial: el Kuriboh Alado. Luego, Jaden se apresura, pero llega tarde igualmente. Se le da una última oportunidad para ingresar a la academia, pero debe vencer al profesor Dr. Vellian Crowler. Este juega su poderoso monstruo, el poderoso Golem de Engranajes Ancestrales, pero Jaden es capaz de derrotarlo gracias al Kuriboh Alado y a su mazo de Héroes Elementales.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=02
+ |Título=Bienvenido a la Academia de Duelos (Jaden vs. Chazz)
+ |AltTítulo=Welcome to Duel Academy (フレイム·ウィングマン) 
+ |FechadeEmisiónorig=10 de octubre de 2004
+ |ResumenBreve= Jaden llega a la Academia de Duelos y es asignado en el dormitorio Slifer Rojo, donde van los duelistas con las habilidades más débiles. En el dormitorio se hace rápidamente amigo de sus compañeros Syrus Truesdale y Chumley Huffington. No pasa mucho tiempo para que Jaden se meta en problemas, pues es desafiado por Chazz Princeton, un estudiante del dormitorio Obelisco Azul (donde van los mejores duelistas de la Academia) que busca averiguar si su victoria contra Crowler fue por habilidad o por mera suerte.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=03
+ |Título=Un duelo de amor (Jaden vs. Alexis)
+ |AltTítulo=A duel in love / (エトワール·サイバー) 
+ |FechadeEmisiónorig=20 de octubre de 2004
+ |ResumenBreve= Crowler está decidido a vengarse y expulsar a Jaden de la Academia, por lo que le envía una falsa carta de amor haciendo parecer que provenía de Alexis Rhodes, una estudiante del dormitorio Obelisco Azul. La carta le pide a Jaden reunirse con ella en las afueras del dormitorio azul por la noche. Pero es Syrus quien encuentra la carta y va al lugar, donde es reprendido por Alexis y sus amigas, Mindy y Jasmine. Alexis promete no decir nada a nadie a cambio de un duelo con Jaden.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=04
+ |Título=Anhelo de duelo (Jaden vs. Chazz)
+ |AltTítulo=Making the grade / (5重合体! VWXYZ) 
+ |FechadeEmisiónorig=27 de octubre de 2004
+ |ResumenBreve= Jaden se despierta tarde para sus exámenes. Chazz aún es incapaz de creer que alguien como Jaden haya vencido al Dr. Crowler, por lo que lo enfrenta nuevamente a un duelo, pero esta vez con cartas más poderosas facilitadas por el profesor. Jaden es capaz de vencerlo gracias a una carta nueva que consiguió al ayudar a Dorothy, la encargada de la tienda de cartas de la Academia. Sorprendido por su buen desempeño, el Canciller Sheppard promueve personalmente a Jaden al dormitorio Ra Amarillo, pero para la alegría de Syrus, éste se niega.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=05
+ |Título=El duelista oscuro, parte 1 (Jaden vs. Titan)
+ |AltTítulo=The dark duelist (part 1 of 2) / (闇のデーモンデッキ) 
+ |FechadeEmisiónorig=3 de noviembre de 2004
+ |ResumenBreve= Jaden y sus amigos están contando historias de terror. Su profesor mentor, Lymann Banner, se les une y les cuenta sobre los Juegos de los Oscuro y un cuarto dormitorio abandonado en la academia. Jaden, Syrus y Chumley deciden ir al lugar para comprobar la veracidad de la historia, donde se encuentran con Alexis, quien está en busca de su hermano que tiempo atrás había desaparecido allí. Al entrar los cuatro, Alexis es capturada por un hombre llamado Titan que dice ser un duelista de lo Oscuro. Crowler contrató a Titan para deshacerse de Jaden luego de oír que iría al lugar. Jaden lucha contra él para liberar a Alexis, pero no tiene mucha suerte.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=06
+ |Título=El duelista oscuro, parte 2 (Jaden vs. Titan)
+ |AltTítulo=The dark duelist (part 2 of 2) / (ハネクリボーの奇跡) 
+ |FechadeEmisiónorig=10 de noviembre de 2004
+ |ResumenBreve= Luego de que el falso Juego de lo Oscuro es disipado por Kuriboh Alado, ambos duelistas ingresan a uno real y Titan es poseído por los espíritus del dormitorio, pero Jaden sale victorioso con la ayuda de Kuriboh. Luego de rescatar a Alexis con la ayuda de Syrus y Chumley, Titan es enviado al Reino de las Sombras.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=07
+ |Título=Un duelo y castigo excepcional (Jaden vs. Syrus)
+ |AltTítulo=Duel and unusual punishment / (翔の乗り物デッキ) 
+ |FechadeEmisiónorig=17 de noviembre de 2004
+ |ResumenBreve= Jaden y Syrus están en problemas por llegar tarde a clases y por entrar nuevamente al dormitorio abandonado. Se acuerda que serán expulsados de la Academia a menos que venzan un duelo de equipo a alguien designado por el comité académico. Jaden y Syrus deciden enfrentarse para practicar. Hacia el final del duelo, Syrus consigue Unión Poderosa, una carta que le habría permitido vencer a Jaden, pero se niega a usarla porque su hermano mayor le dijo que era demasiado débil y nunca sería un duelista merecedor de la carta.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=08
+ |Título=Por el bien de Syrus (Jaden vs. Zane)
+ |AltTítulo=For the sake of Sho / (最強! サイバーエンド·ドラゴン)  
+ |FechadeEmisiónorig=24 de noviembre de 2004
+ |ResumenBreve= Syrus está planeando renunciar a la academia a causa de los dichos de su hermano. Jaden se siente apenado y parte en busca del hermano de Syrus, Zane Truesdale, un estudiante del dormitorio azul y el duelista más destacado de la Academia. Jaden se le enfrenta en un duelo. Sin embargo, la poderosa baraja de Cyber Dragones de Zane es demasiado para Jaden y pierde el duelo. Pero a pesar de no haber ganado, Jaden mantiene una actitud positiva y le hace entender a Syrus el espíritu duelista y lo divertido que es jugar, lo que hace sentir mejor.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=09
+ |Título=Asunto familiar (Chumley vs. Sr. Huffington)
+ |AltTítulo=Family business / (一撃必殺! ちゃぶ台返し)   
+ |FechadeEmisiónorig=1 de diciembre de 2004
+ |ResumenBreve= El señor Huffington, padre de Chumley, cree que su hijo es un muy mal duelista a causa de sus calificaciones, por lo que le pide que se vaya de la Academia y lo ayude con el negocio familiar. Jaden y Syrus no quieren que su amigo se marche, por lo que Chumley hace un trato con su padre: si él logra vencerlo en un duelo, podrá permanecer en la academia. Chumley pierde, pero su padre se siente orgulloso de su espíritu duelista y decide dejarlo permanecer en la Academia.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=10
+ |Título=El duelo decisivo, parte 1 (Jaden & Syrus vs. Los Hermanos Paradoja)
+ |AltTítulo=Tag team trial (part 1 of 2) / (十代&翔! タッグデュエル (前編))   
+ |FechadeEmisiónorig=7 de diciembre de 2004
+ |ResumenBreve= El día del duelo en equipo para decidir si Jaden y Syrus permanecen en la academia ha llegado. Deben vencer a los hermanos Paradoja, duelistas profesionales. El duelo comienza y Syrus se siente inseguro y apenado porque podría hacer perder a Jaden. Su miedo incrementa cuando los hermanos paradoja invocan a su monstruo más poderoso, el Guardián de las Rejas. Jaden, en cambio, mantiene su actitud positiva como de costumbre e intenta animar a Syrus, sin embargo, las cosas no marchan bien para ellos,
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=11
+ |Título=El duelo decisivo, parte 2 (Jaden & Syrus vs. Los Hermanos Paradoja)
+ |AltTítulo=Tag team trial (part 2 of 2) / (十代&翔! タッグデュエル (後編))  
+ |FechadeEmisiónorig=14 de diciembre de 2004
+ |ResumenBreve= El duelo entre Jaden, Syrus y los hermanos paradoja continúa. Alexis y Chumley se comienzan a preocupar, ya que sus amigos podrían perder. Por otro lado, Chazz mira el duelo atentamente y desea ver a Jaden perder. El duelo se complica cada vez más para Jaden y Syrus, pero Jaden no pierde las esperanzas. Viendo esto, Syrus se anima y logra vencer al Guardián de las Rejas usando Unión Poderosa, la carta que anteriormente no pudo usar y le prueba a su hermano que no es débil. Debido a que resultan vencedores, se les permite quedarse en la Academia, para el disgusto de Chazz y Crowler.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=12
+ |Título=La fórmula del éxito (Bastion vs. Chazz)
+ |AltTítulo=Formula for success / (酸素+水素=H²Oドラゴン)   
+ |FechadeEmisiónorig=22 de diciembre de 2004
+ |ResumenBreve= Crowler está decepcionado de Chazz por perder contra un duelista del dormitorio rojo, Jaden. Así que lo reta: si no vence a un duelista del dormitorio amarillo, Bastion Misawa, será descendido al dormitorio Ra Amarillo. El duelo comienza y Chazz se esfuerza para ganar, pero es derrotado por Bastion. En consecuencia, se le ofrece ascender al dormitorio Obelisco Azul, pero él declina la oferta, convencido de que no será un buen duelista hasta que venza a Jaden.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=13
+ |Título=El duelo del simio (Jaden vs. Wheeler)
+ |AltTítulo=Monkey see, monkey duel / (野性解放! SALデュエル)
+ |FechadeEmisiónorig=29 de diciembre de 2004  
+|ResumenBreve= Syrus descubre a Chazz ordenando sus maletas para marcharse de la Academia luego de haber perdido contra Bastion. Mientras están en clase, Jaden y Syrus se escapan para detenerlo, pero son sorprendidos por Alexis, Jasmine y Mindy. En vez de acusarlos, Alexis decide ir en busca de Chazz junto con sus amigos, pero en el camino, Jasmine es interrumpida por un simio usando un disco de duelos y la captura. Jaden lucha con el simio para salvarla, pero mientras están distraídos con eso, Chazz abandona la isla y deja la Academia.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=14
+ |Título=Un espíritu invocado (Jaden vs. Jinzo)
+ |AltTítulo=A spirit summoned / (VS サイコショッカー!?)
+ |FechadeEmisiónorig=5 de enero de 2005
+ |ResumenBreve= Sólo unos pocos estudiantes permanecen en la Academia en las vacaciones de invierno, pero Jaden y sus amigos están en ese grupo. Mientras disfrutan su tiempo libre en la cafetería del dormitorio Slifer Rojo, un estudiante del dormitorio Obelisco Azul llega diciendo que él y otros estudiantes habían estado intentando revivir al espíritu de Jinzo, una poderosa carta, pero que no creían que funcionaría realmente. Pero tuvieron éxito, por lo que el espíritu de Jinzo está tomando las almas de esos estudiantes. Jaden y sus amigos se dirigen a lo profundo del bosque y lo encuentran. Jaden lo vence y devuelve las almas que había robado. A la mañana siguiente, todos creen que fue un sueño, pero Jaden sabe que fue verdad, puesto que él puede ver a los espíritus de las cartas, incluyendo a Kuriboh Alado.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=15
+ |Título=Un duelo por Alexis (Jaden vs. Harrington)
+ |AltTítulo=Courting Asuka / (青春のデュエルテニス) 
+ |FechadeEmisiónorig=12 de enero de 2005
+ |ResumenBreve= Jaden y Syrus se encuentran en clase de tenis, mientras Jaden alega que eso no tiene nada que ver con duelos. Mientras se distrae, tira una bola en dirección de Alexis, sin embargo otro estudiante la detiene, dirigiéndola hacia el profesor Crowler. Alexis le agradece al otro estudiante y le revela que él está enamorado de ella. Éste reta a Jaden a un duelo, diciendo que quien gane, será el novio de Alexis. Jaden, sin interesarle el premio, juega y gana. Luego de ganar, le pregunta a Alexis que sería exactamente ser novios, a lo que ella responde que por ahora, solo amistad.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=16
+ |Título=El duelista gigante (Jaden vs. el Duelista Gigante)
+ |AltTítulo=The duel giant / (闇夜のキングゴブリン) 
+ |FechadeEmisiónorig=19 de enero de 2005
+ |ResumenBreve= Varios duelistas del dormitorio azul han sido atacados por un misterioso duelista que les roba sus cartas más raras al ser vencidos, que ellos mismos han denominado "el gigante de los duelos". Mientras tanto, Jaden está muy ocupado haciendo su tarea. Pero el Dr. Crowler le promete eximirlo de ellas si logra encontrar y derrotar al gigante de los duelos. En la noche, Jaden, Syrus y Chumley se encaminan al bosque y encuentran al gigante de los duelos. En el transcurso del duelo, se revela que son dos estudiantes, el que da la forma intimidatoria, y el verdadero duelista, Brier. Él termina el duelo vencido por Jaden, este último lo perdona, dejándolo ir, pero devolviendo las cartas robadas al día siguiente. Sin decir la identidad del gigante de los duelos a Crowler, Jaden debe terminar su tarea.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=17
+ |Título=El valor de elegir (Jaden vs. Damon)
+ |AltTítulo=Nature of the draw / (ドロー!ドロー!ドロー!)
+ |FechadeEmisiónorig=26 de enero de 2005                                       
+ |ResumenBreve= Jaden, Syrus, Chumley y Alexis escucharon sobre un misterioso ex estudiante que se oculta en los bosques que puede elegir la carta que saca en cada turno. Ellos se deciden ir a comprobarlo, y se dirigen al bosque. Al hacerlo, Jaden le propone un duelo y comprueba que es cierto, ya que el duelista, llamado Damon, estaba practicando una misteriosa técnica por años. Jaden, finalmente vence a Damon, y concluye que es mejor divertirse a que tomarse todo en serio como él lo hacía.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=18
+ |Título=El rey de los imitadores, parte 1 (Jaden vs. Dimitri)
+ |AltTítulo=The king of the copycats (part 1 of 2) / (VS 遊戯デッキ (前編))
+ |FechadeEmisiónorig=2 de febrero de 2005
+ |ResumenBreve= La baraja del legendario duelista, [[Yugi Muto]] ha llegado para ser exhibida en la academia. Sho enfrenta a un duelo a un estudiante del dormitorio amarillo para ganar entradas para entrar a la exhibición. El estudiante del dormitorio amarillo se siente avergonzado por ser vencido por uno del rojo, pero Bastion lo consuela. Por la noche, el estudiante que perdió, Dimitri, roba la baraja de Yugi, creyendo que con ella podría ganar todos sus duelos. Jaden, Syrus, Bastion y Chumley van a ver que ocurre y Jaden es retado a un duelo por Dimitri.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=19
+ |Título=El rey de los imitadores, parte 2 (Jaden vs. Dimitri)
+ |AltTítulo=The king of the copycats (part 2 of 2) / (VS 遊戯デッキ (後編)) 
+ |FechadeEmisiónorig=9 de febrero de 2005
+ |ResumenBreve= Jaden se encuentra perdiendo el duelo contra la baraja de Yugi, incluso cuando está siendo jugada por alguien que no sabe usarla. Pero, Jaden logra vencerlo usando uno de sus héroes, Dimitri se siente decepcionado al perder, y cree que nunca será un gran duelista, incluso teniendo cartas poderosas. Zane y Alexis llegan a ver el final del duelo y Jaden se pregunta cómo lo habían encontrado, a lo que Zane responde que no eran los únicos y al voltearse, se da cuenta de que gran parte de la academia había presenciado el duelo.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=20
+ |Título=La doncella enamorada (Jaden vs. Blair)
+ |AltTítulo=The maiden in love / (恋する乙女は強いのよデッキ!)  
+ |FechadeEmisiónorig=16 de febrero de 2005
+ |ResumenBreve= Un nuevo estudiante es transferido a la academia, Blair Flannigan, y se aloja en el dormitorio rojo. Jaden cree que el nuevo chico parece un poco afeminado, y se lo ve interesado en Zane Truesdale. Jaden confronta directamente a Blair sobre este tema y accidentalmente, arroja su sombrero al suelo, revelando su verdadero cabello y descubriéndose que es en realidad una chica. Jaden se enfrenta a Blair, con el objetivo de conocerla mejor. Blair es derrotada y la asusta que Jaden les diga a todos de que es una chica, a lo que Jaden promete que no lo hará. Pero en ese momento, Zane llega y Blair admite que está atraída por él. Al día siguiente, Blair se va de la academia por develar que es demasiado pequeña, y promete regresar cuando sea mayor (cosa que cumple, para integrarse a los personajes principales en la temporada 3).
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=21
+ |Título=El duelo incómodo, parte 1 (Jaden vs. Bastion)
+ |AltTítulo=The duel off (part 1 of 2) / (融合封じ! 十代VS三沢(前編))  
+ |FechadeEmisiónorig=23 de febrero de 2005
+ |ResumenBreve= Se anuncia que en los próximos días se realizará un duelo interescolar contra un duelista de la Academia del Norte. Dr. Crowler, el cánciller Sheppard y los principales profesores discuten en una sala sobre quién será el representante de la academia - Jaden o Bastion. Ellos deciden que ambos deben enfrentarse en un duelo y el ganador luchará contra el representante de la Academia del Norte. Al ser notificado, Bastion se esmera en un primer momento en crear una baraja especializada contra los héroes de Jaden. Al día siguiente, el duelo comienza y la estrategia de Bastion parece funcionar, desde un principio usa una carta que niega las polimerizaciones, arruinando la mayor parte de las cartas poderosas de Jaden.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=22
+ |Título=El duelo incómodo, parte 2 (Jaden vs. Bastion)
+ |AltTítulo=The duel off (part 2 of 2) / (ワイルドマン召喚! 十代VS三沢(後編)) 
+ |FechadeEmisiónorig=2 de marzo de 2005
+ |ResumenBreve= Jaden está teniendo un duelo difícil contra el dragón de agua de Bastion y Syrus teme que pierda. Jaden sigue la orden de no usar fusiones, Jaden juega un héroe convencional que no había usado antes, corazón salvaje, ganando el duelo. Zane y Bastion se encuentran impresionados de las habilidades de Jaden. Posteriormente, Bastion le dice a Jaden que trabajará de nuevo en una baraja para ganarle, mientras que Jaden se convierte en el representante de la academia.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=23
+ |Título=El pequeño Belowski (Jaden vs. Belowski)
+ |AltTítulo=The little Belowski (脱力! もけもけデュエル) 
+ |FechadeEmisiónorig=9 de marzo de 2005
+ |ResumenBreve= Crowler sigue interesado en expulsar a Jaden y recluta a Belowski para que lo ayude. Mientras tanto, Jaden se encuentra trabajando con su baraja para el interescolar, por lo que se encuentra un poco irritado e interrumpe la paz y tranquilidad de la academia. En un piso superior, Jaden conoce a Belowski, quien es capaz de ver el espíritu de Kuriboh Alado. Jaden se sorprende por esto. Belowski le pregunta a Jaden si pueden luchar en un duelo, ya que nunca ha luchado con alguien que puede ver los espíritus de los monstruos. Jaden vence a los moke moke de Belowski y los planes de Crowler fracasan una vez más. 
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=24
+ |Título=El nuevo Chazz (Chazz vs. la Academia del Norte)
+ |AltTítulo=The new Manjoume / (復活! 万丈目サンダー) 
+ |FechadeEmisiónorig=16 de marzo de 2005
+ |ResumenBreve= La historia trae de vuelta a Chazz, quien está irritado por sus derrotas anteriores contra Bastion y Jaden, por lo que se dirige a la Academia del Norte. Esta academia tiene reglas diferentes que él no conoce, y para ingresar debe vencer a cincuenta estudiantes y al campeón de ésta. Chazz no tiene problemas con los cincuenta estudiantes y acaba venciendo al campeón, por lo que finalmente se convierte en un estudiante y representará a la Academia del Norte en el interescolar.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=25
+ |Título=El interescolar, parte 1 (Jaden vs. Chazz)
+ |AltTítulo=The school duel (part 1 of 2) / (VS万丈目サンダー(前編) アームドドラゴンの脅威) 
+ |FechadeEmisiónorig=23 de marzo de 2005
+ |ResumenBreve= El día del interescolar llega, y Jaden les dice a sus cartas que deben prepararse para su duelo más importante. Cuando su oponente llega, se impresiona al descubrir que no es otro que Chazz, quien ha llegado arrimado por toda su nueva academia, y con otra baraja. Los hermanos de Chazz llegan a presenciar el duelo, lo que presiona a este mucho más. Cuando la batalla comienza, Chazz invoca a su dragón armado nivel 3, y posteriormente al más poderoso, dragón armano nivel 7.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=26
+ |Título=El interescolar, parte 2 (Jaden vs. Chazz)
+ |AltTítulo=The school duel (part 2 of 2) / (VS万丈目サンダー(後編) アームドドラゴンLV7)  
+ |FechadeEmisiónorig=30 de marzo de 2005
+ |ResumenBreve= Chazz está ganando con su dragón armado. Pero Jaden lo detiene con una combinación de sus héroes. Chazz queda destruido por su derrota y sus hermanos están furiosos con él. Cuando el bote de la Academia del Norte se va de vuelta a su lugar de origen, Chazz decide quedarse en la Academia Central, sin embargo, como estuvo tres meses fuera, no se le permite quedarse en el dormitorio azul, y debe permanecer en el dormitorio rojo, junto con Jaden, Syrus y Chumley.
+ |LineaColor=EB2C2C
+}}
+|}
+
+=== El Despertar de las Bestias Sagradas ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#CCCCFF"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=27
+ |Título=Peligro en la cripta, parte 1 (Jaden vs. el Jefe de los GuardaCriptas)
+ |AltTítulo=Grave riesk (part 1 of 2) / (課外授業は闇のデュエル!?(前編)) 
+ |FechadeEmisiónorig=6 de abril de 2005
+ |ResumenBreve= El profesor Banner, Jaden, Syrus, Chumley y Alexis están en un viaje a las ruinas de un volcán. El gato de Banner, Faraón, ve algo sospechoso en la arena. Hay tres soles muy brillantes cubriendo al grupo. Jaden los mira y pierde la conciencia, al despertar, ve a una mujer misteriosa que le explica que esa es una tumba sagrada y él no debería estar ahí. Más tarde, el guardia de la cripta aparece y lo reta a un duelo: si gana, podrá escapar con vida.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=28
+ |Título=Peligro en la cripta, parte 2 (Jaden vs. el Jefe de los GuardaCriptas)
+ |AltTítulo=Grave riesk (part 2 of 2) / (課外授業は闇のデュエル!?(後編)) 
+ |FechadeEmisiónorig=13 de abril de 2005
+ |ResumenBreve= La carta mágica del guarda criptas, Necrovalle, le está causando problemas a Jaden. Que le impide invocar monstruos mientras tenga en su cementerio. Jaden usa la habilidad especial del héroe necrosombra y gana el duelo. El guarda criptas, aceptando su derrota, le entrega a Jaden un misterioso amuleto partido por la mitad, y le advierte que alguien que él conocerá tiene la otra. El espíritu de Kuriboh Alado y Des Koala guían a Jaden y sus amigos hacia las salida de ese extraño lugar.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=29
+ |Título=Duelo del apocalipsis, parte 1 (Jaden vs. Velo Nocturno)
+ |AltTítulo=Doomsday duel (part 1 of 2) / (VS ダークネス(前編)真紅眼の黒竜の挑戦)  
+ |FechadeEmisiónorig=20 de abril de 2005
+ |ResumenBreve= Alexis, el profesor Banner, Bastion, Chazz, el doctor Crowler, Jaden y Zaen son citados a la oficina del canciller Sheppard. Él les explica sobre tres poderosas cartas legendarias, las "tres bestias sagradas", ellas están selladas debajo de la Academia de Duelos. También les cuenta sobre un grupo maligno, denominados los siete jinetes de las sombras (Abidos, Amnael, Cámula, Don Zaloog, Titan, Tania y Velo Nocturno) que planean liberar a las bestias y usar su poder. Para protegerlas, se les da a cada uno de los reunidos, una parte de la llave que libera a las bestias, habiendo siete llaves espirituales en total, todos deberán enfrentarse a los jinetes de las sombras, si los jinetes ganan, se quedarán con una llave espiritual y quien la pierda no podrá seguir luchando, pero si ellos ganan, lo derrotarán para siempre y desaparecerá. Ahora la misión es derrotar a cada uno de los jinetes. Por la noche, Velo Nocturno aparece y reta a Jaden a un duelo.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=30
+ |Título=Duelo del apocalipsis, parte 2 (Jaden vs. Velo Nocturno)
+ |AltTítulo=Doomsday duel (part 2 of 2) / (VS ダークネス(後編)真紅眼の闇竜の攻撃)  
+ |FechadeEmisiónorig=27 de abril de 2005
+ |ResumenBreve= Jaden está venciendo lentamente a la baraja de dragones de Velo Nocturno. Pero se ve presionado, ya que sus amigos están en peligro. Con la ayuda de rascacielos y corazón salvaje, Jaden logra derrotar al primer jinete de las sombras. Cuando éste pierde, se cae su máscara y su espíritu queda sellado en ella. Pero al ver el verdadero rostro del jinete, descubren su verdadera identidad, quien es, nada más ni nada menos, que el hermano de Alexis, Atticus Rhodes.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=31
+ |Título=El campo del terror, parte 1 (Dr. Crowler vs. Cámula)
+ |AltTítulo=Field of screams (part 1 of 3) / (クロノスVS吸血美女カミューラ)   
+ |FechadeEmisiónorig=5 de mayo de 2005
+ |ResumenBreve= Después del duelo con Velo nocturno, Jaden y Atticus se encuentran en el hospital. Durante su estancia, Jaden sueña con una vampiresa. Cuando los portadores de las llaves se dan cuenta de que unos murciélagos los perseguían, aparece Cámula, una vampiresa que ve y conoce las debilidades de los portadores. Crowler es el primero en luchar con ella, pero resulta perdedor y le pide a Jaden que vengue su duelo y queda convertido en un muñeco.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=32
+ |Título=El campo del terror, parte 2 (Zane vs. Cámula)
+ |AltTítulo=Field of screams (part 2 of 3) / (カイザーVSカミューラ 幻魔の扉発動!)   
+ |FechadeEmisiónorig=11 de mayo de 2005
+ |ResumenBreve= Esta batalla se da en el castillo, donde Cámula retó a Zane, este asiste con todos los demás. Después de una ardua batalla Cámula usa el conjuro de la puerta para conseguir un alma y encerrarla ahí, ella elige la de su hermano menor, Syrus. Zane sacrifica su vida para salvar la de su hermano.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=33
+ |Título=El campo del terror, parte 3 (Jaden vs. Cámula)
+ |AltTítulo=Field of screams (part 3 of 3) / (輝け!シャイニング·フレア·ウィングマン)    
+ |FechadeEmisiónorig=18 de mayo de 2005
+ |ResumenBreve= El director Sheppard ve cómo la otra puerta es abierta, se ve la imagen del líder de los jinetes (no se ve su facciones) diciendo que tomara otra alma, después todos se pelean por ver quien será el que peleara, hasta que Atticus dice que Cámula tiene un amuleto de sombras, así que solo Jaden será capaz de vencerla gracias a su propio amuleto y la otra parte que la tiene Atticus. Llegan al castillo y comienza el duelo. Jaden comienza con E-HÉROE tempestad, y la vampira usa el conjuro de la puerta, pero el amuleto de Jaden la cancela. Aun así, Cámula ofrece su propia alma y consigue a tempestad de su lado del campo. Pero Jaden utiliza una trampa para que tempestad regrese. Después de una serie de sucesos, Cámula convoca a "génesis vampírica" la cual destruye a E-HERO tempestad. Cámula revela que quiere las almas para revivir a sus hermanos vampiros. Jaden convoca al héroe elemental bengala brillante (E-HÉROE alado con llamas + E-HÉROE chispas) el cual gana 300 puntos de ataque por cada héroe elemental en el cementerio. Así Jaden gana y recupera el alma de sus amigos.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=34
+ |Título=El factor del miedo (Jaden vs. Kaibaman)
+ |AltTítulo=Fear factor / (湯けむり旅情! 青眼の白龍)     
+ |FechadeEmisiónorig=25 de mayo de 2005
+ |ResumenBreve= Jaden tiene una pesadilla y le empieza a tener miedo a los duelos. Al día siguiente, Syrus lo lleva al estanque de la academia para relajarse. Jaden ve a Kuriboh alado y lo sigue, luego el cae por el estanque y llega a un lugar donde los monstruos de duelos son reales, allí conoce a Kaibaman y lo enfrenta en un duelo. Kaibaman tiene las mismas cartas de su creador [[Seto Kaiba]] y vence a Jaden con los 3 dragones de ojos azules. Al final del duelo, Kaibaman le dice que no tiene que tener miedo a los duelos y esto tranquiliza a Jaden.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=35
+ |Título=Rivalidad entre hermanos (Chazz vs. Slade)
+ |AltTítulo=Sibling rivalry / (兄弟の結束! おジャマデルタハリケーン)      
+ |FechadeEmisiónorig=1 de junio de 2005
+ |ResumenBreve= Slade y Jagger Princeton quieren apoderarse de la academia de duelos pero Seto Kaiba les dice que tienen que batirse en duelo con algún estudiante, además tiene que utilizar cartas con un puntaje de ataque 500 o menor. Ellos eligen a su hermano menor Chazz para que pelee por la academia de duelos. Chazz vence a Slade y logra salvar la escuela. 
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=36
+ |Título=Hasta que el duelo nos separe, parte 1 (Bastion vs. Tania)
+ |AltTítulo=Duel distractions (part 1 of 2) / (三沢っちVSアマゾネス! ムコとり決闘)     
+ |FechadeEmisiónorig=8 de junio de 2005
+ |ResumenBreve= La mayor parte de los estudiantes no asisten a clase, la causa es que construyen un coliseo para Tania, otra jinete de las sombras que reta a Bastión a un duelo. Durante este, Tania dice estar enamorada de Bastion y que si lo vence se casará con ella, al final Tania vence y lo aprisiona en el coliseo.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=37
+ |Título=Hasta que el duelo nos separe, parte 2 (Jaden vs. Tania)
+ |AltTítulo=Duel distractions (part 2 of 2) / (肉弾決闘! アマゾネスのデスリング)      
+ |FechadeEmisiónorig=15 de junio de 2005
+ |ResumenBreve= Tania termina su relación con Bastion porque él no es digno de ella. La noche siguiente Jaden la reta en un duelo y él la vence, luego Tania revela su forma original, es un tigresa de Bengala, luego se marcha con su mascota.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=38
+ |Título=Duelo en las profundidades (Jaden vs. el Almirante)
+ |AltTítulo=Get yarr game on  / (水中デュエル! 伝説の都アトランティス)    
+ |FechadeEmisiónorig=22 de junio de 2005
+ |ResumenBreve= El capitán de un submarino llega a la academia de duelos y busca a Jaden y lo reta a un duelo con la condición de que si este perdía tenía que irse con el capitán y trabajar en su proyecto de construir una academia de duelos debajo del océano.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=39
+ |Título=Los escorpiones oscuros (Chazz vs. Don Zaloog)
+ |AltTítulo=The dark scorpions  / (名探偵サンダーVS黒サソリ盗掘団)     
+ |FechadeEmisiónorig=29 de junio de 2005
+ |ResumenBreve= Un inspector llega a la academia para ayudar a proteger las llaves espirituales, pero mientras las esconden alguien los espía. Durante la noche se roban las llaves, Chazz descubre gracias a sus Ojamas que el inspector es Don Zaloog, otro jinete de las sombras que viene con su pandilla los escorpiones oscuros. Don Zaloog reta a un duelo a Chazz para que las llaves se las ganen de forma legitima, pero Chazz lo vence y recupera las llaves.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=40
+ |Título=Una leyenda viviente (Jaden vs. Abidos III)
+ |AltTítulo=A lying legend  / (H·E·R·Oフラッシュ!)     
+ |FechadeEmisiónorig=6 de julio de 2005
+ |ResumenBreve= El profesor Banner en clase dice que antes de Yugi y Kaiba hubo un duelista que nunca perdió un duelo, Abidos III. Esa noche una nave flotante llega a la academia de duelos y en ella está el faraón que es otro jinete de las sombras. Jaden pelea con el y lo derrota, se vuelven amigos y Abidos vuelve a su época.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=41
+ |Título=Una razón para ganar (Alexis vs. Titan)
+ |AltTítulo=A reason to win / (闇の闘牛場発動! 明日香VSタイタン)    
+ |FechadeEmisiónorig=13 de julio de 2005
+ |ResumenBreve= Atticus sigue sin recuperar su memoria, mientras Alexis lo cuida aparece Titan y le ofrece que si la vence puede devolverle la memoria. Titan cambió porque las sombras lo salvaron cuando Jaden lo venció la primera vez, ahora es otro jinete de las sombras que amenaza con quitarle la llave a Alexis.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=42
+ |Título=El día del espíritu de los monstruos (Jaden vs. Maga Oscura)
+ |AltTítulo=Duel monsters spirit day / (学園祭デュエル! ブラマジガール乱入)    
+ |FechadeEmisiónorig=20 de julio de 2005
+ |ResumenBreve= Es el día del espíritu de los monstruos y los estudiantes se disfrazan de cartas de duelo, se hacen ferias y por supuesto duelos, Chazz se disfraza del dragón cañón XYZ, Alexis, Jasmine y Mindy de las hermanas águila, Syrus es el maestro de ceremonias y Jaden hace una combinación de monstruos. Pero la situación cambia cuando aparece la Maga Oscura en el campus y reta a Jaden a un duelo. Al final Jaden se entera de que a quien enfrentó fue realmente el espíritu de la maga oscura y no una chica disfrazada como todos suponían.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=43
+ |Título=Corazones violentos (Alexis vs. Pierre)
+ |AltTítulo=Hearts are wilds / (明日香にセカンド·ラブ·チャンス!?)   
+ |FechadeEmisiónorig=27 de julio de 2005
+ |ResumenBreve= Pierre es un excelente jugador de apuestas que llega a la academia para retar a Alexis a un duelo con la condición de que si ella pierde tiene que ser su novia, ella accede al duelo y lo vence, él se va y le devuelve la bufanda de la madre de Alexis.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=44
+ |Título=El séptimo jinete de la sombra (Alexis vs. Amnael) / (Chazz vs. Amnael)
+ |AltTítulo=The seventh shadow rider / (7人目の影)    
+ |FechadeEmisiónorig=3 de agosto de 2005
+ |ResumenBreve= El profesor Banner sigue sin aparecer, el profesor Crowler lo reemplaza y les habla sobre la marca de Amnael. Más tarde Alexis va a buscar a su hermano a su habitación pero no lo encuentra, baja al jardín y se encuentra con un hombre misterioso que dice que tiene a Atticus, ella lucha por rescatarlo pero pierde. Jaden y sus amigos salen a buscar al profesor Banner en el bosque, se separan y Chazz encuentra al hombre misterioso que también lo vence.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=45
+ |Título=El juego de Amnael (Profesor Lymann Banner), parte 1 (Jaden vs. Amnael)
+ |AltTítulo=Amnael's endgame (part 1 of 2) / (VSアムナエル! Eヒーロー絶対封じ)   
+ |FechadeEmisiónorig=10 de agosto de 2005
+ |ResumenBreve= Amnael tiene seis llaves espirituales en su poder, una marca de Amnael sale al frente de Jaden y sus amigos y los guía hasta el dormitorio abandonado, allí adentro encuentran una arena de duelo y el cadáver del profesor Banner momificado, Amnael sale y reta a Jaden en duelo, durante este Amnael revela su identidad, es el profesor Banner.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=46
+ |Título=El juego de Amnael (Profesor Lymann Banner), parte 2 (Jaden vs. Amnael)
+ |AltTítulo=Amnael's endgame (part 2 of 2) / (地水炎風融合! エリクシーラー)    
+ |FechadeEmisiónorig=17 de agosto de 2005
+ |ResumenBreve= Continua el duelo hasta que Jaden lo vence, luego Amnael le da un libro y le advierte sobre el peligro que viene, luego él se convierte en polvo pero su alma queda dentro de faraón.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=47
+ |Título=Chazz-anova (Alexis vs. Chazz)
+ |AltTítulo=Manjoume-anova / (明日香VS万丈目! サイバー·エンジェル-弁天-)   
+ |FechadeEmisiónorig=24 de agosto de 2005
+ |ResumenBreve= Luego de regresar del espacio donde los tenía atrapados Amnael, Chazz se enamora de Alexis pero no sabe como conquistarla, después se encuentra con Attucus que tiene buena suerte con las chicas para que le ayude a conseguir a Alexis. Los dos roban las llaves sagradas para crear la atención de Alexis y obtener lo que quiere.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=48
+ |Título=El despertar de las bestias sagradas, parte 1 (Jaden vs. Kagemaru)
+ |AltTítulo=Rise of the sacred beasts (part 1 of 2) / (VS影丸(前編)2つの幻魔)   
+ |FechadeEmisiónorig=31 de agosto de 2005
+ |ResumenBreve= La fuerza maligna llegó a la isla de la academia y arrebata todas las llaves del destino rápidamente, después llega Kagemaru dentro de una cápsula que le da vida y coge las cartas sagradas, después reta a Jaden a un duelo y el accede.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=49
+ |Título=El despertar de las bestias sagradas, parte 2 (Jaden vs. Kagemaru)
+ |AltTítulo=Rise of the sacred beasts (part 2 of 2) / (VS影丸(後編)三幻魔覚醒)   
+ |FechadeEmisiónorig=7 de septiembre de 2005
+ |ResumenBreve= Sigue el duelo contra las bestias sagradas, mientras que Kagemaru se vuelve joven y los monstruos sagrados se alimentan de las cartas de duelo de todo el mundo, volviéndolas inútiles excepto las de Jaden, que después de todo vence a Kagemaru y salva al mundo.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=50
+ |Título=Graduación (Chumley vs. Dr. Crowler)
+ |AltTítulo=Magna chum laude / (隼人VSクロノス!エアーズロックサンライズ)   
+ |FechadeEmisiónorig=14 de septiembre de 2005
+ |ResumenBreve= Chumley ganó el concurso de diseñar cartas y Pegasus quiere que trabaje para el pero Crowler no quiere que vaya por sus malas calificaciones, después ellos dos tienen un duelo para determinar el futuro de Chumley.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=51
+ |Título=Duelo de graduación, parte 1 (Jaden vs. Zane)
+ |AltTítulo=The graduation match (part 1 of 2) / (VSカイザー(前編)パワー·ボンド×サイバーエンド)   
+ |FechadeEmisiónorig=21 de septiembre de 2005
+ |ResumenBreve= Zein se va a graduar como el mejor estudiante de la academia y tiene derecho a elegir su rival y escoge a Jaden. En el duelo Zein tiene la ventaja porque Jaden no juega con su corazón sino que piensa todas sus jugadas para no perder otra vez con Zein.
+ |LineaColor=EB2C2C
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=52
+ |Título=Duelo de graduación, parte 2 (Jaden vs. Zane)
+ |AltTítulo=The graduation match (part 2 of 2) / (VSカイザー(後編)ファイナル·フュージョン)   
+ |FechadeEmisiónorig=29 de septiembre de 2005
+ |ResumenBreve= Jaden comienza el duelo de la misma manera que siempre y hace que las cosas valgan la pena. Todo se reduce a un enfrentamiento entre el Héroe elemental Alado Bengala Brillante y Cyber Dragón final, después de defender a sus monstruos con hechizos y trampas el partido terminó en empate. Zane quedó contento de tener un buen duelo antes de que se gradué.
+ |LineaColor=EB2C2C
+}}
+|}
+
+== Segunda temporada ==
+
+=== Sociedad de la Luz ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#FCFC02"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=53
+ |Título=De vuelta al duelo (Jaden Vs. Astro Fenix)
+ |AltTítulo=Back to Duel (運命のはじまり!新入生エド·フェニックス) 
+ |FechadeEmisiónorig=5 de octubre de 2005
+ |ResumenBreve= Es el segundo año de Jaden en la Academia de Duelos y mucho ha cambiado. EL canciller Sheppard se ha ido, dejando al Dr. Crowler y su asistente, Vicerrector Bonaparte, a cargo de la escuela. Jaden se encontraba en su dormitorio, cuando fue desafiado a un duelo por un estudiante, conocido como "AF" Jaden luchó contra el estudiante, que fue enviado por un misterioso adivino y quería que AF que perdiera para poner a prueba las habilidades de Jaden. Jaden ganó y después se enteraron de que AF era una abreviación de Astro Fenix, un duelista Profesional, que se supone es tan bueno como Zane.
+ |LineaColor=FCFC02
+}}
+{{Lista de episodios
+ |EpisodioNúmero=54
+ |Título=Campeón o Chazz-co (Chazz vs Reggie)
+ |AltTítulo=Champion or Chazz-been / (サンダーVSエリート君!メカおジャマキング発進) 
+ |FechadeEmisiónorig=12 de octubre de 2005
+ |ResumenBreve= Con Astro Fénix sin mostrarse por clases, el Dr. Crowler elabora un proyecto para hacer de Chazz Princeton la nueva estrella de La Academia, sin embargo, antes de que eso ocurra, Chazz primero debe vencer a Reginald Van Howell III en un Duelo para que se le permita regresar a Obelisco Azul.
+ |LineaColor=FCFC02
+}}
+{{Lista de episodios
+ |EpisodioNúmero=55
+ |Título=La evolución de Hassleberry (Jaden vs Tyranno Hassleberry)
+ |AltTítulo=A Hassleberry Hounding (ティラノ剣山登場ざうるす!) 
+ |FechadeEmisiónorig=19 de octubre de 2005
+ |ResumenBreve=Crowler manda a Syrus y Jaden a repartir nuevos Discos de Duelo para estudiantes que han perdido los suyos como castigo por quedarse dormidos en clase. Syrus le explica a Jaden que los Discos les han sido arrebatados a todos, incluyéndose, por un abusador que los reta a Duelo y cuando gana, se los queda como trofeos. Jaden decide enfrentar entonces a Tyranno Hassleberry, del Dormitorio Ra Amarillo y el responsable, para recuperar los Discos robados.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=56
+ |Título=Syrus sin miedo (Syrus vs Missy)
+ |AltTítulo=Sad but Truesdale (翔VS昆虫少女! インセクト·プリンセス) 
+ |FechadeEmisiónorig=26 de octubre de 2005
+ |ResumenBreve=A Syrus Truesdale se le ofrece una promoción al dormitorio Ra Amarillo si es capaz de vencer a un estudiante de Obelisco Azul llamado Missy. Sin embargo, esto tiene que ver con el plan de demolición del dormitorio Slifer Rojo del Vicerrector Bonaparte.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=57
+ |Título=El Demonio(Zane vs Astro Fenix)
+ |AltTítulo=The Demon (カイザーVSエド! プロリーグの戦い)
+ |FechadeEmisiónorig=2 de noviembre de 2005
+ |ResumenBreve=Zane Truesdale sostiene un Duelo con Astro Fénix en la Liga Profesional, mientras la Academia de Duelos mira la pelea en televisión. Astro revela su Baraja – una de “Héroes Elementales”, justo como la de Jaden Yuki.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=58
+ |Título=Una nueva clase de héroes parte 1 (Jaden vs Astro Fenix)
+ |AltTítulo=A New Breed of Hero (Part 1 of 2) (VSエド(前編)Eヒーロー対Eヒーロー) 
+ |FechadeEmisiónorig=9 de noviembre de 2005
+ |ResumenBreve=Astro Fénix reta a Jaden Yuki a una revancha, para probar la fuerza de su Baraja de Héroes en batalla, revelando Astro nuevos monstruos “Héroes” en su Baraja, conocidos como los “Héroes del Destino”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=59
+ |Título=Una nueva clase de héroes parte 2 (Jaden vs Astro Fenix)
+ |AltTítulo=A New Breed of Hero (Part 2 of 2) (VSエド(後編)運命のDヒーロー)  
+ |FechadeEmisiónorig=16 de noviembre de 2005
+ |ResumenBreve=Jaden Yuki continua su Duelo con Astro Fénix, mientras Astro continúa revelando sus “Héroes del Destino”, finalmente ganando con el “Héroe del Destino – Amo del Miedo”
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=60
+ |Título=Cantando por un Duelo (Alexis vs Atticus)
+ |AltTítulo=Pop Goes the Duel (明日香VS吹雪!兄妹アイドルへの道)  
+ |FechadeEmisiónorig=23 de noviembre de 2005
+ |ResumenBreve=Luego de que Jaden Yuki pierde ante Astro Fénix, el afirma que no puede ver sus cartas y que están en blanco. Sin embargo parece que solo Jaden ve así su Baraja pues todos los demás no ven nada malo con sus cartas. Todos, se preocupan por él, en especial Syrus Truesdale. Más tarde, Atticus Rhodes sostiene un Duelo con su hermana porque él y el Dr. Crowler quieren que se conviertan en un dúo cantante llamado “El Carnal y su Sisterna”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=61
+ |Título=He visto la luz (Chazz vs Sartorius)
+ |AltTítulo=I've Seen the Light (斎王登場! 運命のタロットデッキ) 
+ |FechadeEmisiónorig=30 de noviembre de 2005
+ |ResumenBreve=El representante de Astro Fénix, Sartorius, llega a la Academia de Duelos. Él le dice al Dr. Crowler y al Vicerrector Bonaparte que desea explorar la Academia por sí mismo, pues quiere encontrar estudiantes que el considere dignos de unirse a la Liga Profesional bajo su tutela. Conoce a Chazz Princeton en el bosque, y comienza un Duelo con él, prometiéndole dejarlo convertirse en un Duelista Profesional si gana. Sartorius no porta un Disco de Duelo y usa una mesa en lugar de ello. Sartorius exitosamente derrota a Chazz y en el proceso juega con su mente. Lo persuade para que se le una, prometiéndole que podrá usar su poder para derrotar a Jaden. De esta forma, a Chazz le lavan el cerebro y se convierte en el primer recluta de Sartorius en la “Sociedad de la Luz”
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=62
+ |Título=Un gran destino (Jaden vs Robot de la luz)
+ |AltTítulo=A Greater Porpoise (新Eヒーロー! ネオス) 
+ |FechadeEmisiónorig=7 de diciembre de 2005
+ |ResumenBreve=Mientras navega por el mar, Jaden es de pronto transportado al Neo Espacio, donde aprende que es su destino derrotar a la Luz de Destrucción y gana nuevos compañeros, los Neo-Espaciales.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=63
+ |Título=Curri-ocidades (Hassleberrie vs Sartyr)
+ |AltTítulo=Curry Worries (剣山VSカレーの魔人! スパイシーデュエル) 
+ |FechadeEmisiónorig=14 de diciembre de 2005
+ |ResumenBreve=El líder del dormitorio Ra Amarillo, Sartyr, empieza una vendetta para llevar de vuelta a sus estudiantes al dormitorio. Syrus, Hassleberry y Bastion han estado viviendo en el dormitorio Slifer Rojo. Sartyr pelea con Hassleberry con la promesa de que si él gana ellos regresarán al dormitorio Ra. Al principio parece ser un Duelista débil, pero pronto reduce los Puntos de Vida de Hassleberry a 100 en un simple turno. Hassleberry finalmente lo derrota y los estudiantes acceden a volver al dormitorio Amarillo de vez en cuando si Sartyr continua cocinando curry.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=64
+ |Título=Concurso de camaradería (Syrus vs Hassleberrie)
+ |AltTítulo=Camaraderie Contest (翔VS剣山! 兄貴への熱き想いデュエル) 
+ |FechadeEmisiónorig=21 de diciembre de 2005
+ |ResumenBreve=La rivalidad entre Syrus y Hassleberry se intensifica, incluso con Jaden ausente. Con la sugerencia de Alexis, ambos deciden demostrar quién es el verdadero “mejor amigo” de Jaden mediante un Duelo. Jaden por su parte esta cerca de volver, y escala el risco en el lado opuesto de la isla. Hassleberry pudo terminar el Duelo en un empate, pero elige no hacerlo luego de darse cuenta de que Syrus en verdad tiene una relación más fuerte con Jaden que la que él tiene.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=65
+ |Título=Sin dolor no hay duelo (Zane vs Mad Dog)
+ |AltTítulo=No Pain, No Game (ヘルカイザー亮!キメラテック·オーバー·ドラゴン) 
+ |FechadeEmisiónorig=28 de diciembre de 2005
+ |ResumenBreve=A Zane se le ofrece una oportunidad para recuperar su Gloria en el circuito Profesional de Duelos a través de Duelos Clandestinos y sufre un drástico cambio en su corazón acerca de los Duelos, abandonando el respeto para obtener la victoria.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=66
+ |Título=Perdiendo la cabeza
+ |AltTítulo=Going Bananas (十代初夢デュエル!) 
+ |FechadeEmisiónorig=4 de enero de 2006
+ |ResumenBreve=Jaden continua su camino de regreso a la Academia de Duelos, y se reúne con Wheeler el mono, y tiene una serie de alucinaciones y recuerdos.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=67
+ |Título=Duelo de Bienvenida parte 1 (Jaden vs Astro Fenix)
+ |AltTítulo=Homecoming Duel (Part 1 of 2) (VSエド(前編)新たな力! アクア·ネオス) 
+ |FechadeEmisiónorig=11 de enero de 2006
+ |ResumenBreve=Con la misión de reunir a más estudiantes para la Sociedad de la Luz, Astro Fénix regresa a la Academia de Duelos para retar a Alexis, solo para acabar peleando por el destino del Dormitorio Slifer Rojo. Sin embargo, Jaden hace una aparición repentina y un regreso sorpresivo, y voluntariamente se ofrece a ser el oponente de Astro en lugar de Alexis.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=68
+ |Título=Duelo de Bienvenida parte 2 (Jaden vs Astro Fenix)
+ |AltTítulo=Homecoming Duel (Part 2 of 2) (VSエド(後編)炎のフレア·ネオス) 
+ |FechadeEmisiónorig=18 de enero de 2006
+ |ResumenBreve=La batalla parece cerca de terminar mientras Jaden coloca sus Neo-Espaciales contra los Héroes del Destino de Astro. Al final, solo una batalla uno a uno entre el “Héroe Elemental Neos Llameante” y el “Héroe del Destino – Dogma” puede determinar al ganador de su duelo.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=69
+ |Título=La demolición del dormitorio (Dr. Crowler vs Jean-Louis Bonaparte)
+ |AltTítulo=Dormitory Demolition (クロノスVSナポレオン! トイソルジャーの行進) 
+ |FechadeEmisiónorig=25 de enero de 2006
+ |ResumenBreve=Determinado a destruir al Dormitorio Rojo, el Vicerrector Bonaparte decide manejar el asunto personalmente, pero el Dr. Crowler se le opone, y los dos pelean para determinar el último destino del dormitorio.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=70
+ |Título=¿Obelisco Blanco? (Chazz vs Alexis)
+ |AltTítulo=Obelisk White? (明日香VS万丈目 ホワイトサンダー!) 
+ |FechadeEmisiónorig=1 de febrero de 2006
+ |ResumenBreve=Ante su perdida contra Sartorius, Chazz se convierte en discípulo de la Sociedad de la Luz y transforma a todos en Obelisco Azul al mismo grupo, todos menos Alexis.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=71
+ |Título=Compañeros de Duelo (Jaden vs Lorenzo)
+ |AltTítulo=DuelFellas (VSゲームチャンプ! 巨大戦艦テトラン発進) 
+ |FechadeEmisiónorig=8 de febrero de 2006
+ |ResumenBreve=Jaden es puesto a pelear contra Lorenzo, un miembro de la Sociedad de la Luz y campeón de los “juegos de disparos”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=72
+ |Título=Jugando con un mazo Incompleto (Jaden vs Equis)
+ |AltTítulo=Not Playing with a Full Deck (デッキ破壊を破壊せよ) 
+ |FechadeEmisiónorig=15 de febrero de 2006
+ |ResumenBreve=Jaden se encuentra atrapado ante uno de sus oponentes más fuertes cuando se enfrenta contra Howard X Miller y su Mazo de Descarte. Luego gana con tan solo 5 cartas.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=73
+ |Título=Fuente de Poder (Sartorius vs Hassleberrie)
+ |AltTítulo=Source of Strength (剣山VS斎王!恐竜DNΑだドン) 
+ |FechadeEmisiónorig=22 de febrero de 2006
+ |ResumenBreve=Sartorius se entera de que Astro se ha vuelto en su contra después de que perdiera contra Jaden, así que busca a nuevos miembros para convertirlos a la Sociedad de la Luz, y decide empezar con Tyranno Hassleberry.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=74
+ |Título=Felices por nunca jamás (Jaden vs Princesa Rosa)
+ |AltTítulo=Happily Never After (黄泉ガエル!イキカエル!デスガエル!) 
+ |FechadeEmisiónorig=1 de marzo de 2006
+ |ResumenBreve=Mientras la Academia de Duelos planea una próxima excursión, la Sociedad de la Luz gana fuerza rápidamente, con la mayoría de los estudiantes de Obelisco Azul y Ra Amarillo siendo convertidos. Jaden se enfrenta contra la Princesa Rosa, un refuerzo enviado por Sartorius, y el vencedor elegirá el destino para la excursión.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=75
+ |Título=Atrapados en la Tormenta parte 1 (Escarcha y Trueno vs Syrus y Hassleberry)
+ |AltTítulo=Taken by Storm (Part 1 of 2) (修学旅行タッグデュエル) 
+ |FechadeEmisiónorig=8 de marzo de 2006
+ |ResumenBreve=Los estudiantes de la Academia de Duelos llegan a Ciudad Domino para excursionar. Jaden, Syrus y Hassleberry conocen a Solomon Muto, abuelo de Yugi, y junto a él visitan todos los lugares clave de la ciudad donde se libraron grandes batallas de Yugi. Más tarde Solomon es secuestrado y se separan para buscarlo. Syrus y Hassleberry se encuentran con Chazz quien les dice dónde encontrar a los secuestradores, en la cima del edificio donde Yugi y Kaiba lucharon con Lumis y Umbra. Al llegar, conocen a Trueno y Escarcha, los secuestradores y empieza un Duelo en Equipo entre ellos.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=76
+ |Título=Atrapados en la Tormenta parte 2 (Escarcha y Trueno vs Syrus y Hassleberry)
+ |AltTítulo=Taken by Storm (Part 2 of 2) (究極合体!レックスユニオン) 
+ |FechadeEmisiónorig=15 de marzo de 2006
+ |ResumenBreve=Sartorius va a Kaiba Corp. y le pide a Seto Kaiba que le permita utilizar Kaibalandia, pero Kaiba desconfía y pide que lo vigilen. Jaden localiza a Solomon u también se reúne con Astro. Mientras tanto, en el Duelo, Trueno y Escarcha empiezan a llevarse cada vez peor mientras Syrus y Hassleberry cada vez actúan mejor como equipo. Syrus hace un movimiento que les daría la victoria, pero Escarcha usa “Espejo de la Dualidad”, eliminando así a Syrus, Hassleberry y a su propio compañero para poder ganar. Entonces encuentra a Jaden y desea llevarlo a ver a Sarina, a quien Astro reconoce como la hermana menor de Sartorius.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=77
+ |Título=J-Dawg y T-Bone (Jaden vs T-Bone)
+ |AltTítulo=J-Dawg and T-Bone (恐怖の四帝! デミウルゴス·EMΑ) 
+ |FechadeEmisiónorig=22 de marzo de 2006
+ |ResumenBreve=Jaden se enfrenta contra T-Bone, el último de los refuerzos de Sarina.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=78
+ |Título=Espejo, Espejo parte 1 (Jaden y Astro vs Sarina)
+ |AltTítulo=Mirror, Mirror (Part 1 of 2) (最強タッグ!? 十代&エド(前編)) 
+ |FechadeEmisiónorig=29 de marzo de 2006
+ |ResumenBreve=Luego de enterarse de que Syrus y Hassleberry están atrapados en un universo virtual, Jaden y Astro entran a ese mundo por sí mismos y confrontan a Sarina, quien, actuando bajo las órdenes de Sartorius, desafía al dúo a un Duelo, en un intento por descubrir quién es el verdadero Duelista Elegido que su hermano debe derrotar.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=79
+ |Título=Espejo, Espejo parte 2 (Jaden y Astro vs Sarina)
+ |AltTítulo=Mirror, Mirror (Part 2 of 2) (最強タッグ!? 十代&エド(後編))  
+ |FechadeEmisiónorig=5 de abril de 2006
+ |ResumenBreve=Jaden y Astro continúan su Duelo contra las 2 Sarinas, y finalmente usan trabajo en equipo para sobreponerse al monstruo más fuerte de Sarina, el “Creador Oscuro”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=80
+ |Título=Que Muñeca (Jaden vs Alice)
+ |AltTítulo=What a Doll! (絶望の国のアリス) 
+ |FechadeEmisiónorig=12 de abril de 2006
+ |ResumenBreve=Luego de que un Duelista frustrado considera a su carta de la “Muñeca Quimera” inútil y se deshace de ella, su espíritu se refugia en el cuerpo de una muñeca llamada Alice, que busca eliminar a quienes considere inútiles.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=81
+ |Título=Hagamos un Duelo (Jaden vs Bob Banter)
+ |AltTítulo=Let's Make a Duel! (クイズデュエル!? VSナゾラー·パネル9) 
+ |FechadeEmisiónorig=19 de abril de 2006
+ |ResumenBreve=Un miembro de la Sociedad de la Luz, Bob Banter, quien está enamorado de Alexis, sostiene un Duelo con Jaden para demostrarse a sí mismo que es digno de ser el novio de Alexis.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=82
+ |Título=Una gran personalidad (Bastion vs Chazz)
+ |AltTítulo=Magnetic Personality (三沢VS万丈目 アサルト·キャノン·ビートル) 
+ |FechadeEmisiónorig=26 de abril de 2006
+ |ResumenBreve=Bastion está molesto con el hecho de que la Sociedad de la Luz no trate de reclutarlo, siendo que están detrás de los mejores Duelistas de la Academia de Duelos, y para ser reconocido, el los busca para luchar con Sartorius. Sin embargo, Sartorius lo hace pelear contra Chazz en su lugar, con la condición de que Bastion se una a la Sociedad de la Luz si él pierde.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=83
+ |Título=Educando al Maestro (Zane vs Rector Sheppard)
+ |AltTítulo=Schooling the Master (ヘルカイザー亮VSマスター鮫島) 
+ |FechadeEmisiónorig=3 de mayo de 2006
+ |ResumenBreve=Debido a su recién descubierta crueldad y odio hacia otros, Zane es confrontado por el Rector Sheppard, quien lo desafía a Duelo con la esperanza de recuperar a la persona que su antiguo estudiante solía ser.
+ |LineaColor=FCFC02
+}}
+|}
+
+=== Torneo GX ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#FCFC02"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=84
+ |Título=La siguiente generación (Sartorius vs Príncipe Ojin)
+ |AltTítulo=Generation Next (ジェネックス開幕! 目指せー番!) 
+ |FechadeEmisiónorig=10 de mayo de 2006
+ |ResumenBreve=El Rector Sheppard regresa a la Academia de Duelos y anuncia el inicio del Torneo GX, que contará con Duelistas de todo el mundo. Sartorius usa la oportunidad para poner en marcha sus propios planes.
+ |LineaColor=FCFC02
+}}
+{{Lista de episodios
+ |EpisodioNúmero=85
+ |Título=Ra, Ra, Ra! (Jaden vs Franz)
+ |AltTítulo=Rah, Rah, Rah! (神のカード「ラーの翼神竜」を操る男!?) 
+ |FechadeEmisiónorig=17 de mayo de 2006
+ |ResumenBreve=Con el Torneo GX en marcha, un prototipo de prueba del dios egipcio Ra Amarillo es robada, por lo que Pegasus y Chumley vuelven a la academia para detener al ladrón pero Jaden se bate a un duelo con el ladrón. 
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=86
+ |Título=El arte del duelo (Jaden vs Orlando)
+ |AltTítulo=The Art of the Duel (デュエルの花道) 
+ |FechadeEmisiónorig=24 de mayo de 2006
+ |ResumenBreve=Jaden tiene un Duelo con Orlando como parte del Torneo GX. Orlando es un actor del estado de Kabuki y un Duelista de Disfraces Profesional.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=87
+ |Título=Cegado por la luz parte 1 (Jaden vs Chazz)
+ |AltTítulo=Blinded by the Light (Part 1 of 2) ((がんばれ! おジャマトリオ(前編)) 
+ |FechadeEmisiónorig=31 de mayo de 2006
+ |ResumenBreve=En un intento por liberar la mente de Chazz de la influencia de la Sociedad de la Luz, Jaden incluye a los hermanos Ojama en su Baraja mientras desafía a Chazz a tener otro Duelo.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=88
+ |Título=Cegado por la luz parte 2 (Jaden vs Chazz)
+ |AltTítulo=Blinded by the Light (Part 2 of 2) (がんばれ! おジャマトリオ(後編)) 
+ |FechadeEmisiónorig=7 de junio de 2006
+ |ResumenBreve=Jaden continua su Duelo con Chazz, definitivamente liberándolo de la influencia de Sartorius y dejándolo recuperar su mente y el control de sus cartas “Ojama”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=89
+ |Título=La oscuridad interior (Velo Nocturno vs Zane)
+ |AltTítulo=The Darkness Within (ヘルカイザーVSダークネス吹雪) 
+ |FechadeEmisiónorig=14 de junio de 2006
+ |ResumenBreve=El Rector Sheppard le pide a Atticus enfrentar a Zane en un Duelo, con la esperanza de que el antiguo Velo Nocturno pueda convencer a Zane de abandonar el camino de la crueldad y el odio.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=90
+ |Título=Duelo profesional (Jasmine y Mindy vs Maitre´ D) (Alexis vs Maitre´ D)
+ |AltTítulo=Pro-Dueling (アカデミアのプライド) 
+ |FechadeEmisiónorig=21 de junio de 2006
+ |ResumenBreve=Con el Torneo GX a su máximo, los Duelistas Profesionales invitados están eliminando a una gran parte de los estudiantes de la Academia de Duelos del torneo. El Dr. Crowler busca refuerzos en los mejores estudiantes del pasado, y Alexis Rhodes pelea con Maitre´ D, quien está clasificada como la octava mejor Duelista en la Liga Profesional.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=91
+ |Título=No le temas a la Muerte (Jaden vs Grimley)
+ |AltTítulo=Don't Fear the Reaper (ワンターンキルの死神) 
+ |FechadeEmisiónorig=28 de junio de 2006
+ |ResumenBreve=Lucien Grimley, un estudiante de la Academia del Norte, posee una Baraja que es virtualmente invencible, debido a que ha hecho un trato con “La Parca”, pero Jaden le enseña a Lucien el valor de creer en una Baraja y en la de uno mismo.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=92
+ |Título=Duelo por un empleo (Crowler y Bonaparte vs Pegasus)
+ |AltTítulo=Duel For Hire (トライアングル·デュエル) 
+ |FechadeEmisiónorig=5 de julio de 2006
+ |ResumenBreve=Semillas de miedo y duda son planteadas cuando el Dr. Crowler y el Vicerrector Bonaparte son despedidos por el Rector Sheppard, debido a su atentado para tomar control de la Academia de Duelos. Cuando Maximillion Pegasus regresa a la isla, el dúo decide relocalizarse en Ilusiones Industriales. Pegasus le promete a ambos, Crowler y Bonaparte, trabajo en su compañía, pero solo si pueden vencerlo a él en un Duelo.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=93
+ |Título=Corazón de hielo parte 1 (Jaden vs Alexis)
+ |AltTítulo=Heart of Ice (Part 1 of 2) (白夜の決闘!十代VS明日香(前編)) 
+ |FechadeEmisiónorig=12 de julio de 2006
+ |ResumenBreve=El lado bueno de Sartorius le entrega a Jaden y Astro las dos llaves que activan el satélite SORA y les pide cuidarlas y no devolvérselas a él. Su lado malo entonces, poseído por la Luz de Destrucción, le pide a Alexis recuperar la llave de Jaden.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=94
+ |Título=Corazón de hielo parte 2 (Jaden vs Alexis)
+ |AltTítulo=Heart of Ice (Part 2 of 2) (白夜龍!十代VS明日香(後編)) 
+ |FechadeEmisiónorig=19 de julio de 2006
+ |ResumenBreve=Jaden continúa su duelo para poder liberar a su amiga del control de Sartorius sobre ella.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=95
+ |Título=Amor y odio (Zane vs Syrus)
+ |AltTítulo=Tough Love (仁義なき兄弟デュエル 亮VS翔) 
+ |FechadeEmisiónorig=26 de julio de 2006
+ |ResumenBreve=Syrus y Zane sostienen un duelo con la esperanza si Syrus gana podría recupera a su hermano pero por desgracia eso no logra y Syrus pierde. 
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=96
+ |Título=Todo es relativo (Jaden vs Einsestein)
+ |AltTítulo=It's All Relative (相対性フィールド!十代VS天才博士) 
+ |FechadeEmisiónorig=2 de agosto de 2006
+ |ResumenBreve=Jaden se enfrenta con el DR. Eisenstein, otro de los refuerzos de Sartorius, en un Duelo que prueba su suerte contra la lógica de su oponente.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=97
+ |Título=La luz oscura (El D vs Dr.Coleccionador)
+ |AltTítulo=The Dark Light (登場!謎の世界チャンプ!) 
+ |FechadeEmisiónorig=9 de agosto de 2006
+ |ResumenBreve=Astro continúa su casería por la “Carta del Destino Definitiva” mencionada por Sarina, mientras Jaden y compañía miran la última pelea de la Liga Profesional presentando al misterioso campeón conocido como El D, pero nadie sabe que ambos eventos están ligados a La Luz de Destrucción.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=98
+ |Título=Destino máximo (Astro vs El D)
+ |AltTítulo=Ultimate Destiny (ついに発動!究極のDのカード) 
+ |FechadeEmisiónorig=16 de agosto de 2006
+ |ResumenBreve=Astro descubre la horrible verdad acerca de la desaparición de su padre y el paradero de la “Carta del Destino Definitiva”: el culpable detrás de ambos incidentes es su actual guardián, El D, quien es otro títere poseído por La Luz de Destrucción.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=99
+ |Título=El factor llave (Jaden vs Principe Ojin)
+ |AltTítulo=The Key Factor (十代VSレーザー衛星の恐怖) 
+ |FechadeEmisiónorig=23 de agosto de 2006
+ |ResumenBreve=La Luz de Destrucción pone en marcha su plan para destruir la Tierra, pero descubre que su sirviente, Sartorius, le ha dado las llaves del satélite del Príncipe Ojin a Jaden y Astro. Ahora, si la luz quiere completar su misión, primero debe derrotar a ambos Duelistas en un Duelo, y empieza con Jaden.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=100
+ |Título=El Fenix toca tierra parte 1 (Astro vs Sartorius)
+ |AltTítulo=The Phoenix Has Arrived (Part 1 of 2) (究極のアルカナ「ザ·ワールド」) 
+ |FechadeEmisiónorig=30 de agosto de 2006
+ |ResumenBreve=Luego de derrotar a El D y escapar con el “Héroe del Destino – Plasma” y su vida, Astro llega al dormitorio de la Sociedad de la Luz, con la intención de salvar a Sartorius de La Luz, retándola a un duelo.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=101
+ |Título=El Fenix toca tierra parte 2 (Astro vs Sartorius)
+ |AltTítulo=The Phoenix Has Arrived (Part 2 of 2) (エド, 必殺の一撃!「ブルーD」) 
+ |FechadeEmisiónorig=6 de septiembre de 2006
+ |ResumenBreve=El Sartorius bueno regresa e intenta auxiliar a Astro para derrotar al Sartorius poseído por la Luz de Destrucción. Sin embargo, incluso con el “Héroe del Destino – Plasma” de su lado, Astro finalmente pierde gracias a uno de los monstruos más poderosos de Sartorius, “Fuerza Arcana Extra – El Señor de la Luz”.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=102
+ |Título=Las manos de la justicia parte 1 (Jaden vs Sartorius)
+ |AltTítulo=The Hands of Justice (Part 1 of 2) (光の波動VSネオ·スペーシアン) 
+ |FechadeEmisiónorig=13 de septiembre de 2006
+ |ResumenBreve=Con Astro derrotado y las llaves del satélite reclamadas por la Luz de Destrucción, Jaden desafía al Sartorius Corrupto a un Duelo, con el destino del mundo esperando al resultado.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=103
+ |Título=Las manos de la justicia parte 2 (Jaden vs Sartorius)
+ |AltTítulo=The Hands of Justice (Part 2 of 2) (十代ピンチ!フィールド魔法「光の結界」) 
+ |FechadeEmisiónorig=20 de septiembre de 2006
+ |ResumenBreve=Jaden continúa su Duelo con Sartorius, con el destino del mundo dependiendo del resultado, mientras el encuentro final del Torneo GX inicia en las afueras de la escuela.
+ |LineaColor=FCFC02
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=104
+ |Título=El futuro cambia (Jaden vs Sartorius)
+ |AltTítulo=Future Changes (勝利の行方は?!十代VS斎王) 
+ |FechadeEmisiónorig=27 de septiembre de 2006
+ |ResumenBreve=El Torneo GX finalmente llega a su fin y Jaden termina su conflicto con La Luz de Destrucción.
+ |LineaColor=FCFC02
+}}
+|}
+
+== Tercera temporada ==
+
+=== Duelos de Supervivencia ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#CCCCFF"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=105
+ |Título=La Tercera es la Vencida
+ |AltTítulo=Third Time's A Charm / (新学期スタート!波乱の予感) 
+ |FechadeEmisiónorig=4 de octubre de 2006
+ |ResumenBreve=Jaden recuerda los eventos de los pasados dos años. Chazz vuelve al dormitorio rojo. Crowler y Napoleón engañan a Shepard para que lo recontrate y aparece una nueva integrante Blair.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=106
+ |Título=Una Joya de Duelo-1a Parte (Jaden vs Jesse)
+ |AltTítulo=A Jewel of A Duel: Part 1 (十代と宝玉獣デッキのヨハン) 
+ |FechadeEmisiónorig=11 de octubre de 2006
+ |ResumenBreve=Jaden inicia un Duelo con el campeón extranjero Jesse Anderson bajo la influencia del Profesor Viper.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=107
+ |Título=Una Joya de Duelo-2a Parte (Jaden vs Jesse)
+ |AltTítulo=A Jewel of A Duel: Part 2 / (ネオ・スペーシアンVS宝玉獣) 
+ |FechadeEmisiónorig=18 de octubre de 2006
+ |ResumenBreve=Jaden continúa su Duelo con Jesse mientras los motivos del Profesor Viper empiezan a presentarse por sí mismos.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=108
+ |Título=Colgando con Axel-1a Parte (Jaden vs Axel)
+ |AltTítulo=Hanging with Axel: Part 1 / (プロフェッサー・コブラの刺客) 
+ |FechadeEmisiónorig=1 de noviembre de 2006
+ |ResumenBreve=Axel Brodie es enviado a pelear con Jaden por el Profesor Viper, con Jaden aceptando para poder salvar a Syrus.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=109
+ |Título=Colgando con Axel-2da Parte (Jaden vs Axel)
+ |AltTítulo=Hanging with Axel: Part 2 / (十代と炎のオブライエン) 
+ |FechadeEmisiónorig=8 de noviembre de 2006
+ |ResumenBreve=Jaden continúa su Duelo con Axel y algo del misterioso pasado de este último es revelado.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=110
+ |Título=Instinto Primitivo (Hassleberry vs Jim)
+ |AltTítulo=Primal Instinct / (ティラノ剣山と化石竜のジム) 
+ |FechadeEmisiónorig=15 de noviembre de 2006
+ |ResumenBreve=El grupo de Jaden se une con Jim Crocodile Cook para investigar misteriosas lecturas de energía en el bosque. Estas terminan afectando a Hassleberry, y él termina teniendo un Duelo con Jim.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=111
+ |Título=Cabeza en las Nubes-1a Parte (Chazz vs Adrian)
+ |AltTítulo=Head in the Clouds: Part 1/ (万丈目と雲デッキのアモン) 
+ |FechadeEmisiónorig=22 de noviembre de 2006
+ |ResumenBreve=El Profesor Viper empieza a sospechar de Adrian Gecko, y este último termina sosteniendo un Duelo con Chazz, pero es parte del plan de Viper para eliminarlo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=112
+ |Título=Cabeza en las Nubes-2da Parte (Chazz vs Adrian)
+ |AltTítulo=Head in the Clouds: Part 2 / (サンダーVSアイ・オブ・ザ・タイフーン)  
+ |FechadeEmisiónorig=29 de noviembre de 2006
+ |ResumenBreve=Adrian sigue su Duelo con Chazz, y exitosamente sirve en las aspiraciones del Profesor Viper de incapacitarlo en el proceso.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=113
+ |Título=Ganar el Duelo del Sr. Stein-1a Parte (Jaden vs Sr. Stein)
+ |AltTítulo=Win Mr. Stein's Duel, Part 1 / (十代ｖｓ裏切りの E ヒーロー)   
+ |FechadeEmisiónorig=6 de diciembre de 2006
+ |ResumenBreve=Mientras su grupo exploraba los cuarteles del Profesor Viper, Jaden es forzado a un Duelo con el Sr. Stein, quien insiste en que Jaden está lentamente destruyendo las aspiraciones de los otros estudiantes.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=114
+ |Título=Ganar el Duelo del Sr. Stein-2da Parte (Jaden vs Sr. Stein)
+ |AltTítulo=Win Mr. Stein's Duel, Part 2 / (絶体絶命！傷だらけのヒーロー)   
+ |FechadeEmisiónorig=13 de diciembre de 2006
+ |ResumenBreve=Jaden sigue su Duelo con el Sr. Stein, y el último revela más de sus motivos e historia pasada.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=115
+ |Título=Trampero Enredoso-1a Parte (Jesse vs Trampero)
+ |AltTítulo=Trapper Keeper, Part 1 / (精霊狩りのギース)  
+ |FechadeEmisiónorig=20 de diciembre de 2006
+ |ResumenBreve=Mientras Jaden se recupera de su Duelo con el Sr. Stein, Jesse es emboscado por el Trampero, quien aprisiona al espíritu del “Bestia de Cristal Pegaso Safiro” de Jesse.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=116
+ |Título=Trampero Enredoso-2da Parte (Jesse vs Trampero)
+ |AltTítulo=Trapper Keeper, Part 2 / (宝玉獣ｖｓ地獄の番犬)   
+ |FechadeEmisiónorig=27 de diciembre de 2006
+ |ResumenBreve=Jesse continúa su Duelo con el Trampero y el último resulta usar más tácticas tramposas.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=117
+ |Título=Una Serpiente en la Hierba-1a Parte (Jaden vs Viper)
+ |AltTítulo=A Snake in the Grass, Part 1 / (決戦!十代VSプロフェッサー・コブラ)
+ |FechadeEmisiónorig=3 de enero de 2007
+ |ResumenBreve=Adrian confronta al Profesor Viper, pero éste lo deja al cuidado de un demonio mientras él se va para tener un Duelo con Jaden.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=118
+ |Título=Una Serpiente en la Hierba-2da Parte (Jaden vss Viper)
+ |AltTítulo=A Snake in the Grass, Part 2 / (恐怖!毒蛇王ヴェノミノン)
+ |FechadeEmisiónorig=10 de enero de 2007
+ |ResumenBreve=Jaden continúa su Duelo con el Profesor Viper. A pesar de las constantes destrucciones de “Vennominon, el Rey de las Serpientes Venenosas”, él continuamente lo revive.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=119
+ |Título=Una Serpiente en la Hierba-3.ª Parte (Jaden vs Viper)
+ |AltTítulo=A Snake in the Grass, Part 3 / (トリプルコンタクト融合!マグマ・ネオス) 
+ |FechadeEmisiónorig=17 de enero de 2007
+ |ResumenBreve=Jaden vence a Viper, pero el ente que lo manipula transporta a la Academia de Duelos a otro mundo.
+ |LineaColor=00CED1
+}}
+|}
+
+=== La Búsqueda por el Dragón Arcoíris ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#CCCCFF"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=120
+ |Título=Detencion Inter-Dimensional
+ |AltTítulo=Inter-Dimension Detention (異世界での戦い!宝玉獣VSハーピイレディ) 
+ |FechadeEmisiónorig=24 de enero de 2007
+ |ResumenBreve=La Academia de Duelos intenta adaptarse al mundo al que han entrado, mientras el demonio adopta a Marcel Bonaparte como su Nuevo huésped.
+ |LineaColor=00CED1
+}}
+{{Lista de episodios
+ |EpisodioNúmero=121
+ |Título=Duelo Sub-Desértico (Jesse vs The Rock Spirit)
+ |AltTítulo=Sub-Desert Duel (砂漠のサバイバル! ヨハンVS蟻地獄) 
+ |FechadeEmisiónorig=31 de enero de 2007
+ |ResumenBreve=La condición de Blair empeora, y un grupo es enviado a conseguir medicina para ella de un submarino cercano. Adrian hace un trato con el demonio.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=122
+ |Título=La Noche de los Duelistas Vivientes (Chazz vs Duelistas Zombies)
+ |AltTítulo=Night of the Living Duelist (デュエルアカデミア危機!ゾンビ生徒の恐怖!) 
+ |FechadeEmisiónorig=7 de febrero de 2007
+ |ResumenBreve=Jaden intenta volver a la Academia de Duelos, mientras el demonio gana seguidores para asaltar la bodega de comida.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=123
+ |Título=Duelos en la Escuela Zombi (Jaden vs La Señorita Fontaine)
+ |AltTítulo=School Ghoul Duels (レイ救出作戦!E・ヒーローVS堕天使ナース) 
+ |FechadeEmisiónorig=14 de febrero de 2007
+ |ResumenBreve=Jaden regresa a la Academia de Duelos, pero es detenido en su camino a darle la medicina a Blair por una Profesora Fontaine Zombi.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=124
+ |Título=Juego Triple-1a Parte (Jesse - Jim - Axel vs Los Duelistas Enmascarados)
+ |AltTítulo=Triple Play, Part 1 (学園分裂!腹ペコデュエル) 
+ |FechadeEmisiónorig=21 de febrero de 2007
+ |ResumenBreve=Con la bodega de suministros de comida y la estación suplementaria de poder al máximo, Jim Crocodile Cook, Axel Brodie y Jesse Anderson pelean contra los Tres Caballeros Enmascarados de Marcel Bonaparte.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=125
+ |Título=Juego Triple-2da Parte (Jesse - Jim - Axel vs Los Duelistas Enmascarados)
+ |AltTítulo=Triple Play, Part 2(ヨハン・ジム・オブライエンVS仮面の三騎士) 
+ |FechadeEmisiónorig=28 de febrero de 2007
+ |ResumenBreve=Axel se da cuenta de que los Tres Caballeros Enmascarados son simplemente una distracción, y apresura a Jim y Jesse a detener sus Duelos y atentan detener a Marcel de alcanzar su verdadero objetivo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=126
+ |Título=El Regreso de las Bestias Sagradas (Jaden vs Chazz Zombie)
+ |AltTítulo=Return of the Sacred Beasts (十代VS万丈目・竜騎士ダークソード) 
+ |FechadeEmisiónorig=7 de marzo de 2007
+ |ResumenBreve=Marcel se acerca más y más al lugar de descanso de las Bestias Sagradas, mientras Chazz y otros numerosos Zombis Duelistas bloquean el camino de Jaden.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=127
+ |Título=El Sello Sagrado se Rompe (Marcel Bonaparte [Yubel] vs Adrian)
+ |AltTítulo=Breaking of the Sacred Seal (封印を破りし者・マルタン) 
+ |FechadeEmisiónorig=14 de marzo de 2007
+ |ResumenBreve=Jaden sigue adelante, intentando llegar hasta Marcel antes de que libere el sello de las Bestias Sagradas. Adrian Gecko también se opone a Marcel, y los dos tienen un Duelo para ganar el derecho a tomar las cartas de las Bestias Sagradas.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=128
+ |Título=Un Duelo Dimensional (Zane vs Jesse)
+ |AltTítulo=A Dimensional Duel (宝玉獣VSサイバー・エンド・ドラゴン) 
+ |FechadeEmisiónorig=21 de marzo de 2007
+ |ResumenBreve=En la cancha de tenis, Jesse sostiene un Duelo con Zane a través de un portal dimensional, con la intención de abrir lo suficiente el portal para enviar la carta del “Dragón Arcoíris” a la otra dimensión.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=129
+ |Título=Liberando al Dragón-1a Parte (Jaden vs Marcel Bonaparte [Yubel])
+ |AltTítulo=Unleashing the Dragon, Part 1 (三幻魔の脅威!十代VSマルタン) 
+ |FechadeEmisiónorig=28 de marzo de 2007
+ |ResumenBreve=Los Zombis Duelistas intentan detener a Jaden de alcanzar a Marcel antes de que el tiempo límite expire. Los amigos de Jaden limpian el camino por él, y la segunda confrontación de Jaden con las Bestias Sagradas inicia. Mientras, Jesse busca la cápsula que contiene la carta del “Dragón Arcoíris”
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=130
+ |Título=Liberando al Dragón-2da Parte (Jaden y Jesse vs Yubel)
+ |AltTítulo=Unleashing the Dragon, Part 2 (レインボードラゴン覚醒) 
+ |FechadeEmisiónorig=4 de abril de 2007
+ |ResumenBreve=Tras adquirir la carta del “Dragón Arcoíris”, Jesse une fuerzas con Jaden en el intento por derrotar a Marcel, quien durante el Duelo, el ente que lo posee revela su verdadera identidad.
+ |LineaColor=00CED1
+}}
+|}
+
+=== Hacia las Sombras ===
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#CCCCFF"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=131
+ |Título=Todos para Uno
+ |AltTítulo=All for One (エースカード大集合！！開け、次元の扉！) 
+ |FechadeEmisiónorig=11 de abril de 2007
+ |ResumenBreve=Luego de regresar a la Academia de Duelos de la dimensión alterna, todos creen que el conflicto ha terminado. Pero, mientras Jaden llora el abandono de Jesse, otro portal se abre, y Jaden se pone impaciente con volver para intentar encontrar a su amigo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=132
+ |Título=Un Nuevo Orden Mundial
+ |AltTítulo=A New World Order (生死を賭けた決闘) 
+ |FechadeEmisiónorig=18 de abril de 2007
+ |ResumenBreve=Jaden y sus amigos terminan en una dimensión alterna diferente a la de la vez anterior, y Jaden termina encontrándose en un Duelo letal contra un Espíritu de Duelo opresivo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=133
+ |Título=Amigo o Enemigo
+ |AltTítulo=Friend or Fiend (十代VS暗黒界の斥候スカー) 
+ |FechadeEmisiónorig=25 de abril de 2007
+ |ResumenBreve=Para proteger a un pequeño niño, Jaden tiene un Duelo con Scarr y aprende más acerca del estado del mundo al que han entrado en el proceso.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=134
+ |Título=Duelo con el Ejército Oscuro
+ |AltTítulo=Dueling With the Dark Army (十代VS暗黒界の騎士ズール) 
+ |FechadeEmisiónorig=2 de mayo de 2007
+ |ResumenBreve=Jaden busca salvar a la gente de Freed y a Jesse y esto lo hace terminar peleando con Zure, un oficial de alto rango del Ejército del Mundo Oscuro.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=135
+ |Título=Volteando la Página-1a Parte
+ |AltTítulo=Turning the Page, Part 1 (十代VS暗黒界の狂王ブロン) 
+ |FechadeEmisiónorig=9 de mayo de 2007
+ |ResumenBreve=Los amigos de Jaden siguen molestándose con él por su naturaleza impulsiva, y Jaden paga el precio, pues la mayoría de ellos terminan siendo capturados por el Ejército del Mundo Oscuro. Jaden inicia su Duelo con el loco Rey del Mundo Oscuro, Brron, quien declara su intento de sacrificar a los amigos de Jaden para crear “la carta definitiva”
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=136
+ |Título=Volteando la Página-2da Parte
+ |AltTítulo=Turning the Page, Part 2(邪心経典発動！暗黒界の魔神レイン) 
+ |FechadeEmisiónorig=16 de mayo de 2007
+ |ResumenBreve=El Duelo de Jaden con Brron continúa, y el loco Rey sacrifica a los amigos de Jaden uno tras otro para intentar completar “la carta definitiva”. Jaden es invadido por una imparable ira a la vez que sus ojos se tornan amarillos, y brutalmente vence a Brron, al costo de perder el respeto de sus amigos restantes.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=137
+ |Título=El Estado de Syrus
+ |AltTítulo=The State of Syrus (翔の決意！「友情の証」) 
+ |FechadeEmisiónorig=23 de mayo de 2007
+ |ResumenBreve=Syrus deambula, incapaz de encararse a Jeden. Él termina siendo acompañado por Ojama Amarillo, y se encuentra con su hermano, quien le da cierta advertencia indirecta.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=138
+ |Título=La Oscuridad Revelada
+ |AltTítulo=The Darkness Revealed (覇王降臨・死の決闘者たち) 
+ |FechadeEmisiónorig=30 de mayo de 2007
+ |ResumenBreve=Jim y Axel se unen a la resistencia contra las fuerzas de El Rey Supremo, el nuevo tirano de esta dimensión. Intentando atacar su castillo, encuentran a un científico de bajo rango en su lugar, a quien Jim derrota. Ellos entonces se enteran de la verdadera identidad de El Rey Supremo, lo que los deja sorprendidos hasta la médula.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=139
+ |Título=Una Visión Jamás Vista-1a Parte
+ |AltTítulo=A Sight Unseen, Part 1 (ダーク・フュージョン！インフェルノ・ウイング！！) 
+ |FechadeEmisiónorig=6 de junio de 2007
+ |ResumenBreve=Luego de que el ejército de El Rey Supremo destruyera otro pueblo, Jim Crocodile Cook se apresura a enfrentarlo a un Duelo y descubre la verdadera identidad del rey.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=140
+ |Título=Una Visión Jamás Vista-2da Parte
+ |AltTítulo=A Sight Unseen, Part 2 (空前絶後・超融合発動！) 
+ |FechadeEmisiónorig=13 de junio de 2007
+ |ResumenBreve=Jim continúa su Duelo con El Rey Supremo, atentando con salvar a Jaden de la oscuridad interna que se ha adueñado de su corazón.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=141
+ |Título=Lo que Yace por Debajo-1a Parte
+ |AltTítulo=What Lies Beneath, Part 1 (恐怖の覇王！彷徨えるオブライエン) 
+ |FechadeEmisiónorig=20 de junio de 2007
+ |ResumenBreve=Zane y Astro interrogan y derrotan a miembros de las fuerzas de El Rey Supremo, mientras Axel vaga, luchando con su cobardía ante El Rey, y duda de sí mismo severamente.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=142
+ |Título=Lo que Yace por Debajo-2da Parte
+ |AltTítulo=What Lies Beneath, Part 2 (勝ち残る者が正義！覇王ｖｓオブライエン) 
+ |FechadeEmisiónorig=27 de junio de 2007
+ |ResumenBreve=Axel planea un asalto al castillo de El Rey Supremo, y derrota al “Caballero Cráneo” para poder salvar a uno de los últimos aldeanos restantes. Axel es respaldado por Zane y Astro, quienes pelean contra los subordinados de El Rey mientras Axel se dirige a la torre.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=143
+ |Título=Lo que Yace por Debajo-3.ª Parte
+ |AltTítulo=What Lies Beneath, Part 3 (ヴォルカニック･デビルｖｓ最凶のイービル・ヒーロー) 
+ |FechadeEmisiónorig=4 de julio de 2007
+ |ResumenBreve=Axel empata con El Rey Supremo y es capaz de liberar a Jaden al costo de su propia vida.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=144
+ |Título=El Ritual Prohibido-1a Parte
+ |AltTítulo=The Forbidden Ritual, Part 1 (発動！究極封印解放儀式術) 
+ |FechadeEmisiónorig=11 de julio de 2007
+ |ResumenBreve=Mientras Jaden se recupera, su pequeño grupo de compañeros restantes siguen adelante. Adrian se muestra tras una larga ausencia e intenta sacrificar a su amiga de la infancia, Echo, para liberar el espíritu de Exodia. Astro se le opone.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=145
+ |Título=El Ritual Prohibido-2da Parte
+ |AltTítulo=The Forbidden Ritual, Part 2 (究極封印神エクゾディオス召喚！) 
+ |FechadeEmisiónorig=18 de julio de 2007
+ |ResumenBreve=En su búsqueda para liberar a Exodia, Adrian continúa su Duelo con Astro, intentando usar el poder de Exodia para escapar de la influencia de Yubel.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=146
+ |Título=Conquistando el Pasado-1a Parte
+ |AltTítulo=Conquering the Past, Part 1 (封印された融合) 
+ |FechadeEmisiónorig=25 de julio de 2007
+ |ResumenBreve=Jaden se encuentra a sí mismo incapaz de jugar con “Polimerización” debido a sus errores usando Monstruos de Fusión mientras era El Rey Supremo. Zane intenta volverlo a la normalidad, pero Jaden está bloqueado mentalmente, y más tarde termina en un Duelo con el último de sus antiguos sirvientes, el Guardian Baou, quien desea reemplazarlo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=147
+ |Título=Conquistando el Pasado-2da Parte
+ |AltTítulo=Conquering the Past, Part 2 (因縁の対決！サイバー流ｖｓ宝玉獣) 
+ |FechadeEmisiónorig=8 de agosto de 2007
+ |ResumenBreve=Jaden aún no puede permitirse a sí mismo jugar con “Polimerización”, pero por poco logra evadir la muerte a manos de Baou sin ella. Jesse revela seguir con vida, pero él está ahora poseído por Yubel, quien empieza un Duelo con Zane.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=148
+ |Título=Conquistando el Pasado-3.ª Parte
+ |AltTítulo=Conquering the Past, Part 3 (究極ドラゴン対決！サイバー・エンドｖｓレインボー・ダーク) 
+ |FechadeEmisiónorig=15 de agosto de 2007
+ |ResumenBreve=Yubel continúa su Duelo con Zane, terminando con Zane sacrificándose para salvar a Jesse, pues de todas formas moriría pronto sin importar el resultado del Duelo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=149
+ |Título=El Máximo Enfrentamiento-1a Parte
+ |AltTítulo=The Ultimate Face-Off, Part 1 (魔神対決！幻魔ｖｓエクゾディア) 
+ |FechadeEmisiónorig=22 de agosto de 2007
+ |ResumenBreve=Adrian confronta a Yubel, intentando usar el poder de Exodia para derrotarla y convertirse en Rey. Yubel, aún poseyendo a Jesse, responde con las Bestias Sagradas.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=150
+ |Título=El Máximo Enfrentamiento-2da Parte
+ |AltTítulo=The Ultimate Face-Off, Part 2 ("ユベル" 召喚！) 
+ |FechadeEmisiónorig=29 de agosto de 2007
+ |ResumenBreve=La confrontación de Adrian con Yubel prosigue, con la última poseyendo aún a Jesse.
+Ambos Duelistas exitosamente tuercen las estrategias del otro una y otra vez, mientras ambos revelan su plan de reserva. Yubel finalmente gana gracias al efecto de su propia carta.
+
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=151
+ |Título=El Poder Interno-1a Parte
+ |AltTítulo=The Power Within, Part 1 (ネオスｖｓアドバンスド宝玉獣) 
+ |FechadeEmisiónorig=5 de septiembre de 2007
+ |ResumenBreve=Jaden por fin confronta a Yubel, y tiene un Duelo con ella con la esperanza de liberar a Jesse de su control.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=152
+ |Título=El Poder Interno-2da Parte
+ |AltTítulo=The Power Within, Part 2 (超融合発動！レインボー・ネオス) 
+ |FechadeEmisiónorig=12 de septiembre de 2007
+ |ResumenBreve=Jaden continúa su Duelo con Yubel, con su intento de salvar a Jesse. Las Bestias de Cristal lo contactan y desean ser liberados de la influencia de Yubel por sí mismos. Al final, Jaden libera a Jesse tras purificar al “Dragón Arcoíris”, y el Duelo termina en empate.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=153
+ |Título=El Regreso del Rey Supremo-1a Parte
+ |AltTítulo=Return of the Supreme King, Part 1 (選ばれしカード対決！エレメンタル・ヒーローVSユベル) 
+ |FechadeEmisiónorig=19 de septiembre de 2007
+ |ResumenBreve=Jaden inicia su confrontación final con Yubel. Más de la historia pasada entre los dos es revelada mientras Yubel tuerce la mayoría de los movimientos de Jaden.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=154
+ |Título=El Regreso del Rey Supremo-2da Parte
+ |AltTítulo=Return of the Supreme King, Part 2 (蘇る覇王十代！) 
+ |FechadeEmisiónorig=26 de septiembre de 2007
+ |ResumenBreve=La confrontación de Jaden con Yubel continúa, y Jaden toma control de los poderes dormidos de El Rey Supremo montando un regreso en sí mismo.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=155
+ |Título=El Regreso del Rey Supremo-3.ª Parte
+ |AltTítulo=Return of the Supreme King, Part 3 (レインボー・ネオスｖｓユベル究極態) 
+ |FechadeEmisiónorig=3 de octubre de 2007
+ |ResumenBreve=La verdadera historia entre Yubel y Jaden es desvelada por completo a mitad de su Duelo y Yubel decide fusionar las doce dimensiones y reunirse a ella misma con Jaden en la muerte. Jaden responde, fusionando su propia alma con la de Yubel, uniéndola con El Rey Supremo por toda la eternidad.
+Este episodio marca oficialmente el final de la serie en la versión Americana.
+ |LineaColor=00CED1
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=156
+ |Título=¿Jaden revivido? ¡Una nueva historia comienza!
+ |AltTítulo=¿Jaden Revived? ¡A new story begins! (レインボー・ネオスｖｓユベル究極態) 
+ |FechadeEmisiónorig=10 de octubre de 2007
+ |ResumenBreve=Tras regresar de la dimensión alterna y estar nuevamente en la Academia del Duelo, todos lamentan que Jaden no este más con ellos. Mientras todos recuerdan duelos y experiencias anteriores con Jaden, Syrus, que es quien más sufrió la ida de su mejor amigo, logra dar con él tras chocar un cometa en la Academia, el cual se puede presumir como que Jaden regresa del lugar donde se encontraba con Yubel.
+ |LineaColor=00CED1
+}}
+|}
+
+== Cuarta Temporada ==
+
+{|class="wikitable" width="98%"
+|-
+! width="3%" | Ep# !! Título !! Fecha de Emisión Original
+|-
+| colspan="5" bgcolor="#CCCCFF"|
+|-
+{{Lista de episodios
+ |EpisodioNúmero=157
+ |Título= ¡Una amenaza tenebrosa! El misterioso visitante (Jaden vs Trueman)
+ |AltTítulo= A dark menace! The mysterious visitor (暗い脅威！謎の訪問者)
+ |FechadeEmisiónorig= 17 de octubre  de  2007
+ |ResumenBreve= Después de que todo regresara a la normalidad, Jaden pelea con un extraño sujeto maligno proveniente de las cartas de los demás duelistas de todos los dormitorios. También conoce un estudiante nuevo, que con su poder hace que los demás crean que lo conocen desde hace 3 años.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=158
+ |Título= ¡Adiós academia! El camino que Jaden eligió (Jaden vs Trueman)
+ |AltTítulo= Goodbye Academy! Jaden chose the path (さようならアカデミー！ジェイデンは道を選びました)
+ |FechadeEmisiónorig= 24 de octubre  de 2007
+ |ResumenBreve= Jaden pensando que Trueman está presente por su culpa, decide abandonar la academia, pero una reunion con viejos enemigos lo hará cambiar de opinión, sin embargo, Trueman vuelve a aparecer para una revancha contra Jaden.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=159
+ |Título=¡La Verdad de Darkness! (Jaden vs Atticus)
+ |AltTítulo= The Truth of Darkness! (闇の真実！)
+ |FechadeEmisiónorig= 31 de octubre de 2007
+ |ResumenBreve= Jaden relaciona a Trueman con el incidente en el Dormitorio Abandonado, sabiendo que solo hay una persona que sabe lo que paso en él, le pide a Atticus que vuelva a ser Velo Nocturno
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=160
+ |Título=¡Fusionando almas! Neos vs.F.G.D  (Jaden vs Trueman)
+ |AltTítulo= Merging souls! Neos vs.F.G.D (魂をマージ！ネオスvs.F.G.D)
+ |FechadeEmisiónorig=  7 de noviembre  de 2007
+ |ResumenBreve= Luego del duelo en el Dormitorio Abandonado, Jaden y sus amigos se encuentran nuevamente a Trueman, el cual reta a un duelo a Jaden, durante el cual, Trueman logra invocar a uno de los Monstruos más poderosos del juego, Five-Heads Dragon.
+ |LineaColor=FF3300
+}}
+{{Lista de episodios
+ |EpisodioNúmero=161
+ |Título=¿Batallaremos? ¡invitación para un duelo de parejas! (Jaden y Alexis vs Hassleberry y Blair)
+ |AltTítulo= ¿Will battle?Invitation to a duel couples! (¿決闘のカップル？招待状を戦います！)
+ |FechadeEmisiónorig= 14 de noviembre de 2007
+ |ResumenBreve= Se celebra un torneo de duelos Tag en la academia, los de segundo año contra los de tercero, Jaden y Alexis hacen equipo para el torneo, pero poco a poco Alexis se da cuenta el cambio en Jaden.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=162
+ |Título=¡Judai vs. Azuka! Carta boca-abajo de emociones escondidas (Jaden y Alexis vs Hassleberry y Blair)
+ |AltTítulo= Judai vs. Azuka! Face-down card hidden emotions (Judai vs Azuka！フェイスダウンカード隠された感情)
+ |FechadeEmisiónorig= 21 de noviembre de 2007
+ |ResumenBreve= Durante la final del torneo de duelos Tag, Blair activa una carta que le permite intercambiar parejas con Alexis, la cual acepta. Ahora Jaden y Alexis se enfrentan cara a cara.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=163
+|Título=El legado del Dragón Cyber-Oscuro (Syrus vs Makoto Inotsume)
+ |AltTítulo= The legacy of the Cyber-Dark Dragon (サイバーダークドラゴンの遺産)
+ |FechadeEmisiónorig= 5 de diciembre  de 2007
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+
+|-
+{{Lista de episodios
+ |EpisodioNúmero=164
+|Título=Desafío de Pycho Shocker (Rector Sheppard y Zane vs Makoto Inotsume)
+ |AltTítulo= Psycho Shocker Challenge (サイコショッカーチャレンジ)
+ |FechadeEmisiónorig= 28 de noviembre  de 2007
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=165
+ |Título=¡Dirigido a Manjoume! Pacto para un pro-duelista (Chazz vs Jaden)
+ |AltTítulo= Aimed at Manjoume! Deal for a pro-duelist (Manjoumeを目的としました！プロデュエリストのための対処)
+ |FechadeEmisiónorig= 12 de diciembre  de 2007
+ |ResumenBreve= Chazz para aprender como ser un profesional, se vuelve el asistente de Astro, luego de un tiempo, Chazz desempeña muy bien su trabajo, hasta que por un descuido de su parte, se ve obligado a reemplazar a Astro en un duelo... ¡Vestido como Ojama Amarillo!
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=166
+ |Título=Ojama Amarillo vs Dragon D-final (Astro vs Chazz)
+ |AltTítulo= Yellow Ojama vs D-Final Dragon (D-ファイナルドラゴンVSイエローおジャマ•)
+ |FechadeEmisiónorig=19 de diciembre  de 2007
+ |ResumenBreve= Chazz salta al estrellato gracias a que hace el ridículo, pero ahora, se deberá enfrentar a Astro y a la nueva carta de los HEROEs del Destino y a la vez recuperar su honor de duelista.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=167
+ |Título=Duelo de gratitud! Crawler vs. El Duelista Original (Crawler vs Jaden)
+ |AltTítulo= Duel of gratitude! Crawler vs. Original Duelist (感謝の決闘！オリジナルデュエリスト対クローラ)
+ |FechadeEmisiónorig= 26 de diciembre  de 2007
+ |ResumenBreve= 
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=168
+ |Título=¡Apertura de los duelos de graduación! Neos vs. Dragon flama negra de Horus (Jaden vs Taigo Sorano)
+ |AltTítulo= Opening graduation duels! Neos vs. Black Flame Dragon of Horus (卒業決闘を開きます！ホルスの黒炎竜対ネオス)
+ |FechadeEmisiónorig= 4 de enero   de 2008
+ |ResumenBreve= Los duelos de graduación comienzan, compitiendo por una copia del deck de Yugi, varios duelistas se van a enfrentar a Jaden, mientras, Trueman comienza a moverse 
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=169
+ |Título=¡El precio de la decisión! Flama de la oscuridad O´brien (Axel vs Trueman)
+ |AltTítulo= The decision price! O'Brien Flame of Darkness (即決価格！闇のオブライエン炎)
+ |FechadeEmisiónorig= 9 de enero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=170
+ |Título=¡Sartorius regresa! Activación “Poder decisivo del destino absoluto” (Jaden vs Sartorius)
+ |AltTítulo= Sartorius return! Activation "Decisive Power of Absolute Destiny"(ザルトリウスは返します！アクティベーション"絶対運命の決定的な力")
+ |FechadeEmisiónorig= 16 de enero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=171
+ |Título=¡Destino Final! Neos Magma vs. Gobernante Oscuro (Jaden vs Sartorius)
+ |AltTítulo= Final Destiny! Magma Neos vs. Dark ruler (最終的な運命！ダークルーラー対マグマネオス)
+ |FechadeEmisiónorig= 25 de enero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=172
+ |Título=¡Academia de duelos en crisis! Las bestias de Cristal bloquean el camino (Jaden vs Jesse y Hassleberry vs Sorano)
+ |AltTítulo=Academy of duels in crisis! Crystal beasts block your way (危機における決闘のアカデミー！クリスタル獣は、あなたの方法をブロックします)
+ |FechadeEmisiónorig=  30 de enero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=173
+ |Título=Invasión de Darkness! Las memorias robadas (Atticus vs Fujiwara)
+ |AltTítulo= Invasion of Darkness! Stolen Memories (闇の侵略！盗まれた思い出)
+ |FechadeEmisiónorig= 6 de febrero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=174
+ |Título=¡Activar, mundo claro! Efecto negativo feroz (Atticus vs Fujiwara)
+ |AltTítulo= Activate, Clear World! Fierce negative effect (アクティブ化、明確な世界！激しい負の効果)
+ |FechadeEmisiónorig= 13 de febrero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=175
+ |Título=Batalla real! Judai vs. Johan vs. Fujiwara (Jaden y Jesse vs Fujiwara)
+ |AltTítulo= Real battle! Judai vs. Johan vs. Fujiwara (本当の戦い！ Judai対ヨハン対藤原)
+ |FechadeEmisiónorig= 20 de febrero   de 2008
+ |ResumenBreve= 
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=176
+ |Título=Rainbow Neos, Protector de Vínculos vs Clear Vicious Knight (Jaden y Jesse vs Fujiwara)
+ |AltTítulo= Rainbow Neos, Protector Links vs Clear Vicious Knight (レインボーネオス、クリアヴィシャスナイト対プロテクターリンク)
+ |FechadeEmisiónorig= 27 de febrero   de 2008
+ |ResumenBreve=
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=177
+ |Título=¡El combo del Terror! Zero infinito (Jaden vs Velo Nocturno)
+ |AltTítulo= The combo of Terror! Zero infinity (恐怖のコンボ！ゼロの無限大)
+ |FechadeEmisiónorig= 5 de marzo   de 2008
+ |ResumenBreve= Jaden se ve cara a cara con el verdadero Velo Nocturno, al cual desafía a un duelo por la humanidad, pero Jaden se ve rápidamente abrumado por el poder de Zero y Infinity de Velo Nocturno,
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=178
+ |Título=¡La Última Esperanza! Jaden Yuki (Jaden vs Velo Nocturno)
+ |AltTítulo= The Last Hope! Jaden Yuki (最後の希望！遊城十代)
+ |FechadeEmisiónorig= 12 de marzo   de 2008
+ |ResumenBreve= Jaden logra invocar a la unión de Neos y Yubel ¡Wise Neos!, ahora con su nuevo monstruo Jaden defenderá los recuerdos y vínculos de sus amigos con sus cartas y derrotar a Velo Nocturno de una vez por todas.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=179
+ |Título=Adiós Jaden, una graduación llorosa (Jaden vs Yugi)
+ |AltTítulo= Goodbye Jaden, a tearful graduation (さようならジェイデン、涙ながらの卒業)
+ |FechadeEmisiónorig= 19 de marzo   de 2008
+ |ResumenBreve= Con el mundo salvado, Jaden y sus amigos se gradúan, viendo así su separación definitiva, pero Kuriboh Alado guía a Jaden a su desafío más grande.
+ |LineaColor=FF3300
+}}
+|-
+{{Lista de episodios
+ |EpisodioNúmero=180
+ |Título=El verdadero duelo de graduación: Jaden vs El Duelista Legendario (Jaden vs Yugi)
+ |AltTítulo= The real duel of graduation: Jaden vs Legendary Duelist (卒業の本当の決闘：伝説のデュエリスト対ジェイデン)
+ |FechadeEmisiónorig= 26 de marzo   de 2008
+ |ResumenBreve= Jaden se enfrenta a Yugi con todo su poder, pero el legendario duelista no le deja las cosas fáciles, el mayor duelo de todos los tiempos, comienza.
+ |LineaColor=FF3300
+}}
+
+
+{{Control de autoridades}}
+[[Categoría:Anexos:Episodios de anime|Yu-Gi-Oh! GX]]
+[[Categoría:Temporadas de series de televisión de Japón de 2004]]
+[[Categoría:Temporadas de series de televisión de Japón de 2005]]
+[[Categoría:Temporadas de series de televisión de Japón de 2006]]
+[[Categoría:Temporadas de series de televisión de Japón de 2007]]

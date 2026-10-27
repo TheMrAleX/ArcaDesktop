@@ -1,4 +1,5 @@
 <RCC><qresource prefix="/">
-<file>qml/Main.qml</file><file>qml/Pill.qml</file><file>qml/Poster.qml</file><file>qml/Player.qml</file>
+<file>qml/Main.qml</file><file>qml/Search.js</file><file>qml/Pill.qml</file><file>qml/Poster.qml</file><file>qml/Player.qml</file>
+<file>qml/Backdrop.qml</file>
 <file>assets/manrope.ttf</file><file>assets/bricolage.ttf</file><file>assets/arca.png</file>
 </qresource></RCC>

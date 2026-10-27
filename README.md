@@ -15,21 +15,19 @@ sudo apt install ./arca-desktop-0.2.0-ubuntu-24.04-x86_64.deb
 ## Compilar en Debian, Ubuntu 24.04 y Mint 22.x
 
 ```sh
-sudo apt install cmake ninja-build g++ qt6-base-dev qt6-declarative-dev qt6-multimedia-dev libqt6sql6-sqlite ffmpeg qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qtmultimedia qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window
-# En Mint 22.x / Ubuntu 24.04, Qt 6.4 usa GStreamer:
-sudo apt install gstreamer1.0-libav gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-gl
+sudo apt install cmake ninja-build g++ qt6-base-dev qt6-declarative-dev libmpv-dev libqt6sql6-sqlite ffmpeg qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts qml6-module-qtquick-dialogs qml6-module-qt5compat-graphicaleffects qml6-module-qtqml-workerscript qml6-module-qtquick-templates qml6-module-qtquick-window
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
 ctest --test-dir build --output-on-failure
 ./build/arca
 ```
 
-Fedora: `gcc-c++ cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtmultimedia-devel ffmpeg-free`.
-Arch: `base-devel cmake ninja qt6-base qt6-declarative qt6-multimedia-ffmpeg ffmpeg`.
+Fedora: `gcc-c++ cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qt5compat mpv-libs-devel ffmpeg-free`.
+Arch: `base-devel cmake ninja qt6-base qt6-declarative qt6-5compat mpv ffmpeg`.
 
 Qt mínimo: 6.4. Los módulos QML y el plugin SQLite deben estar instalados también en ejecución. Los paquetes usan las bibliotecas de la distribución.
 El icono de la interfaz está incluido como PNG, por lo que compilar y ejecutar Arca no requiere un plugin SVG.
-Con Qt 6.4 se selecciona GStreamer, su backend estable. Las versiones posteriores usan el backend predeterminado de Qt. Los paquetes DEB añaden automáticamente los plugins GStreamer cuando hacen falta.
+El reproductor integra libmpv sobre OpenGL en todas las distribuciones. Libass dibuja los subtítulos ASS/SSA con sus estilos. Para ejecutar las pruebas gráficas de CI se necesitan Xvfb y una implementación OpenGL (Mesa sirve).
 
 ## Uso
 
@@ -39,9 +37,9 @@ Añade una carpeta y elige Películas, Series o Detectar sola. El escaneo no mod
 
 En Perfiles puedes elegir sus carpetas visibles. En Ajustes puedes evitar spoilers globalmente y cambiar la política de cada serie desde su ficha. Las elecciones de audio, subtítulos y retardo son independientes por perfil; el siguiente episodio hereda la elección de idioma de la serie.
 
-En el reproductor: espacio pausa, flechas saltan diez segundos, F cambia a pantalla completa y Esc vuelve. El panel Pistas permite cambiar audio y subtítulos, abrir un SRT/ASS y ajustar tamaño y retardo del texto externo.
+En el reproductor: espacio pausa, flechas saltan diez segundos, F cambia a pantalla completa y Esc vuelve. El panel Pistas permite cambiar audio y subtítulos, abrir un SRT/ASS y ajustar tamaño y retardo de subtítulos embebidos y externos. También hay ventana flotante, selección de pantalla, gestos y controles MPRIS.
 
-La base SQLite y los ajustes viven en el directorio XDG de datos de Arca (`~/.local/share/TheMrAleX/Arca` normalmente). La copia de progreso se exporta desde Perfiles; contiene rutas y nombres de perfil, por lo que debes compartirla solo si lo deseas.
+La base SQLite y los ajustes viven en el directorio XDG de datos de Arca (`~/.local/share/TheMrAleX/Arca` normalmente). La copia se exporta desde Perfiles y lee los formatos Android v1/v2 y Desktop v1/v2. Puedes incluir carpetas, correcciones y ajustes (estos últimos contienen la clave TMDB). Las carpetas de Android se vinculan a sus rutas Linux; los datos pendientes se conservan entre reinicios.
 
 ## Paquetes y releases
 

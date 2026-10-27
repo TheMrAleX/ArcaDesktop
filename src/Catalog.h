@@ -9,5 +9,6 @@ struct View {
 };
 QString showKey(const QVariantMap &file);
 QString continueKey(const QVariantMap &file);
+QVariantList markDuplicates(QVariantList files);
 View build(const QVariantList &files, const QVariantMap &hidden = {});
 }

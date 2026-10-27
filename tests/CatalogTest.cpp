@@ -45,11 +45,12 @@ private slots:
         result=Catalog::build({episode(1,300,false,10000),episode(2,200,true)});
         QCOMPARE(result.continuing.first().toMap().value("episode").toInt(),1);
     }
-    void duplicatesUseMostRecentlyPlayedFile() {
-        auto alternate=episode(1,100,false,10000);alternate["path"]="/serie/alternate.mkv";
+    void duplicatesPreferUserChoiceThenQualityAsAndroid() {
+        auto alternate=episode(1,100,false,10000);alternate["path"]="/serie/alternate.mkv";alternate["height"]=2160;
         auto result=Catalog::build({episode(1),alternate,episode(2)});
         QCOMPARE(result.shows.first().toMap().value("episodeCount").toInt(),2);
         QCOMPARE(result.continuing.first().toMap().value("path").toString(),QString("/serie/alternate.mkv"));
+        auto preferred=episode(1);preferred["preferred"]=true;preferred["height"]=720;result=Catalog::build({preferred,alternate,episode(2)});QCOMPARE(result.shows.first().toMap().value("path").toString(),preferred.value("path").toString());
     }
     void metadataTitleDoesNotChangeIdentity() {
         auto first=episode(1,100,true),second=episode(2);first["fileTitle"]="Original";second["fileTitle"]="Original";

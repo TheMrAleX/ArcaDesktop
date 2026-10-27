@@ -105,6 +105,17 @@ private slots:
         db.correct(second+"/31.mkv","Aang",5,9,true);QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
         episode=db.media(second+"/32.mkv");QCOMPARE(episode.value("season").toInt(),5);QCOMPARE(episode.value("episode").toInt(),10);QCOMPARE(episode.value("confidence").toInt(),100);
     }
+    void animePlainNumberingMatchesAndroid(){
+        QList<QPair<QString,Names::Result>> files;
+        for(int n=70;n<=138;++n){auto name=n>=98&&n<=111?QString("InuYasha - %1 Latino.mp4").arg(n):QString("%1.mp4").arg(n);files.append({name,Names::parse(name,{"InuYasha"},"SERIES","Series")});}
+        const auto fixed=Names::plainNumberingFixes(files,"InuYasha","Series");QCOMPARE(fixed.size(),files.size());for(auto it=fixed.cbegin();it!=fixed.cend();++it){QCOMPARE(it.value().episode,Names::plainNumber(files[it.key()].first));QCOMPARE(it.value().title,QString("InuYasha"));QCOMPARE(it.value().season,1);QVERIFY(it.value().confidence>=80);QVERIFY(it.value().episodeTitle.isEmpty());}
+        files.clear();for(int n=1;n<=12;++n){auto name=QString("%1.mkv").arg(n,2,10,QChar('0'));files.append({name,Names::parse(name,{"Serie","Temporada 2"},"SERIES","Series")});}QVERIFY(Names::plainNumberingFixes(files,"Temporada 2","Series").isEmpty());
+    }
+    void duplicatesHiddenSubtitlesAndCompactRules(){
+        QTemporaryDir storage,media;for(const auto &name:{"Film.2024.720p.mkv","Film.2024.1080p.mkv","Serie.S101.mkv","Serie.es.srt"}){QFile file(media.path()+'/'+name);QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");}
+        Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"AUTO");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);QCOMPARE(db.files().size(),4);const auto first=media.path()+"/Film.2024.720p.mkv",second=media.path()+"/Film.2024.1080p.mkv";QVERIFY(db.media(first).value("hasDuplicates").toBool());db.preferFile(first);QVERIFY(!db.media(first).value("duplicate").toBool());QVERIFY(db.media(second).value("duplicate").toBool());db.setFileHidden(first,true);QVERIFY(!db.media(second).value("duplicate").toBool());db.resetDecision(first);QVERIFY(!db.media(first).value("hidden").toBool());
+        const auto series=media.path()+"/Serie.S101.mkv";db.setCompactRule(db.folders().first().toMap().value("id").toInt(),"SSE");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);QCOMPARE(db.media(series).value("season").toInt(),10);QCOMPARE(db.media(series).value("episode").toInt(),1);QCOMPARE(db.media(media.path()+"/Serie.es.srt").value("kind").toString(),QString("SUBTITLE"));
+    }
     void episodeNfoKeepsShowIdentity() {
         QTemporaryDir storage,media;
         QFile file(media.path()+"/Serie.S01E01.mkv");QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");file.close();

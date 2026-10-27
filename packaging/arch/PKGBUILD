@@ -6,7 +6,7 @@ arch=('x86_64')
 url='https://github.com/TheMrAleX/ArcaDesktop'
 # Upstream has not published a software license yet.
 license=('LicenseRef-Proprietary')
-depends=('qt6-base' 'qt6-declarative' 'qt6-multimedia-ffmpeg' 'ffmpeg')
+depends=('qt6-base' 'qt6-declarative' 'qt6-5compat' 'mpv' 'ffmpeg')
 makedepends=('cmake' 'ninja')
 options=('!debug')
 

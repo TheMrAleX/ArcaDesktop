@@ -2,6 +2,7 @@
 #include "NameParser.h"
 #include "Catalog.h"
 #include "TrackChoice.h"
+#include "Metadata.h"
 #include <QtConcurrent>
 #include <QDir>
 #include <QDirIterator>
@@ -52,6 +53,16 @@ Library::Library(const QString &dataDir, QObject *parent) : QObject(parent) {
     exec("CREATE TABLE IF NOT EXISTS progress(profile INTEGER REFERENCES profiles(id),path TEXT,position INTEGER,duration INTEGER,watched INTEGER,updated INTEGER,PRIMARY KEY(profile,path))");
     exec("CREATE TABLE IF NOT EXISTS rules(path TEXT PRIMARY KEY,title TEXT,season INTEGER,offset INTEGER)");
     exec("CREATE TABLE IF NOT EXISTS metadata(path TEXT PRIMARY KEY,data TEXT NOT NULL)");
+    exec("CREATE TABLE IF NOT EXISTS file_decisions(path TEXT PRIMARY KEY,data TEXT NOT NULL)");
+    exec("CREATE TABLE IF NOT EXISTS pending_backups(id TEXT PRIMARY KEY,data TEXT NOT NULL)");
+    exec("CREATE TABLE IF NOT EXISTS folder_aliases(source TEXT PRIMARY KEY,path TEXT NOT NULL)");
+    exec("CREATE TABLE IF NOT EXISTS compact_rules(folder INTEGER PRIMARY KEY,reading TEXT NOT NULL)");
+    for(const auto &value:query("SELECT path,data FROM files WHERE corrected=1")){auto row=value.toMap(),file=unjson(row.value("data").toString());QVariantMap decision;for(const auto &key:{"kind","title","year","season","episode","confidence","reason","hidden","preferred"})if(file.contains(key))decision[key]=file.value(key);exec("INSERT OR IGNORE INTO file_decisions VALUES(?,?)",{row.value("path"),json(decision)});}
+    exec("UPDATE files SET corrected=0 WHERE corrected=1");
+    exec("CREATE TABLE IF NOT EXISTS show_meta(key TEXT PRIMARY KEY,data TEXT NOT NULL)");
+    exec("CREATE TABLE IF NOT EXISTS episode_meta(showkey TEXT,season INTEGER,episode INTEGER,data TEXT NOT NULL,PRIMARY KEY(showkey,season,episode))");
+    for(const auto &value:query("SELECT f.data AS file,m.data AS meta FROM metadata m JOIN files f ON f.path=m.path")){auto row=value.toMap();auto file=unjson(row.value("file").toString());if(file.value("kind")=="EPISODE")exec("INSERT OR IGNORE INTO show_meta VALUES(?,?)",{Names::key(file.value("title").toString()),row.value("meta")});}
+    m_artTimer.setSingleShot(true);m_artTimer.setInterval(40);connect(&m_artTimer,&QTimer::timeout,this,&Library::flushArtwork);
     exec("INSERT OR IGNORE INTO profiles VALUES(1,'Principal')");
     m_debounce.setSingleShot(true);m_debounce.setInterval(1500);
     connect(&m_watcher,&QFileSystemWatcher::directoryChanged,&m_debounce,qOverload<>(&QTimer::start));
@@ -64,7 +75,7 @@ Library::Library(const QString &dataDir, QObject *parent) : QObject(parent) {
                 for(const auto &folder:result.value("complete").toList()) ok=exec("UPDATE files SET available=0 WHERE folder=?",{folder})&&ok;
                 for(const auto &item:result.value("files").toList()) {
                     const auto f=item.toMap();
-                    ok=exec("INSERT INTO files(path,folder,size,mtime,data,available) VALUES(?,?,?,?,?,1) ON CONFLICT(path) DO UPDATE SET folder=excluded.folder,size=excluded.size,mtime=excluded.mtime,data=CASE WHEN files.corrected=1 THEN files.data ELSE excluded.data END,available=1",
+                    ok=exec("INSERT INTO files(path,folder,size,mtime,data,available) VALUES(?,?,?,?,?,1) ON CONFLICT(path) DO UPDATE SET folder=excluded.folder,size=excluded.size,mtime=excluded.mtime,data=excluded.data,available=1",
                          {f["path"],f["folder"],f["size"],f["mtime"],json(f)})&&ok;
                 }
                 for(const auto &folder:result.value("complete").toList()) ok=exec("UPDATE folders SET lastScan=? WHERE id=?",{now(),folder})&&ok;
@@ -78,10 +89,12 @@ Library::Library(const QString &dataDir, QObject *parent) : QObject(parent) {
         if(!watched.isEmpty())m_watcher.addPaths(watched);
         m_scanning=false;m_paused=false;
         m_scanStatus=QString("Exploración terminada · %1 archivos").arg(result.value("files").toList().size());
-        emit scanningChanged();emit scanStatusChanged();reload();
+        applyPendingBackups();emit scanningChanged();emit scanStatusChanged();reload();
+        if(m_rescanRequested){m_rescanRequested=false;QTimer::singleShot(0,this,&Library::scan);}
     });
     reload();
-    if(setting("scanOnOpen",true).toBool())QTimer::singleShot(100,this,&Library::scan);
+    refreshPendingFolders();
+    if(setting("scanOnOpen",true).toBool())QTimer::singleShot(100,this,[this]{if(setting("scanOnOpen",true).toBool())scan();});
 }
 Library::~Library(){
     if(m_scanState){m_scanState->cancel=true;m_scanState->pause=false;m_scanState->condition.wakeAll();}
@@ -99,12 +112,13 @@ QVariantList Library::query(const QString &sql,const QVariantList &args)const{
 void Library::fail(const QString &message){m_error=message;emit errorChanged();}
 void Library::clearError(){m_error.clear();emit errorChanged();}
 QVariant Library::setting(const QString &key,const QVariant &fallback)const{auto value=m_settings->value(key,fallback);if(fallback.isValid())value.convert(fallback.metaType());return value;}
-void Library::setSetting(const QString &key,const QVariant &value){m_settings->setValue(key,value);m_settings->sync();if(key=="spoilerFree"||key.startsWith("spoilerShows/"))reload();else emit changed();}
+void Library::setSetting(const QString &key,const QVariant &value){m_settings->setValue(key,value);if(key=="absoluteMode")m_settings->remove("absoluteShows");m_settings->sync();if(key=="spoilerFree"||key=="absoluteMode"||key.startsWith("spoilerShows/"))reload();else emit changed();if(key=="ignoreSamples")scan();}
 bool Library::onboarded()const{return setting("onboarded",false).toBool();}
 void Library::finishWelcome(){setSetting("onboarded",true);}
 QString Library::profile()const{const auto id=setting("profileId",1).toInt();for(const auto &p:m_profiles)if(p.toMap()["id"].toInt()==id)return p.toMap()["name"].toString();return "Principal";}
 void Library::reload(){
     m_folders=query("SELECT * FROM folders ORDER BY path");m_profiles=query("SELECT * FROM profiles ORDER BY id");
+    for(auto &value:m_profiles){auto p=value.toMap();const int id=p.value("id").toInt();p["color"]=setting(QString("profileColor/%1").arg(id),QString("#8B9CFF"));auto counts=query("SELECT SUM(watched) AS watched,SUM(CASE WHEN watched=0 AND position>5000 THEN 1 ELSE 0 END) AS inProgress FROM progress WHERE profile=?",{id});if(!counts.isEmpty()){p["watched"]=counts.first().toMap().value("watched").toInt();p["inProgress"]=counts.first().toMap().value("inProgress").toInt();}value=p;}
     const auto profileId=setting("profileId",1).toInt();
     const auto visibilityKey=QString("visibleFolders/%1").arg(profileId);
     const bool restricted=m_settings->contains(visibilityKey);
@@ -114,15 +128,36 @@ void Library::reload(){
     const auto rows=query("SELECT f.path,f.data,f.available,COALESCE(p.position,0) AS position,COALESCE(p.duration,0) AS progressDuration,COALESCE(p.watched,0) AS watched,COALESCE(p.updated,0) AS updated FROM files f LEFT JOIN progress p ON p.path=f.path AND p.profile=? ORDER BY json_extract(f.data,'$.title') COLLATE NOCASE,json_extract(f.data,'$.season'),json_extract(f.data,'$.episode'),f.path",{setting("profileId",1)});
     QSet<QString> episodes;
     QHash<QString,QVariantMap> metadata;
+    QHash<QString,QVariantMap> decisions;
+    for(const auto &value:query("SELECT * FROM file_decisions")){auto row=value.toMap();decisions[row.value("path").toString()]=unjson(row.value("data").toString());}
     for(const auto &v:query("SELECT * FROM metadata")){auto row=v.toMap();metadata[row["path"].toString()]=unjson(row["data"].toString());}
+    QHash<QString,QVariantMap> showMeta,episodeMeta;
+    for(const auto &value:query("SELECT * FROM show_meta")){auto row=value.toMap();showMeta[row.value("key").toString()]=unjson(row.value("data").toString());}
+    for(const auto &value:query("SELECT * FROM episode_meta")){auto row=value.toMap();episodeMeta[row.value("showkey").toString()+'|'+row.value("season").toString()+'|'+row.value("episode").toString()]=unjson(row.value("data").toString());}
+    QHash<QString,QVariantList> byShow;
+    for(const auto &value:rows){auto row=value.toMap(),file=unjson(row.value("data").toString());const auto manual=decisions.value(row.value("path").toString());for(auto it=manual.cbegin();it!=manual.cend();++it)if(!it.value().isNull())file[it.key()]=it.value();if(file.value("kind")=="EPISODE")byShow[Names::key(file.value("title").toString())]<<file;}
     for(const auto &v:rows){auto row=v.toMap();auto f=unjson(row.take("data").toString());for(auto it=row.begin();it!=row.end();++it)f[it.key()]=it.value();
         if(restricted&&!visible.contains(f["folder"].toString()))continue;
-        f["fileTitle"]=f["title"];for(auto it=metadata[f["path"].toString()].cbegin();it!=metadata[f["path"].toString()].cend();++it)f[it.key()]=it.value();
+        const auto manual=decisions.value(f.value("path").toString());for(auto it=manual.cbegin();it!=manual.cend();++it)if(!it.value().isNull())f[it.key()]=it.value();f["manual"]=!manual.isEmpty();
+        f["fileTitle"]=f["title"];f["fileYear"]=f["year"];
+        const auto sourceKey=Names::key(f.value("fileTitle").toString());
+        if(f.value("kind")=="EPISODE"){
+            const auto info=showMeta.value(sourceKey);for(auto it=info.cbegin();it!=info.cend();++it)if(it.key()!="details")f[it.key()]=it.value();
+            const auto ranges=Metadata::ranges(info.value("seasonCounts").toList());
+            const bool absolute=Metadata::looksAbsolute(byShow.value(sourceKey),ranges);
+            auto choice=setting("absoluteShows/"+sourceKey);
+            if(!choice.isValid()){const auto mode=setting("absoluteMode",QString("ASK")).toString();if(mode!="ASK")choice=mode=="RENUMBER";}
+            int season=f.value("season").toInt(),number=f.value("episode").toInt();
+            if(absolute){const auto mapped=Metadata::absoluteEpisode(number,ranges);if(!mapped.isEmpty()){season=mapped.value("season").toInt();number=mapped.value("episode").toInt();if(choice.isValid()&&choice.toBool()){f["sourceSeason"]=f["season"];f["sourceEpisode"]=f["episode"];f["season"]=season;f["episode"]=number;}}}
+            const auto episode=episodeMeta.value(sourceKey+'|'+QString::number(season)+'|'+QString::number(number));for(auto it=episode.cbegin();it!=episode.cend();++it)f[it.key()]=it.value();
+        }else{const auto info=metadata.value(f.value("path").toString());for(auto it=info.cbegin();it!=info.cend();++it)f[it.key()]=it.value();}
+        if(f.value("fileYear").toInt()>0)f["year"]=f.value("fileYear");
         f["showKey"]=Catalog::showKey(f);f["continueKey"]=Catalog::continueKey(f);
+        f["thumb"]="image://thumbs/"+QString::fromLatin1(QCryptographicHash::hash((f.value("path").toString()+'|'+f.value("mtime").toString()).toUtf8(),QCryptographicHash::Sha256).toHex());
         const bool spoilers=setting("spoilerShows/"+f["showKey"].toString(),setting("spoilerFree",false)).toBool();
         f["spoilerEnabled"]=spoilers;
         f["spoilerHidden"]=f["kind"]=="EPISODE"&&spoilers&&!f["watched"].toBool()&&f["position"].toLongLong()<=5000;
-        if(f["spoilerHidden"].toBool()){f["episodeTitle"]="";f["episodeOverview"]="";f["still"]="";}
+        if(f["spoilerHidden"].toBool()){f["episodeTitle"]="";f["episodeOverview"]="";f["still"]="";f["thumb"]="";}
         const auto id=Names::key(f["title"].toString())+"|"+f["season"].toString()+"|"+f["episode"].toString();
         if(f["kind"]=="EPISODE"){f["duplicate"]=episodes.contains(id);episodes.insert(id);}
         m_files<<f;
@@ -130,8 +165,8 @@ void Library::reload(){
     QVariantMap hidden;
     const auto prefix=QString("continueHidden/%1/").arg(profileId);
     for(const auto &key:m_settings->allKeys())if(key.startsWith(prefix))hidden[key.mid(prefix.size())]=m_settings->value(key);
-    const auto catalog=Catalog::build(m_files,hidden);m_shows=catalog.shows;m_continuing=catalog.continuing;
-    emit changed();
+    m_files=Catalog::markDuplicates(m_files);const auto catalog=Catalog::build(m_files,hidden);m_shows=catalog.shows;m_continuing=catalog.continuing;
+    emit filesPrepared();emit changed();
 }
 void Library::addFolder(const QUrl &url,const QString &kind){
     const QFileInfo dir(url.toLocalFile());
@@ -175,16 +210,17 @@ static void localMetadata(QVariantMap &f,const QFileInfo &file){
     if(!genres.isEmpty())f["genres"]=genres.join(" · ");
 }
 void Library::scan(){
-    if(m_scanning||!m_db.isOpen()||m_folders.isEmpty())return;
+    if(m_scanning){m_rescanRequested=true;return;}if(!m_db.isOpen()||m_folders.isEmpty())return;
     m_scanning=true;m_paused=false;m_scanStatus="Explorando tus carpetas…";emit scanningChanged();emit scanStatusChanged();
     const auto folders=m_folders;
     QHash<QString,QVariantMap> cache;
     for(const auto &v:query("SELECT path,size,mtime,data FROM files"))cache[v.toMap()["path"].toString()]=v.toMap();
     QHash<QString,QVariantMap> rules;
     for(const auto &v:query("SELECT * FROM rules"))rules[v.toMap()["path"].toString()]=v.toMap();
+    QHash<int,QString> compactRules;for(const auto &v:query("SELECT * FROM compact_rules")){auto row=v.toMap();compactRules[row.value("folder").toInt()]=row.value("reading").toString();}
     const bool ignore=setting("ignoreSamples",true).toBool();
     const auto state=m_scanState=std::make_shared<ScanState>();
-    m_scan.setFuture(QtConcurrent::run([this,folders,cache,rules,ignore,state]{
+    m_scan.setFuture(QtConcurrent::run([this,folders,cache,rules,compactRules,ignore,state]{
         QVariantList files,complete;QStringList errors,watched;
         for(const auto &v:folders){
             auto folder=v.toMap();const auto root=folder["path"].toString();QFileInfo rootInfo(root);
@@ -205,29 +241,24 @@ void Library::scan(){
                 const auto dirs=relative=="."?QStringList{}:relative.split('/');
                 for(const auto &file:entries){
                     if(file.isDir()){if(!file.fileName().startsWith('.')&&(!ignore||!Names::ignoredDir(file.fileName())))pending<<file.absoluteFilePath();continue;}
+                    if(QStringList{"srt","ass","ssa","vtt","ttml"}.contains(file.suffix().toLower())){current<<QVariantMap{{"path",file.absoluteFilePath()},{"url",QUrl::fromLocalFile(file.absoluteFilePath()).toString()},{"folder",folder.value("id")},{"name",file.fileName()},{"size",file.size()},{"mtime",file.lastModified().toMSecsSinceEpoch()},{"title",file.completeBaseName()},{"kind","SUBTITLE"},{"confidence",100},{"season",-1},{"episode",0}};continue;}
                     if(!Names::isVideo(file.fileName()))continue;
-                    auto p=Names::parse(file.fileName(),dirs,folder["kind"].toString(),rootInfo.fileName(),{},ignore);
+                    auto p=Names::parse(file.fileName(),dirs,folder["kind"].toString(),rootInfo.fileName(),compactRules.value(folder.value("id").toInt()),ignore);
                     if(p.compactNumber)groups[Names::key(p.title)]<<p.compactNumber;
                     parsed<<qMakePair(file,p);
                 }
-                QList<int> numbers;
+                QList<QPair<QString,Names::Result>> names;
                 for(auto &pair:parsed){
                     auto &p=pair.second;
-                    if(p.compactNumber){const auto rule=Names::resolveCompactGroup(groups[Names::key(p.title)]);if(!rule.isEmpty())p=Names::parse(pair.first.fileName(),dirs,folder["kind"].toString(),rootInfo.fileName(),rule,ignore);}
-                    const auto n=Names::plainNumber(pair.first.fileName());
-                    if(n&&p.yearHint==0&&(p.kind==Names::Kind::Unknown||(p.kind==Names::Kind::Episode&&(p.confidence<80||p.compactToken==QString::number(p.compactNumber)))||(p.kind==Names::Kind::Movie&&Names::clean(pair.first.completeBaseName())==QString::number(n))))numbers<<n;
+                    if(p.compactNumber&&!compactRules.contains(folder.value("id").toInt())){const auto rule=Names::resolveCompactGroup(groups[Names::key(p.title)]);if(!rule.isEmpty())p=Names::parse(pair.first.fileName(),dirs,folder["kind"].toString(),rootInfo.fileName(),rule,ignore);}
+                    names.append({pair.first.fileName(),p});
                 }
-                const bool plain=folder["kind"]!="MOVIES"&&Names::plainNumbering(numbers);
+                const auto fixes=folder["kind"]!="MOVIES"?Names::plainNumberingFixes(names,info.fileName(),rootInfo.fileName()):QMap<int,Names::Result>();
+                for(auto it=fixes.cbegin();it!=fixes.cend();++it)parsed[it.key()].second=it.value();
                 for(auto &pair:parsed){
                     {QMutexLocker lock(&state->mutex);while(state->pause&&!state->cancel)state->condition.wait(&state->mutex,500);}
                     if(state->cancel)break;
                     const auto file=pair.first;auto p=pair.second;
-                    if(plain&&numbers.contains(Names::plainNumber(file.fileName()))){
-                        p.kind=Names::Kind::Episode;p.episode=Names::plainNumber(file.fileName());p.episodeEnd=0;
-                        p.season=Names::seasonFromDir(info.fileName());p.seasonFromFolder=p.season>=0;if(p.season<0)p.season=1;
-                        if(p.title.isEmpty()||QRegularExpression("^\\d+$").match(p.title).hasMatch())p.title=Names::clean(dirs.isEmpty()?rootInfo.fileName():dirs.last());
-                        p.confidence=86;p.reason.clear();
-                    }
                     if(rules.contains(path)&&p.kind!=Names::Kind::Ignored){auto rule=rules[path];int n=Names::numberHint(file.fileName());if(n>0&&n-rule["offset"].toInt()>=0){p.kind=Names::Kind::Episode;p.title=rule["title"].toString();p.season=rule["season"].toInt();p.episode=n-rule["offset"].toInt();p.confidence=100;p.reason.clear();}}
                     const auto old=cache.value(file.absoluteFilePath());
                     QVariantMap f;
@@ -235,7 +266,7 @@ void Library::scan(){
                     // Reparse cached files too: learned rules and folder type may have changed.
                     f["path"]=file.absoluteFilePath();f["url"]=QUrl::fromLocalFile(file.absoluteFilePath()).toString();f["folder"]=folder["id"];f["name"]=file.fileName();f["size"]=file.size();f["mtime"]=file.lastModified().toMSecsSinceEpoch();f["title"]=p.title;f["episodeTitle"]=p.episodeTitle;f["year"]=p.year;f["season"]=p.season;f["episode"]=p.episode;f["episodeEnd"]=p.episodeEnd;f["confidence"]=p.confidence;f["reason"]=p.reason;
                     f["kind"]=p.kind==Names::Kind::Movie?"MOVIE":p.kind==Names::Kind::Episode?"EPISODE":p.kind==Names::Kind::Ignored?"IGNORED":"UNKNOWN";
-                    f["seasonFromFolder"]=p.seasonFromFolder;f["rawEpisode"]=p.episode;f["ruleApplied"]=rules.contains(path);
+                    f["compactToken"]=p.compactToken;f["compactNumber"]=p.compactNumber;f["altSeason"]=p.altSeason;f["altEpisode"]=p.altEpisode;f["yearHint"]=p.yearHint;f["seasonFromFolder"]=p.seasonFromFolder;f["rawEpisode"]=p.episode;f["ruleApplied"]=rules.contains(path);
                     if(!f.contains("probe")&&p.kind!=Names::Kind::Ignored){const auto details=probe(file.absoluteFilePath());f["probe"]=details;f["duration"]=qint64(details["format"].toMap()["duration"].toDouble()*1000);for(const auto &stream:details["streams"].toList()){auto s=stream.toMap();if(s["codec_type"]=="video"){f["width"]=s["width"];f["height"]=s["height"];f["codec"]=s["codec_name"];break;}}}
                     localMetadata(f,file);current<<f;
                     if(current.size()%20==0){const auto status=QString("%1 archivos · %2").arg(files.size()+current.size()).arg(path);QMetaObject::invokeMethod(this,[this,status]{m_scanStatus=status;emit scanStatusChanged();},Qt::QueuedConnection);}
@@ -267,18 +298,38 @@ void Library::saveProgress(const QString &path,qint64 position,qint64 duration){
     exec("INSERT INTO progress VALUES(?,?,?,?,?,?) ON CONFLICT(profile,path) DO UPDATE SET position=excluded.position,duration=excluded.duration,watched=CASE WHEN excluded.watched=1 THEN 1 WHEN excluded.position<5000 THEN progress.watched ELSE 0 END,updated=excluded.updated",{setting("profileId",1),path,watched?0:qMin(position,duration),duration,watched,now()});
 }
 void Library::markWatched(const QString &path,bool watched){auto f=media(path);exec("INSERT INTO progress VALUES(?,?,0,?,?,?) ON CONFLICT(profile,path) DO UPDATE SET position=0,watched=excluded.watched,updated=excluded.updated",{setting("profileId",1),path,f["duration"],watched,now()});reload();}
-void Library::correct(const QString &path,const QString &title,int season,int episode,bool folderRule){
+void Library::correct(const QString &path,const QString &title,int season,int episode,bool folderRule,int year){
     const auto rows=query("SELECT data FROM files WHERE path=?",{path});
     if(media(path).isEmpty()||rows.isEmpty()||title.trimmed().isEmpty()||season<0||episode<0){fail("Escribe un título y números válidos.");return;}
     auto f=unjson(rows.first().toMap().value("data").toString());
     if(Names::key(f.value("title").toString())!=Names::key(title))exec("DELETE FROM metadata WHERE path=?",{path});
-    f["title"]=title.trimmed();f["season"]=season;f["episode"]=episode;f["kind"]=episode>0?"EPISODE":"MOVIE";f["confidence"]=100;f["reason"]="";
-    exec("UPDATE files SET data=?,corrected=1 WHERE path=?",{json(f),path});
-    if(folderRule&&episode>0){int hint=Names::numberHint(QFileInfo(path).fileName());if(hint>0)exec("INSERT INTO rules VALUES(?,?,?,?) ON CONFLICT(path) DO UPDATE SET title=excluded.title,season=excluded.season,offset=excluded.offset",{QFileInfo(path).absolutePath(),title.trimmed(),season,hint-episode});}
+    auto prior=query("SELECT data FROM file_decisions WHERE path=?",{path});auto decision=prior.isEmpty()?QVariantMap():unjson(prior.first().toMap().value("data").toString());
+    decision["title"]=title.trimmed();decision["season"]=season;decision["episode"]=episode;decision["kind"]=episode>0?"EPISODE":"MOVIE";decision["confidence"]=100;decision["reason"]="";
+    if(year>=0)decision["year"]=year;
+    exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{path,json(decision)});
+    if(folderRule&&episode>0&&f.value("compactNumber").toInt()<=0){int hint=Names::numberHint(QFileInfo(path).fileName());if(hint>0)exec("INSERT INTO rules VALUES(?,?,?,?) ON CONFLICT(path) DO UPDATE SET title=excluded.title,season=excluded.season,offset=excluded.offset",{QFileInfo(path).absolutePath(),title.trimmed(),season,hint-episode});}
+    if(folderRule&&episode>0&&f.value("compactNumber").toInt()>0){int n=f.value("compactNumber").toInt();QString reading=season==n/10&&episode==n%10?"SSE":season==n/100&&episode==n%100?"SEE":"";if(!reading.isEmpty())exec("INSERT INTO compact_rules VALUES(?,?) ON CONFLICT(folder) DO UPDATE SET reading=excluded.reading",{f.value("folder"),reading});}
     reload();if(folderRule)scan();
 }
-void Library::accept(const QString &path){const auto rows=query("SELECT data FROM files WHERE path=?",{path});if(media(path).isEmpty()||rows.isEmpty())return;auto f=unjson(rows.first().toMap().value("data").toString());if(f["kind"]=="UNKNOWN"||f["kind"]=="IGNORED"){fail("Corrige el título y el tipo antes de aceptar.");return;}f["confidence"]=100;f["reason"]="";exec("UPDATE files SET data=?,corrected=1 WHERE path=?",{json(f),path});reload();}
+void Library::accept(const QString &path){const auto rows=query("SELECT data FROM files WHERE path=?",{path});if(media(path).isEmpty()||rows.isEmpty())return;auto file=unjson(rows.first().toMap().value("data").toString());if(file["kind"]=="UNKNOWN"||file["kind"]=="IGNORED"){fail("Corrige el título y el tipo antes de aceptar.");return;}auto prior=query("SELECT data FROM file_decisions WHERE path=?",{path});auto decision=prior.isEmpty()?QVariantMap():unjson(prior.first().toMap().value("data").toString());for(const auto &key:{"kind","title","year","season","episode"})decision[key]=file.value(key);decision["confidence"]=100;decision["reason"]="";exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{path,json(decision)});reload();}
+void Library::acceptSafeGuesses(){
+    auto files=rawFiles();if(!m_db.transaction())return;bool ok=true;for(const auto &v:files){auto file=v.toMap();if(file.value("hidden").toBool()||file.value("confidence").toInt()<50||file.value("confidence").toInt()>=80||file.value("altSeason",-1).toInt()>=0||file.value("title").toString().isEmpty()||(file.value("kind")!="MOVIE"&&file.value("kind")!="EPISODE"))continue;auto rows=query("SELECT data FROM file_decisions WHERE path=?",{file.value("path")});auto manual=rows.isEmpty()?QVariantMap():unjson(rows.first().toMap().value("data").toString());for(const auto &key:{"kind","title","year","season","episode"})manual[key]=file.value(key);manual["confidence"]=100;manual["reason"]="";ok=exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{file.value("path"),json(manual)})&&ok;}if(ok)m_db.commit();else m_db.rollback();reload();
+}
+void Library::setCompactRule(int folder,const QString &reading){if(reading!="SEE"&&reading!="SSE")return;bool exists=false;for(const auto &v:m_folders)if(v.toMap().value("id").toInt()==folder)exists=true;if(!exists)return;exec("INSERT INTO compact_rules VALUES(?,?) ON CONFLICT(folder) DO UPDATE SET reading=excluded.reading",{folder,reading});scan();}
+void Library::setFileHidden(const QString &path,bool hidden){if(media(path).isEmpty())return;auto rows=query("SELECT data FROM file_decisions WHERE path=?",{path});auto decision=rows.isEmpty()?QVariantMap():unjson(rows.first().toMap().value("data").toString());decision["hidden"]=hidden;exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{path,json(decision)});reload();}
+void Library::resetDecision(const QString &path){exec("DELETE FROM file_decisions WHERE path=?",{path});reload();}
+void Library::preferFile(const QString &path){auto files=rawFiles();QVariantMap selected;for(const auto &v:files)if(v.toMap().value("path")==path)selected=v.toMap();if(selected.isEmpty())return;for(const auto &v:files){auto file=v.toMap();if(file.value("folder")!=selected.value("folder")||file.value("kind")!=selected.value("kind")||Catalog::showKey(file)!=Catalog::showKey(selected)||file.value("season")!=selected.value("season")||file.value("episode")!=selected.value("episode")||(file.value("kind")=="MOVIE"&&file.value("year")!=selected.value("year")))continue;auto rows=query("SELECT data FROM file_decisions WHERE path=?",{file.value("path")});auto decision=rows.isEmpty()?QVariantMap():unjson(rows.first().toMap().value("data").toString());decision["preferred"]=file.value("path")==path;exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{file.value("path"),json(decision)});}reload();}
 void Library::createProfile(const QString &name){if(name.trimmed().isEmpty())return;exec("INSERT INTO profiles(name) VALUES(?)",{name.trimmed()});reload();}
+void Library::editProfile(int id,const QString &name,const QString &color){
+    if(name.trimmed().isEmpty())return;bool found=false;for(const auto &v:m_profiles)if(v.toMap().value("id").toInt()==id)found=true;if(!found)return;
+    exec("UPDATE profiles SET name=? WHERE id=?",{name.trimmed(),id});if(QRegularExpression("^#[0-9a-fA-F]{6}$").match(color).hasMatch())m_settings->setValue(QString("profileColor/%1").arg(id),color);m_settings->sync();reload();
+}
+void Library::deleteProfile(int id){
+    if(m_profiles.size()<2)return;bool found=false;int fallback=0;for(const auto &v:m_profiles){int current=v.toMap().value("id").toInt();if(current==id)found=true;else if(!fallback)fallback=current;}if(!found)return;
+    if(!m_db.transaction())return;bool ok=exec("DELETE FROM progress WHERE profile=?",{id})&&exec("DELETE FROM profiles WHERE id=?",{id});if(!ok){m_db.rollback();return;}if(!m_db.commit())return;
+    for(const auto &key:m_settings->allKeys())if(key==QString("profileColor/%1").arg(id)||key==QString("visibleFolders/%1").arg(id)||key.startsWith(QString("playback/%1/").arg(id))||key.startsWith(QString("continueHidden/%1/").arg(id)))m_settings->remove(key);
+    if(setting("profileId",1).toInt()==id)m_settings->setValue("profileId",fallback);m_settings->sync();reload();
+}
 void Library::selectProfile(int id){for(const auto &v:m_profiles)if(v.toMap()["id"].toInt()==id){setSetting("profileId",id);reload();return;}}
 void Library::setFolderVisible(int id,bool enabled){
     const auto key=QString("visibleFolders/%1").arg(setting("profileId",1).toInt());
@@ -361,72 +412,4 @@ QVariantMap Library::nextEpisode(const QString &path)const{
         if(number>after&&(next.isEmpty()||number<qMakePair(next.value("season").toInt(),next.value("episode").toInt())))next=file;
     }
     return next;
-}
-bool Library::exportBackup(const QUrl &url){
-    QVariantMap data{{"format","arca-desktop"},{"version",1},{"profiles",query("SELECT * FROM profiles")},{"progress",query("SELECT * FROM progress")},{"rules",query("SELECT * FROM rules")}};
-    QSaveFile file(url.toLocalFile());if(!file.open(QIODevice::WriteOnly)||file.write(QJsonDocument::fromVariant(data).toJson())<0||!file.commit()){fail("No puedo escribir la copia: "+file.errorString());return false;}return true;
-}
-bool Library::importBackup(const QUrl &url){
-    QFile file(url.toLocalFile());if(!file.open(QIODevice::ReadOnly)||file.size()>32*1024*1024){fail("No puedo leer la copia o supera 32 MB.");return false;}
-    QJsonParseError error;auto doc=QJsonDocument::fromJson(file.readAll(),&error);auto data=doc.toVariant().toMap();
-    if(error.error!=QJsonParseError::NoError||data["format"]!="arca-desktop"||data["version"].toInt()!=1){fail("Formato de copia no compatible. Se necesita una copia de Arca Desktop v1.");return false;}
-    if(!m_db.transaction())return false;
-    bool ok=true;QHash<int,int> ids;
-    for(const auto &v:data["profiles"].toList()){auto p=v.toMap();if(p["name"].toString().trimmed().isEmpty()){ok=false;break;}auto existing=query("SELECT id FROM profiles WHERE name=?",{p["name"]});if(existing.isEmpty()){ok=exec("INSERT INTO profiles(name) VALUES(?)",{p["name"]})&&ok;existing=query("SELECT id FROM profiles WHERE name=?",{p["name"]});}if(!existing.isEmpty())ids[p["id"].toInt()]=existing.first().toMap()["id"].toInt();}
-    for(const auto &v:data["progress"].toList()){auto p=v.toMap();if(!ids.contains(p["profile"].toInt())||p["path"].toString().isEmpty()||p["position"].toLongLong()<0||p["duration"].toLongLong()<0){ok=false;break;}ok=exec("INSERT INTO progress VALUES(?,?,?,?,?,?) ON CONFLICT(profile,path) DO UPDATE SET position=excluded.position,duration=excluded.duration,watched=excluded.watched,updated=excluded.updated WHERE excluded.updated>progress.updated",{ids[p["profile"].toInt()],p["path"],p["position"],p["duration"],p["watched"],p["updated"]})&&ok;}
-    // Rules are only useful for folders that this computer already watches.
-    for(const auto &v:data["rules"].toList()){auto r=v.toMap();bool local=false;for(const auto &f:m_folders){auto root=f.toMap()["path"].toString();if(r["path"].toString()==root||r["path"].toString().startsWith(root+'/'))local=true;}if(local)ok=exec("INSERT OR IGNORE INTO rules VALUES(?,?,?,?)",{r["path"],r["title"],r["season"],r["offset"]})&&ok;}
-    if(!ok){m_db.rollback();fail("La copia contiene datos inválidos; no se ha importado.");return false;}if(!m_db.commit()){fail(m_db.lastError().text());return false;}reload();return true;
-}
-
-void Library::tmdb(const QString &endpoint,const QVariantMap &parameters,std::function<void(QVariantMap)> done){
-    auto token=setting("tmdbKey",QString()).toString().trimmed();
-    if(token.isEmpty()){fail("Añade tu clave de TMDB en Ajustes → Metadatos de internet.");done({});return;}
-    QUrl url("https://api.themoviedb.org/3/"+endpoint);QUrlQuery query;
-    query.addQueryItem("language",setting("metaLang",QString("es-ES")).toString());
-    for(auto it=parameters.cbegin();it!=parameters.cend();++it)query.addQueryItem(it.key(),it.value().toString());
-    if(!token.contains('.'))query.addQueryItem("api_key",token);
-    url.setQuery(query);QNetworkRequest request(url);request.setTransferTimeout(15000);
-    if(token.contains('.'))request.setRawHeader("Authorization","Bearer "+token.toUtf8());
-    auto reply=m_network.get(request);
-    connect(reply,&QNetworkReply::downloadProgress,reply,[reply](qint64 received,qint64){if(received>4*1024*1024)reply->abort();});
-    connect(reply,&QNetworkReply::finished,this,[this,reply,done]{
-        QVariantMap data;
-        if(reply->error()==QNetworkReply::NoError)data=QJsonDocument::fromJson(reply->readAll()).toVariant().toMap();
-        else fail("No puedo consultar TMDB. Comprueba la conexión y la clave; tu biblioteca local sigue disponible.");
-        reply->deleteLater();done(data);
-    });
-}
-void Library::findMetadata(const QString &title,bool series){
-    m_searching=true;m_matches.clear();emit matchesChanged();const auto generation=++m_searchGeneration;
-    tmdb(series?"search/tv":"search/movie",{{"query",title},{"include_adult","false"}},[this,generation,series](QVariantMap response){
-        if(generation!=m_searchGeneration)return;
-        for(const auto &v:response["results"].toList()){
-            auto item=v.toMap();m_matches<<QVariantMap{{"id",item["id"]},{"title",item[series?"name":"title"]},{"year",item[series?"first_air_date":"release_date"].toString().left(4)},{"plot",item["overview"]}};
-        }m_searching=false;emit matchesChanged();
-    });
-}
-void Library::cacheImage(const QString &path,const QString &key,const QString &remote){
-    if(!remote.startsWith('/')||remote.contains(".."))return;
-    const auto name=QString::fromLatin1(QCryptographicHash::hash(remote.toUtf8(),QCryptographicHash::Sha256).toHex())+".jpg";
-    QDir().mkpath(m_dataDir+"/art");const auto destination=m_dataDir+"/art/"+name;
-    auto update=[this,path,key,destination]{auto rows=query("SELECT data FROM metadata WHERE path=?",{path});if(rows.isEmpty())return;auto data=unjson(rows.first().toMap()["data"].toString());data[key]=QUrl::fromLocalFile(destination).toString();exec("UPDATE metadata SET data=? WHERE path=?",{json(data),path});reload();};
-    if(QFileInfo::exists(destination)){update();return;}
-    QNetworkRequest request(QUrl("https://image.tmdb.org/t/p/"+QString(key=="poster"?"w500":"w1280")+remote));request.setTransferTimeout(15000);
-    auto reply=m_network.get(request);
-    connect(reply,&QNetworkReply::downloadProgress,reply,[reply](qint64 bytes,qint64){if(bytes>10*1024*1024)reply->abort();});
-    connect(reply,&QNetworkReply::finished,this,[reply,destination,update]{if(reply->error()==QNetworkReply::NoError){QSaveFile output(destination);const auto bytes=reply->readAll();if(output.open(QIODevice::WriteOnly)&&output.write(bytes)==bytes.size()&&output.commit())update();}reply->deleteLater();});
-}
-void Library::useMetadata(const QString &path,int id,bool series){
-    if(id<=0)return;
-    const auto original=media(path);const auto originalTitle=Names::key(original.value("fileTitle",original["title"]).toString());
-    tmdb((series?"tv/":"movie/")+QString::number(id),{},[this,path,series,originalTitle](QVariantMap response){
-        if(response.isEmpty())return;
-        QStringList genres;for(const auto &v:response["genres"].toList())genres<<v.toMap()["name"].toString();
-        QVariantMap metadata{{"title",response[series?"name":"title"]},{"plot",response["overview"]},{"year",response[series?"first_air_date":"release_date"].toString().left(4).toInt()},{"genres",genres.join(" · ")},{"tmdbId",response["id"]}};
-        QStringList paths{path};
-        if(series){paths.clear();for(const auto &v:m_files){auto file=v.toMap();if(file["kind"]=="EPISODE"&&Names::key(file.value("fileTitle",file["title"]).toString())==originalTitle)paths<<file["path"].toString();}}
-        for(const auto &target:paths){exec("INSERT INTO metadata VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{target,json(metadata)});cacheImage(target,"poster",response["poster_path"].toString());cacheImage(target,"backdrop",response["backdrop_path"].toString());}
-        reload();
-    });
 }
