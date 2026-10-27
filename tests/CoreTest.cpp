@@ -105,6 +105,11 @@ private slots:
         db.correct(second+"/31.mkv","Aang",5,9,true);QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);
         episode=db.media(second+"/32.mkv");QCOMPARE(episode.value("season").toInt(),5);QCOMPARE(episode.value("episode").toInt(),10);QCOMPARE(episode.value("confidence").toInt(),100);
     }
+    void learnedDirectorySuggestionRespectsConflictingCorrections(){
+        QTemporaryDir storage,media;for(int n=31;n<=33;++n){QFile file(media.path()+QString("/Aang %1.mkv").arg(n));QVERIFY(file.open(QIODevice::WriteOnly));file.write("fixture");}
+        Library db(storage.path());db.setSetting("scanOnOpen",false);db.addFolder(QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);const auto path=media.path()+"/Aang 31.mkv";db.correct(path,"Avatar",2,1,false);auto suggestion=db.suggestForDir(path);QCOMPARE(suggestion.value("targets").toList().size(),2);QCOMPARE(suggestion.value("offset").toInt(),30);QCOMPARE(suggestion.value("targets").toList().first().toMap().value("episode").toInt(),2);
+        db.correct(media.path()+"/Aang 32.mkv","Otra serie",4,8,false);QVERIFY(db.suggestForDir(path).isEmpty());db.resetDecision(media.path()+"/Aang 32.mkv");suggestion=db.suggestForDir(path);db.applyDirSuggestion(suggestion.value("directory").toString(),suggestion.value("title").toString(),2,30);QTRY_VERIFY_WITH_TIMEOUT(!db.scanning(),20000);QCOMPARE(db.media(media.path()+"/Aang 33.mkv").value("episode").toInt(),3);QCOMPARE(db.media(media.path()+"/Aang 33.mkv").value("title").toString(),QString("Avatar"));
+    }
     void animePlainNumberingMatchesAndroid(){
         QList<QPair<QString,Names::Result>> files;
         for(int n=70;n<=138;++n){auto name=n>=98&&n<=111?QString("InuYasha - %1 Latino.mp4").arg(n):QString("%1.mp4").arg(n);files.append({name,Names::parse(name,{"InuYasha"},"SERIES","Series")});}

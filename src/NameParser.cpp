@@ -30,8 +30,9 @@ static bool plausible(int year) { return year >= 1900 && year <= QDate::currentD
 
 QString key(QString value) {
     value = value.toLower().normalized(QString::NormalizationForm_D);
-    value.remove(rx(R"(\p{M}+)"));
-    return value.replace(rx("[^a-z0-9]+"), " ").trimmed();
+    static const auto marks=rx(R"(\p{M}+)"),symbols=rx("[^a-z0-9]+");
+    value.remove(marks);
+    return value.replace(symbols," ").trimmed();
 }
 QString normalize(QString value) {
     auto brackets = rx(R"(\[([^\]]*)\])");
@@ -69,7 +70,8 @@ bool ignoredDir(const QString &name) {
     static const QSet<QString> ignored = {"extras","extra","featurettes","behind the scenes","behindthescenes","deleted scenes","trailers","trailer","samples","sample","muestras","interviews","shorts","bonus"};
     return name.startsWith('.') || ignored.contains(name.trimmed().toLower());
 }
-int seasonFromDir(const QString &name) {
+int seasonFromDir(const QString &value) {
+    const auto name=value.trimmed();
     if (rx(R"(^(specials|especiales|season 0+|temporada 0+)$)").match(name.trimmed()).hasMatch()) return 0;
     auto m = rx(R"(^\s*(\d{1,2})\s*$)").match(name);
     if (!m.hasMatch()) m = rx(R"(^(?:season|temporada|temp|series|serie|staffel|saison|libro|book|parte|part|vol|volumen|volume|s|t)\.?\s*[._-]?\s*(\d{1,2})(?:\D.*)?$)").match(name);
@@ -204,7 +206,7 @@ Result parse(const QString &name, const QStringList &dirs, const QString &kind, 
     if(start<0){auto m=bareCompact.match(masked);if(m.hasMatch())compact(m,"",55);}
     if(start<0){auto m=dashNumber.match(masked);if(m.hasMatch()){start=m.capturedStart();end=m.capturedEnd(1);r.season=1;r.episode=m.captured(1).toInt();r.confidence=60;r.reason="Parece un episodio; asumo temporada 1";}}
     if(start>=0){
-        const auto fileTitle=clean(norm.left(start)).remove(rx(R"(\s*\(?((?:19|20)\d{2})\)?$)")).trimmed();
+        auto fileTitle=clean(norm.left(start));auto withoutYear=fileTitle;withoutYear.remove(rx(R"(\s*\(?((?:19|20)\d{2})\)?$)"));if(!withoutYear.trimmed().isEmpty())fileTitle=withoutYear.trimmed();
         bool useDir=!show.first.isEmpty()&&(fileTitle.isEmpty()||seasonIndex>=0||kind=="SERIES"||key(show.first).startsWith(key(fileTitle))||key(fileTitle).startsWith(key(show.first)));
         r.title=useDir?show.first:fileTitle;r.year=useDir?show.second:0;
         if(r.title.isEmpty())r.title=titleYear(root).first;

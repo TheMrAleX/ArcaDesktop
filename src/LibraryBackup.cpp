@@ -56,7 +56,9 @@ QVariantMap Library::inspectBackup(const QUrl &url){
 }
 bool Library::importBackup(const QUrl &url,bool folders,bool decisions,bool settings){
     QFile file(url.toLocalFile());if(!file.open(QIODevice::ReadOnly)||file.size()>32*1024*1024){fail("No puedo leer la copia o supera 32 MB.");return false;}
-    auto read=BackupCodec::read(file.readAll());if(!read.error.isEmpty()){fail(read.error);return false;}return restoreBackup(read.data,folders,decisions,settings);
+    auto read=BackupCodec::read(file.readAll());if(!read.error.isEmpty()){fail(read.error);return false;}
+    if(read.data.value("format").toString().isEmpty()){read.data["profile"]=profile();auto items=read.data.value("items").toList();for(auto &v:items){auto item=v.toMap();item["_profile"]=profile();v=item;}read.data["items"]=items;}
+    return restoreBackup(read.data,folders,decisions,settings);
 }
 bool Library::restoreBackup(QVariantMap data,bool restoreFolders,bool restoreDecisions,bool restoreSettings,bool pending){
     const auto folders=data.value("folders").toList();

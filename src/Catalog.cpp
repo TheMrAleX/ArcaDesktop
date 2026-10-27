@@ -7,6 +7,7 @@
 #include <tuple>
 
 QString Catalog::showKey(const QVariantMap &file) {
+    const auto cached=file.value("showKey").toString();if(!cached.isEmpty())return cached;
     return Names::key(file.value("fileTitle", file.value("title")).toString());
 }
 
@@ -21,8 +22,8 @@ QVariantList Catalog::markDuplicates(QVariantList files){
     for(const auto &group:groups){if(group.size()<2)continue;int best=group.first();for(int i:group)if(rank(files[i].toMap())>rank(files[best].toMap()))best=i;for(int i:group){auto file=files[i].toMap();file["duplicate"]=i!=best;file["hasDuplicates"]=true;file["duplicateCount"]=group.size();files[i]=file;}}
     return files;
 }
-Catalog::View Catalog::build(const QVariantList &input, const QVariantMap &hidden) {
-    const auto files=markDuplicates(input);
+Catalog::View Catalog::build(const QVariantList &input, const QVariantMap &hidden,bool duplicatesMarked) {
+    const auto files=duplicatesMarked?input:markDuplicates(input);
     View view;
     QMap<QString, QVariantList> grouped;
     auto appendContinue = [&](QVariantMap file, qint64 lastPlayed) {

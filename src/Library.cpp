@@ -153,7 +153,7 @@ void Library::reload(){
         }else{const auto info=metadata.value(f.value("path").toString());for(auto it=info.cbegin();it!=info.cend();++it)f[it.key()]=it.value();}
         if(f.value("fileYear").toInt()>0)f["year"]=f.value("fileYear");
         f["showKey"]=Catalog::showKey(f);f["continueKey"]=Catalog::continueKey(f);
-        f["thumb"]="image://thumbs/"+QString::fromLatin1(QCryptographicHash::hash((f.value("path").toString()+'|'+f.value("mtime").toString()).toUtf8(),QCryptographicHash::Sha256).toHex());
+        f["thumb"]="image://thumbs/"+QString::fromLatin1(QCryptographicHash::hash((f.value("path").toString()+'|'+f.value("mtime").toString()+'|'+setting("thumbnailRevision",0).toString()).toUtf8(),QCryptographicHash::Sha256).toHex());
         const bool spoilers=setting("spoilerShows/"+f["showKey"].toString(),setting("spoilerFree",false)).toBool();
         f["spoilerEnabled"]=spoilers;
         f["spoilerHidden"]=f["kind"]=="EPISODE"&&spoilers&&!f["watched"].toBool()&&f["position"].toLongLong()<=5000;
@@ -165,7 +165,7 @@ void Library::reload(){
     QVariantMap hidden;
     const auto prefix=QString("continueHidden/%1/").arg(profileId);
     for(const auto &key:m_settings->allKeys())if(key.startsWith(prefix))hidden[key.mid(prefix.size())]=m_settings->value(key);
-    m_files=Catalog::markDuplicates(m_files);const auto catalog=Catalog::build(m_files,hidden);m_shows=catalog.shows;m_continuing=catalog.continuing;
+    m_files=Catalog::markDuplicates(m_files);const auto catalog=Catalog::build(m_files,hidden,true);m_shows=catalog.shows;m_continuing=catalog.continuing;
     emit filesPrepared();emit changed();
 }
 void Library::addFolder(const QUrl &url,const QString &kind){
@@ -312,6 +312,17 @@ void Library::correct(const QString &path,const QString &title,int season,int ep
     reload();if(folderRule)scan();
 }
 void Library::accept(const QString &path){const auto rows=query("SELECT data FROM files WHERE path=?",{path});if(media(path).isEmpty()||rows.isEmpty())return;auto file=unjson(rows.first().toMap().value("data").toString());if(file["kind"]=="UNKNOWN"||file["kind"]=="IGNORED"){fail("Corrige el título y el tipo antes de aceptar.");return;}auto prior=query("SELECT data FROM file_decisions WHERE path=?",{path});auto decision=prior.isEmpty()?QVariantMap():unjson(prior.first().toMap().value("data").toString());for(const auto &key:{"kind","title","year","season","episode"})decision[key]=file.value(key);decision["confidence"]=100;decision["reason"]="";exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{path,json(decision)});reload();}
+QVariantMap Library::suggestForDir(const QString &path)const{
+    const auto decisions=query("SELECT data FROM file_decisions WHERE path=?",{path});if(decisions.isEmpty())return {};const auto manual=unjson(decisions.first().toMap().value("data").toString());if(manual.value("kind")!="EPISODE")return {};
+    const auto files=rawFiles();QVariantMap selected;for(const auto &v:files)if(v.toMap().value("path")==path)selected=v.toMap();if(selected.isEmpty())return {};
+    auto raw=[](const QVariantMap &f){int n=f.value("rawEpisode").toInt();if(n<=0)n=Names::numberHint(f.value("name").toString());return n;};const int n=raw(selected);if(n<=0)return {};const int season=manual.value("season").toInt(),offset=n-manual.value("episode").toInt();const auto title=manual.value("title").toString(),directory=QFileInfo(path).absolutePath();int agree=0,disagree=0;QVariantList targets;
+    for(const auto &v:files){auto f=v.toMap();const auto candidate=f.value("path").toString();if(f.value("folder")!=selected.value("folder")||QFileInfo(candidate).absolutePath()!=directory||f.value("hidden").toBool()||f.value("kind")=="SUBTITLE"||f.value("kind")=="IGNORED")continue;const int number=raw(f);if(number<=0)continue;const auto rows=query("SELECT data FROM file_decisions WHERE path=?",{candidate});const auto correction=rows.isEmpty()?QVariantMap():unjson(rows.first().toMap().value("data").toString());if(correction.contains("kind")){if(correction.value("kind")=="EPISODE"){bool same=correction.value("season").toInt()==season&&number-correction.value("episode").toInt()==offset&&Names::key(correction.value("title").toString())==Names::key(title);if(same)++agree;else ++disagree;}continue;}const int episode=number-offset;if(episode<0)continue;if(f.value("kind")=="EPISODE"&&f.value("season").toInt()==season&&f.value("episode").toInt()==episode&&Names::key(f.value("title").toString())==Names::key(title))continue;targets<<QVariantMap{{"path",candidate},{"name",f.value("name")},{"episode",episode}};}
+    if(targets.isEmpty()||(disagree>0&&disagree>=agree))return {};std::sort(targets.begin(),targets.end(),[](const QVariant &a,const QVariant &b){return a.toMap().value("episode").toInt()<b.toMap().value("episode").toInt();});return {{"directory",directory},{"dirName",QFileInfo(directory).fileName()},{"title",title},{"season",season},{"offset",offset},{"agreeing",agree},{"targets",targets}};
+}
+void Library::applyDirSuggestion(const QString &directory,const QString &title,int season,int offset){
+    if(title.trimmed().isEmpty()||season<0)return;bool known=false;for(const auto &v:m_folders){const auto root=v.toMap().value("path").toString();if(directory==root||directory.startsWith(root+'/'))known=true;}if(!known)return;
+    exec("INSERT INTO rules VALUES(?,?,?,?) ON CONFLICT(path) DO UPDATE SET title=excluded.title,season=excluded.season,offset=excluded.offset",{directory,title,season,offset});scan();
+}
 void Library::acceptSafeGuesses(){
     auto files=rawFiles();if(!m_db.transaction())return;bool ok=true;for(const auto &v:files){auto file=v.toMap();if(file.value("hidden").toBool()||file.value("confidence").toInt()<50||file.value("confidence").toInt()>=80||file.value("altSeason",-1).toInt()>=0||file.value("title").toString().isEmpty()||(file.value("kind")!="MOVIE"&&file.value("kind")!="EPISODE"))continue;auto rows=query("SELECT data FROM file_decisions WHERE path=?",{file.value("path")});auto manual=rows.isEmpty()?QVariantMap():unjson(rows.first().toMap().value("data").toString());for(const auto &key:{"kind","title","year","season","episode"})manual[key]=file.value(key);manual["confidence"]=100;manual["reason"]="";ok=exec("INSERT INTO file_decisions VALUES(?,?) ON CONFLICT(path) DO UPDATE SET data=excluded.data",{file.value("path"),json(manual)})&&ok;}if(ok)m_db.commit();else m_db.rollback();reload();
 }

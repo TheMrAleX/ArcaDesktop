@@ -47,6 +47,9 @@ ApplicationWindow {
         playing=Object.assign({},f,{startPosition: restart || !library.setting("resume",true) ? 0 : Math.max(0,(f.position||0)-Number(library.setting("resumeRewindSeconds",3))*1000)})
         page="Reproductor"
     }
+    property var metadataIntent:({})
+    function requestMetadata(path,id,series){metadataIntent={path:path,id:id||0,series:!!series};let language=String(library.setting("metaLang",""));if(!language)metadataLanguageDialog.open();else runMetadata(language)}
+    function runMetadata(language){if(metadataIntent.id)library.useMetadata(metadataIntent.path,metadataIntent.id,metadataIntent.series,language);else library.downloadMetadata(metadataIntent.path,"",language)}
     function back() { if (page === "Reproductor") playerLoader.item.closePlayer(); else page="Inicio" }
     function catalog() {
         let items = libraryTab === "Series" ? shows : movies
@@ -60,7 +63,7 @@ ApplicationWindow {
     }
     Shortcut { sequence: "Alt+Left"; onActivated: root.back() }
     Shortcut { sequence: "Ctrl+O"; onActivated: chooseFolder.open() }
-    Shortcut { sequence: "Ctrl+F"; onActivated: root.page="Buscar" }
+    Shortcut { sequence: "Ctrl+F"; onActivated:{if(root.isPlayer)playerLoader.item.closePlayer();root.page="Buscar"} }
     onClosing: function(close) { if(isPlayer && playerLoader.item) playerLoader.item.persist() }
     Connections {target:library;function onChanged(){root.refreshSelected()}function onMetadataChoicesReady(path){if(root.selected.path===path){metadataQuery.text=root.selected.fileTitle||root.selected.title;metadataDialog.open()}}function onMetadataChanged(){if(library.absolutePrompt.showKey)absoluteDialog.open()}}
 
@@ -94,7 +97,7 @@ ApplicationWindow {
         id:backupPreview;anchors.centerIn:parent;modal:true;width:540;title:"Unir copia de seguridad";property var summary:({})
         background:Rectangle {color:"#15181D";radius:18}
         contentItem:ColumnLayout {spacing:12
-            Muted {Layout.fillWidth:true;text:(backupPreview.summary.profile||"Perfil")+" · "+(backupPreview.summary.items||0)+" progresos. Se conserva el más reciente de cada archivo."}
+            Muted {Layout.fillWidth:true;text:(backupPreview.summary.profile||"Perfil")+" · "+(backupPreview.summary.items||0)+" progresos. Las copias de Android se unen al perfil actual; gana el progreso más reciente."}
             CheckBox {id:restoreFolders;text:"Restaurar carpetas ("+(backupPreview.summary.folders||0)+")";checked:true;palette.windowText:"#F4F5F7"}
             CheckBox {id:restoreDecisions;text:"Restaurar correcciones y reglas ("+(backupPreview.summary.decisions||0)+")";checked:true;palette.windowText:"#F4F5F7"}
             CheckBox {id:restoreSettings;text:"Restaurar ajustes y clave de TMDB";checked:true;enabled:!!backupPreview.summary.settings;palette.windowText:"#F4F5F7"}
@@ -116,6 +119,25 @@ ApplicationWindow {
     }
     Dialog {id:deleteProfileDialog;anchors.centerIn:parent;modal:true;title:"¿Eliminar este perfil?";property var profile:({});standardButtons:Dialog.Ok|Dialog.Cancel;onAccepted:{library.deleteProfile(profile.id);profileEditor.close()} Label {text:"Se eliminará el progreso de "+(deleteProfileDialog.profile.name||"")+". Tus archivos se conservan.";color:"#C2C8D0"}background:Rectangle {color:"#15181D";radius:18}}
     Dialog {
+        id:folderSuggestion;anchors.centerIn:parent;modal:true;width:580;title:"¿Lo aplico al resto de la carpeta?";property var suggestion:({})
+        background:Rectangle {color:"#15181D";radius:18}
+        contentItem:ColumnLayout {spacing:14
+            Muted {Layout.fillWidth:true;text:(folderSuggestion.suggestion.dirName||"")+" · "+(folderSuggestion.suggestion.title||"")+" · temporada "+(folderSuggestion.suggestion.season||0)}
+            Muted {Layout.fillWidth:true;text:"Tu corrección permite leer otros "+(folderSuggestion.suggestion.targets||[]).length+" archivos. La regla servirá también para los que añadas después."}
+            Repeater {model:(folderSuggestion.suggestion.targets||[]).slice(0,5);Muted {required property var modelData;Layout.fillWidth:true;text:modelData.name+" → E"+modelData.episode;elide:Text.ElideMiddle}}
+            RowLayout {Pill {text:"Aplicar a la carpeta";primary:true;onClicked:{let s=folderSuggestion.suggestion;library.applyDirSuggestion(s.directory,s.title,s.season,s.offset);folderSuggestion.close()}} Pill {text:"Solo este archivo";onClicked:folderSuggestion.close()}}
+        }
+    }
+    Dialog {id:metadataLanguageDialog;anchors.centerIn:parent;modal:true;width:480;title:"Idioma de los datos"
+        background:Rectangle {color:"#15181D";radius:18}
+        contentItem:ColumnLayout {spacing:14
+            Muted {Layout.fillWidth:true;text:"En español, los huecos sin traducir se completan con el inglés."}
+            CheckBox {id:rememberMetaLanguage;checked:true;text:"Usar como idioma preferido";palette.windowText:"#F4F5F7"}
+            RowLayout {Repeater {model:[{label:"Español",code:"es-ES"},{label:"English",code:"en-US"}];Pill {required property var modelData;text:modelData.label;onClicked:{if(rememberMetaLanguage.checked)library.setSetting("metaLang",modelData.code);metadataLanguageDialog.close();root.runMetadata(modelData.code)}}}}
+            Pill {text:"Cancelar";onClicked:metadataLanguageDialog.close()}
+        }
+    }
+    Dialog {
         id:metadataDialog;anchors.centerIn:parent;modal:true;width:640;height:560;title:"Buscar metadatos"
         background:Rectangle {color:"#15181D";radius:18;border.color:"#333844"}
         contentItem:ColumnLayout {
@@ -125,7 +147,7 @@ ApplicationWindow {
                 delegate:ItemDelegate {required property var modelData;width:metadataList.width;height:110
                     background:Rectangle {color:parent.hovered?"#252B3A":"#1C2029";radius:12}
                     contentItem:ColumnLayout {Text {text:modelData.title+" · "+modelData.year;color:"white";font.bold:true;Layout.fillWidth:true;elide:Text.ElideRight} Text {text:modelData.plot;color:"#A8AEB8";wrapMode:Text.Wrap;maximumLineCount:3;elide:Text.ElideRight;Layout.fillWidth:true}}
-                    onClicked:{library.useMetadata(root.selected.path,modelData.id,root.selected.kind==="EPISODE");metadataDialog.close()}
+                    onClicked:{root.requestMetadata(root.selected.path,modelData.id,root.selected.kind==="EPISODE");metadataDialog.close()}
                 }
             }
             Pill {text:"Cerrar";onClicked:metadataDialog.close()}
@@ -164,7 +186,7 @@ ApplicationWindow {
                 Pill {visible:(correction.file.compactNumber||0)%10>0;text:"T"+Math.floor((correction.file.compactNumber||0)/10)+" · E"+((correction.file.compactNumber||0)%10);onClicked:{correctionSeason.value=Math.floor(correction.file.compactNumber/10);correctionEpisode.value=correction.file.compactNumber%10}}
             }
             CheckBox { id: ruleCheck; text: "Recordar la numeración para toda esta carpeta"; palette.windowText: "#C2C8D0" }
-            RowLayout { Pill { text: "Guardar"; primary: true; onClicked: {library.correct(correction.file.path,correctionTitle.text,correctionSeason.value,correctionEpisode.value,ruleCheck.checked,correctionYear.value);correction.close()} } Pill { text: "Cancelar"; onClicked: correction.close() } }
+            RowLayout { Pill { text: "Guardar"; primary: true; onClicked: {library.correct(correction.file.path,correctionTitle.text,correctionSeason.value,correctionEpisode.value,ruleCheck.checked,correctionYear.value);let suggestion=ruleCheck.checked?({}):library.suggestForDir(correction.file.path);correction.close();if(suggestion.targets){folderSuggestion.suggestion=suggestion;folderSuggestion.open()}} } Pill { text: "Cancelar"; onClicked: correction.close() } }
         }
     }
 
@@ -384,7 +406,7 @@ ApplicationWindow {
                                 Pill {text:"Desde el inicio";onClicked:root.play(root.selected,true)}
                                 Pill {text:root.selected.watched?"Marcar sin ver":"Marcar visto";onClicked:{library.markWatched(root.selected.path,!root.selected.watched);root.selected=library.media(root.selected.path)}}
                                 Pill {text:"Corregir";onClicked:{correction.file=root.selected;correction.open()}}
-                                Pill {text:"Descargar metadatos";enabled:!root.selectedMetaJob.running;onClicked:library.downloadMetadata(root.selected.path)}
+                                Pill {text:"Descargar metadatos";enabled:!root.selectedMetaJob.running;onClicked:root.requestMetadata(root.selected.path,0,root.selected.kind==="EPISODE")}
                                 Pill {text:"Buscar otra ficha";onClicked:{metadataQuery.text=root.selected.fileTitle||root.selected.title;metadataDialog.open();library.findMetadata(metadataQuery.text,root.selected.kind==="EPISODE")}}
                                 Pill {text:"Cambiar carátula";visible:root.selected.tmdbId>0;onClicked:{artDialog.backdrop=false;library.findArtwork(root.selected.path,false);artDialog.open()}}
                                 Pill {text:"Cambiar fondo";visible:root.selected.tmdbId>0;onClicked:{artDialog.backdrop=true;library.findArtwork(root.selected.path,true);artDialog.open()}}
@@ -493,8 +515,9 @@ ApplicationWindow {
                     Heading {text:"Metadatos de internet";font.pixelSize:22}
                     Muted {Layout.fillWidth:true;text:"Opcional. Usa tu clave o token de TMDB para elegir sinopsis y carátulas. Sin conexión, Arca utiliza la biblioteca local."}
                     TextField {id:tmdbKey;Layout.fillWidth:true;Layout.maximumWidth:560;placeholderText:"Clave API o token de TMDB";echoMode:TextInput.Password;color:"white";text:library.setting("tmdbKey","");onEditingFinished:library.setSetting("tmdbKey",text)}
-                    ComboBox {model:["Español","English"];currentIndex:library.setting("metaLang","es-ES")==="en-US"?1:0;onActivated:library.setSetting("metaLang",currentIndex===1?"en-US":"es-ES")}
+                    ComboBox {model:["Preguntar al descargar","Español","English"];currentIndex:["","es-ES","en-US"].indexOf(library.setting("metaLang",""));onActivated:library.setSetting("metaLang",["","es-ES","en-US"][currentIndex])}
                     Pill {text:"Vaciar metadatos y carátulas · "+(library.cacheSize()/1048576).toFixed(1)+" MB";onClicked:clearCacheDialog.open()}
+                    Pill {text:"Borrar miniaturas locales · "+(library.thumbnailCacheSize()/1048576).toFixed(1)+" MB";onClicked:library.clearThumbnailCache()}
                     Heading {text:"Arca Desktop";font.pixelSize:22}
                     Muted {text:"Qt Quick · libmpv · Biblioteca local · Sin cuenta"}
                     Muted {Layout.fillWidth:true;text:"Este producto usa la API de TMDB pero no está respaldado ni certificado por TMDB."}

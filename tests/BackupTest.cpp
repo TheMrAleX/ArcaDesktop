@@ -19,7 +19,7 @@ private slots:
         const auto url=write(storage.path()+"/android.json",backup);
         {Library db(storage.path());db.setSetting("scanOnOpen",false);QVERIFY(db.importBackup(url));QCOMPARE(db.pendingFolders().size(),1);QCOMPARE(db.setting("languages").toString(),QString("ja,es"));}
         Library db(storage.path());QCOMPARE(db.pendingFolders().size(),1);db.bindImportedFolder(tree,QUrl::fromLocalFile(media.path()),"SERIES");QTRY_VERIFY_WITH_TIMEOUT(!db.scanning()&&!db.files().isEmpty(),20000);QTRY_VERIFY_WITH_TIMEOUT(db.pendingFolders().isEmpty(),20000);
-        int id=0;for(const auto &v:db.profiles())if(v.toMap().value("name")=="Invitado")id=v.toMap().value("id").toInt();QVERIFY(id);db.selectProfile(id);
+        QCOMPARE(db.profile(),QString("Principal"));QCOMPARE(db.profiles().size(),1);
         auto restored=db.media(path);QCOMPARE(restored.value("title").toString(),QString("Avatar"));QCOMPARE(restored.value("position").toLongLong(),42000);QCOMPARE(restored.value("episode").toInt(),1);QCOMPARE(restored.value("year").toInt(),2005);QCOMPARE(db.playbackSetting("subDelay",path).toDouble(),0.35);
         db.saveProgress(path,60000,100000);QVERIFY(db.importBackup(url));QCOMPARE(db.media(path).value("position").toLongLong(),60000);
     }

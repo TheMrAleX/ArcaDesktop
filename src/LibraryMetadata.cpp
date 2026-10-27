@@ -53,21 +53,21 @@ void Library::findMetadata(const QString &title,bool series){
         m_searching=false;emit matchesChanged();
     });
 }
-void Library::downloadMetadata(const QString &path,const QString &input){
+void Library::downloadMetadata(const QString &path,const QString &input,const QString &language){
     const auto file=media(path);if(file.isEmpty())return;
-    const bool series=file.value("kind")=="EPISODE";const auto key=series?Catalog::showKey(file):path;const int generation=++m_metadataGeneration[key];
+    const bool series=file.value("kind")=="EPISODE";const auto key=series?Catalog::showKey(file):path;const int generation=++m_metadataGeneration[key];m_jobLanguages[key]=language.isEmpty()?setting("metaLang",QString("es-ES")).toString():language;if(m_jobLanguages[key].isEmpty())m_jobLanguages[key]="es-ES";
     QString title=input.isEmpty()?file.value("fileTitle",file.value("title")).toString():input;int year=file.value("fileYear",file.value("year")).toInt();
     auto match=QRegularExpression("^(.*?)[\\s._-]*[([]?((?:19|20)\\d{2})[)\\]]?\\s*$").match(title.trimmed());if(match.hasMatch()&&!match.captured(1).trimmed().isEmpty()){title=match.captured(1).trimmed();year=match.captured(2).toInt();}
     setMetadataJob(key,{{"running",true},{"text","Buscando «"+title+"» en TMDB…"},{"fraction",0.0}});
-    QVariantMap args{{"query",title}};if(year>0)args[series?"first_air_date_year":"year"]=year;
+    QVariantMap args{{"query",title},{"language",m_jobLanguages.value(key)}};if(year>0)args[series?"first_air_date_year":"year"]=year;
     tmdb(series?"search/tv":"search/movie",args,[this,path,key,title,year,series,generation](QVariantMap response){
         if(m_metadataGeneration.value(key)!=generation)return;
         const auto hits=response.value("results").toList();auto pool=Metadata::candidates(hits,title,year);if(pool.isEmpty()&&hits.size()==1)pool=hits;
         auto choices=[this,path,key,series,hits]{m_matches.clear();for(const auto &value:hits){auto hit=value.toMap();m_matches<<QVariantMap{{"id",hit.value("id")},{"title",hit.value(series?"name":"title")},{"year",hit.value(series?"first_air_date":"release_date").toString().left(4)},{"plot",hit.value("overview")}};}emit matchesChanged();setMetadataJob(key,{{"running",false},{"text",hits.isEmpty()?"No encuentro ese título.":"Hay varias fichas posibles. Elige la correcta."}});if(!hits.isEmpty())emit metadataChoicesReady(path);};
-        if(pool.size()==1){useMetadata(path,pool.first().toMap().value("id").toInt(),series);return;}
+        if(pool.size()==1){useMetadata(path,pool.first().toMap().value("id").toInt(),series,m_jobLanguages.value(key));return;}
         if(!series||pool.isEmpty()){choices();return;}
         auto remaining=std::make_shared<int>(qMin(4,int(pool.size())));auto scored=std::make_shared<QVariantList>();QVariantList files;for(const auto &value:rawFiles())if(Catalog::showKey(value.toMap())==key&&value.toMap().value("kind")=="EPISODE")files<<value;
-        const int requests=*remaining;for(int i=0;i<requests;++i){const auto id=pool[i].toMap().value("id").toInt();tmdb("tv/"+QString::number(id),{},[this,id,path,key,generation,files,remaining,scored,choices](QVariantMap detail){if(m_metadataGeneration.value(key)!=generation)return;scored->append(QVariantMap{{"id",id},{"score",Metadata::structureScore(files,detail.value("seasons").toList())}});if(--*remaining>0)return;std::sort(scored->begin(),scored->end(),[](const QVariant &a,const QVariant &b){return a.toMap().value("score").toInt()>b.toMap().value("score").toInt();});if(scored->size()>1&&(*scored)[0].toMap().value("score").toInt()>(*scored)[1].toMap().value("score").toInt())useMetadata(path,scored->first().toMap().value("id").toInt(),true);else choices();});}
+        const int requests=*remaining;for(int i=0;i<requests;++i){const auto id=pool[i].toMap().value("id").toInt();tmdb("tv/"+QString::number(id),{{"language",m_jobLanguages.value(key)}},[this,id,path,key,generation,files,remaining,scored,choices](QVariantMap detail){if(m_metadataGeneration.value(key)!=generation)return;scored->append(QVariantMap{{"id",id},{"score",Metadata::matchScore(files,detail.value("seasons").toList())}});if(--*remaining>0)return;std::sort(scored->begin(),scored->end(),[](const QVariant &a,const QVariant &b){return a.toMap().value("score").toInt()>b.toMap().value("score").toInt();});if(scored->size()>1&&(*scored)[0].toMap().value("score").toInt()>(*scored)[1].toMap().value("score").toInt())useMetadata(path,scored->first().toMap().value("id").toInt(),true,m_jobLanguages.value(key));else choices();});}
     });
 }
 void Library::applySeriesDetails(const QString &key,const QVariantMap &details){
@@ -76,7 +76,7 @@ void Library::applySeriesDetails(const QString &key,const QVariantMap &details){
     QStringList genres;for(const auto &value:details.value("genres").toList())genres<<value.toMap().value("name").toString();
     data["title"]=details.value("name");data["plot"]=details.value("overview");data["genres"]=genres.join(" · ");data["year"]=details.value("first_air_date").toString().left(4).toInt();
     data["yearEnd"]=(details.value("status")=="Ended"||details.value("status")=="Canceled")?details.value("last_air_date").toString().left(4).toInt():0;
-    data["tmdbId"]=details.value("id");data["seasonCounts"]=details.value("seasons");data["details"]=details;data["metaLang"]=setting("metaLang",QString("es-ES"));
+    data["tmdbId"]=details.value("id");data["seasonCounts"]=details.value("seasons");data["details"]=details;data["metaLang"]=m_jobLanguages.value(key,"es-ES");
     exec("INSERT INTO show_meta VALUES(?,?) ON CONFLICT(key) DO UPDATE SET data=excluded.data",{key,pack(data)});
     cacheImage("show:"+key,"poster",data.value("posterPickRemote",details.value("poster_path")).toString());cacheImage("show:"+key,"backdrop",data.value("backdropPickRemote",details.value("backdrop_path")).toString());reload();
 }
@@ -92,8 +92,8 @@ void Library::applySeasonMetadata(const QString &key,const QVariantMap &season,c
     }
     cacheImage("show:"+key,"season:"+QString::number(number),season.value("poster_path").toString());reload();
 }
-void Library::useMetadata(const QString &path,int id,bool series){
-    if(id<=0)return;const auto file=media(path);if(file.isEmpty())return;const auto key=series?Catalog::showKey(file):path;const int generation=++m_metadataGeneration[key];
+void Library::useMetadata(const QString &path,int id,bool series,const QString &language){
+    if(id<=0)return;const auto file=media(path);if(file.isEmpty())return;const auto key=series?Catalog::showKey(file):path;const int generation=++m_metadataGeneration[key];m_jobLanguages[key]=language.isEmpty()?setting("metaLang",QString("es-ES")).toString():language;if(m_jobLanguages[key].isEmpty())m_jobLanguages[key]="es-ES";
     setMetadataJob(key,{{"running",true},{"text","Descargando la ficha…"},{"fraction",0.05}});
     auto apply=[this,path,key,id,series,generation](QVariantMap details){
         if(m_metadataGeneration.value(key)!=generation)return;if(details.isEmpty()){setMetadataJob(key,{{"running",false},{"text","No he podido descargar la ficha."}});return;}
@@ -104,7 +104,7 @@ void Library::useMetadata(const QString &path,int id,bool series){
         if(Metadata::looksAbsolute(files,ranges)&&!choice.isValid()){m_absolutePrompt={{"showKey",key},{"path",path},{"tmdbId",id},{"title",details.value("name")},{"ranges",ranges},{"total",ranges.isEmpty()?0:ranges.last().toMap().value("last")}};setMetadataJob(key,{{"running",false},{"text","Confirma cómo leer la numeración corrida."},{"needsChoice",true}});emit metadataChanged();return;}
         fetchSeasons(key,id,generation);
     };
-    tmdb((series?"tv/":"movie/")+QString::number(id),{},[this,id,series,apply](QVariantMap details){if(!details.isEmpty()&&details.value("overview").toString().isEmpty()&&setting("metaLang",QString("es-ES"))!="en-US")tmdb((series?"tv/":"movie/")+QString::number(id),{{"language","en-US"}},[details,apply](QVariantMap en)mutable{details["overview"]=en.value("overview");apply(details);});else apply(details);});
+    tmdb((series?"tv/":"movie/")+QString::number(id),{{"language",m_jobLanguages.value(key)}},[this,id,series,key,apply](QVariantMap details){if(!details.isEmpty()&&details.value("overview").toString().isEmpty()&&m_jobLanguages.value(key,"es-ES")!="en-US")tmdb((series?"tv/":"movie/")+QString::number(id),{{"language","en-US"}},[details,apply](QVariantMap en)mutable{details["overview"]=en.value("overview");apply(details);});else apply(details);});
 }
 void Library::resolveAbsolute(int mode){
     if(m_absolutePrompt.isEmpty())return;const auto prompt=m_absolutePrompt;m_absolutePrompt.clear();emit metadataChanged();if(mode<0)return;
@@ -115,9 +115,9 @@ void Library::fetchSeasons(const QString &key,int id,int generation){
     auto remaining=std::make_shared<int>(0);for(const auto &v:counts)if(v.toMap().value("episode_count").toInt()>0)++*remaining;
     auto total=*remaining;auto finish=[this,key,id,generation,remaining,total,counts]{if(--*remaining>0){setMetadataJob(key,{{"running",true},{"text","Leyendo episodios…"},{"fraction",0.1+0.8*(total-*remaining)/qMax(1.0,double(total))}});return;}if(m_metadataGeneration.value(key)!=generation)return;QVariantList files;for(const auto &v:rawFiles())if(v.toMap().value("kind")=="EPISODE"&&Catalog::showKey(v.toMap())==key)files<<v;if(!Metadata::covers(files,counts)&&!Metadata::looksAbsolute(files,Metadata::ranges(counts)))findAlternative(key,id,counts,generation);else setMetadataJob(key,{{"running",false},{"text","Listo."},{"fraction",1.0}});reload();};
     if(!total){setMetadataJob(key,{{"running",false},{"text","La ficha no tiene una guía de episodios."}});return;}
-    for(const auto &v:counts){auto c=v.toMap();if(c.value("episode_count").toInt()<=0)continue;const int season=c.value("season_number").toInt();tmdb("tv/"+QString::number(id)+"/season/"+QString::number(season),{},[this,key,id,season,generation,finish](QVariantMap response){
+    for(const auto &v:counts){auto c=v.toMap();if(c.value("episode_count").toInt()<=0)continue;const int season=c.value("season_number").toInt();tmdb("tv/"+QString::number(id)+"/season/"+QString::number(season),{{"language",m_jobLanguages.value(key)}},[this,key,id,season,generation,finish](QVariantMap response){
         if(m_metadataGeneration.value(key)!=generation)return;bool fallback=false;for(const auto &ep:response.value("episodes").toList()){auto e=ep.toMap();if(generic(e.value("name").toString())||e.value("overview").toString().isEmpty())fallback=true;}
-        if(fallback&&setting("metaLang",QString("es-ES"))!="en-US")tmdb("tv/"+QString::number(id)+"/season/"+QString::number(season),{{"language","en-US"}},[this,key,generation,response,finish](QVariantMap en){if(m_metadataGeneration.value(key)!=generation)return;applySeasonMetadata(key,response,en);finish();});else{applySeasonMetadata(key,response);finish();}
+        if(fallback&&m_jobLanguages.value(key,"es-ES")!="en-US")tmdb("tv/"+QString::number(id)+"/season/"+QString::number(season),{{"language","en-US"}},[this,key,generation,response,finish](QVariantMap en){if(m_metadataGeneration.value(key)!=generation)return;applySeasonMetadata(key,response,en);finish();});else{applySeasonMetadata(key,response);finish();}
     });}
 }
 void Library::findAlternative(const QString &key,int,const QVariantList &counts,int generation){
@@ -136,7 +136,7 @@ void Library::findAlternative(const QString &key,int,const QVariantList &counts,
                 data["episodeSource"]=wiki.isEmpty()?"TVmaze":"Wikipedia en español + TVmaze";data["episodeSourceUrl"]=wiki;data["episodeStructureUrl"]=best->value("url");exec("UPDATE show_meta SET data=? WHERE key=?",{pack(data),key});reload();setMetadataJob(key,{{"running",false},{"text","Listo. Episodios: "+data.value("episodeSource").toString()},{"fraction",1.0}});
             };
             if(best->isEmpty()){setMetadataJob(key,{{"running",false},{"text","Listo. Algunos episodios siguen sin datos."},{"fraction",1.0}});return;}
-            if(setting("metaLang",QString("es-ES"))!="es-ES"){save(best->value("episodes").toList(),{});return;}
+            if(m_jobLanguages.value(key,"es-ES")!="es-ES"){save(best->value("episodes").toList(),{});return;}
             QStringList pages;for(const auto &t:QStringList{title,key})pages<<"Anexo:Episodios de "+t<<"Anexo:Lista de episodios de "+t<<t+"/Lista de episodios"<<"Lista de episodios de "+t;pages.removeDuplicates();QUrl wiki("https://es.wikipedia.org/w/api.php");QUrlQuery q;for(const auto &p:QVariantMap{{"action","query"},{"prop","revisions"},{"rvprop","content"},{"rvslots","main"},{"redirects","1"},{"format","json"},{"formatversion","2"}}.toStdMap())q.addQueryItem(p.first,p.second.toString());q.addQueryItem("titles",pages.join('|'));wiki.setQuery(q);
             fetchJson(wiki,[best,save](QVariant response){QVariantList bestText;QString page;for(const auto &v:response.toMap().value("query").toMap().value("pages").toList()){auto p=v.toMap();const auto rev=p.value("revisions").toList();if(rev.isEmpty())continue;auto parsed=Metadata::wikipedia(rev.first().toMap().value("slots").toMap().value("main").toMap().value("content").toString());if(parsed.size()>bestText.size()){bestText=parsed;page=p.value("title").toString();}}bool usable=false;for(const auto &v:bestText)if(!v.toMap().value("title").toString().isEmpty()||!v.toMap().value("overview").toString().isEmpty())usable=true;save(usable?Metadata::overlayWikipedia(best->value("episodes").toList(),bestText):best->value("episodes").toList(),usable?"https://es.wikipedia.org/wiki/"+QString::fromLatin1(QUrl::toPercentEncoding(page.replace(' ','_'))):QString());});
         });}
@@ -172,5 +172,8 @@ void Library::findArtwork(const QString &path,bool backdrop){
 void Library::chooseArtwork(const QString &path,const QString &remote,bool backdrop){
     if(!remote.startsWith('/')||remote.contains(".."))return;const auto file=media(path);const bool series=file.value("kind")=="EPISODE";const auto target=series?Catalog::showKey(file):path;const auto rows=query(series?"SELECT data FROM show_meta WHERE key=?":"SELECT data FROM metadata WHERE path=?",{target});if(rows.isEmpty())return;auto data=unpack(rows.first().toMap().value("data"));const auto field=backdrop?QString("backdrop"):QString("poster");data[field+"PickRemote"]=remote;exec(series?"UPDATE show_meta SET data=? WHERE key=?":"UPDATE metadata SET data=? WHERE path=?",{pack(data),target});cacheImage(series?"show:"+target:target,field,remote);
 }
-qint64 Library::cacheSize()const{qint64 size=0;for(const auto &directory:{"art","thumbs"}){QDirIterator files(m_dataDir+'/'+directory,QDir::Files,QDirIterator::Subdirectories);while(files.hasNext()){files.next();size+=files.fileInfo().size();}}return size;}
-void Library::clearMetadata(){exec("DELETE FROM metadata");exec("DELETE FROM show_meta");exec("DELETE FROM episode_meta");QDir(m_dataDir+"/art").removeRecursively();++m_cacheEpoch;for(auto it=m_metadataGeneration.begin();it!=m_metadataGeneration.end();++it)++it.value();++m_searchGeneration;m_searching=false;m_matches.clear();m_metadataJobs.clear();m_absolutePrompt.clear();m_artwork.clear();m_imageWaiters.clear();m_pendingArt.clear();m_artTimer.stop();QDir(m_dataDir+"/thumbs").removeRecursively();emit matchesChanged();emit metadataChanged();emit artworkChanged();reload();}
+qint64 Library::cacheSize()const{qint64 size=0;for(const auto &directory:{"art"}){QDirIterator files(m_dataDir+'/'+directory,QDir::Files,QDirIterator::Subdirectories);while(files.hasNext()){files.next();size+=files.fileInfo().size();}}return size;}
+void Library::clearMetadata(){exec("DELETE FROM metadata");exec("DELETE FROM show_meta");exec("DELETE FROM episode_meta");QDir(m_dataDir+"/art").removeRecursively();++m_cacheEpoch;for(auto it=m_metadataGeneration.begin();it!=m_metadataGeneration.end();++it)++it.value();++m_searchGeneration;m_searching=false;m_matches.clear();m_metadataJobs.clear();m_jobLanguages.clear();m_absolutePrompt.clear();m_artwork.clear();m_imageWaiters.clear();m_pendingArt.clear();m_artTimer.stop();emit matchesChanged();emit metadataChanged();emit artworkChanged();reload();}
+
+qint64 Library::thumbnailCacheSize()const{qint64 size=0;QDirIterator files(thumbnailDirectory(),QDir::Files,QDirIterator::Subdirectories);while(files.hasNext()){files.next();size+=files.fileInfo().size();}return size;}
+void Library::clearThumbnailCache(){QDir(thumbnailDirectory()).removeRecursively();QDir().mkpath(thumbnailDirectory());m_settings->setValue("thumbnailRevision",setting("thumbnailRevision",0).toInt()+1);reload();}

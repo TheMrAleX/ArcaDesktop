@@ -66,6 +66,10 @@ public:
     Q_INVOKABLE void correct(const QString &path, const QString &title, int season, int episode, bool folderRule, int year = -1);
     Q_INVOKABLE void accept(const QString &path);
     Q_INVOKABLE void acceptSafeGuesses();
+    Q_INVOKABLE QVariantMap suggestForDir(const QString &path) const;
+    Q_INVOKABLE void applyDirSuggestion(const QString &directory, const QString &title, int season, int offset);
+    Q_INVOKABLE qint64 thumbnailCacheSize() const;
+    Q_INVOKABLE void clearThumbnailCache();
     Q_INVOKABLE void setCompactRule(int folder, const QString &reading);
     Q_INVOKABLE void setFileHidden(const QString &path, bool hidden);
     Q_INVOKABLE void preferFile(const QString &path);
@@ -95,8 +99,8 @@ public:
     Q_INVOKABLE QVariantList externalSubtitles(const QString &path) const;
     Q_INVOKABLE QVariantList readSubtitles(const QUrl &url) const;
     Q_INVOKABLE void findMetadata(const QString &title, bool series);
-    Q_INVOKABLE void useMetadata(const QString &path, int id, bool series);
-    Q_INVOKABLE void downloadMetadata(const QString &path, const QString &query = {});
+    Q_INVOKABLE void useMetadata(const QString &path, int id, bool series, const QString &language = {});
+    Q_INVOKABLE void downloadMetadata(const QString &path, const QString &query = {}, const QString &language = {});
     Q_INVOKABLE void resolveAbsolute(int mode);
     Q_INVOKABLE void findArtwork(const QString &path, bool backdrop);
     Q_INVOKABLE void chooseArtwork(const QString &path, const QString &remote, bool backdrop);
@@ -145,6 +149,7 @@ private:
     QVariantMap m_metadataJobs,m_absolutePrompt;
     QVariantList m_artwork,m_pendingArt;
     QHash<QString,int> m_metadataGeneration;
+    QHash<QString,QString> m_jobLanguages;
     int m_cacheEpoch=0;
     QHash<QString,QVariantList> m_imageWaiters;
     QTimer m_artTimer;

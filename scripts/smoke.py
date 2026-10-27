@@ -28,6 +28,7 @@ with tempfile.TemporaryDirectory(prefix="arca-smoke-") as tmp:
     env = os.environ.copy()
     env.setdefault("QT_QPA_PLATFORM", "offscreen")
     env.setdefault("QSG_RHI_BACKEND", "opengl")
+    env["QT_FORCE_STDERR_LOGGING"] = "1"
     env["ARCA_TEST_AUDIO_NULL"] = "1"
     env.update(XDG_DATA_HOME=tmp, XDG_CONFIG_HOME=tmp, XDG_CACHE_HOME=tmp, XDG_RUNTIME_DIR=tmp)
     subprocess.run([str(binary), "--smoke-test", str(media)], env=env, check=True, timeout=45)

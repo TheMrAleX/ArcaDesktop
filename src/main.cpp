@@ -40,7 +40,7 @@ int main(int argc,char **argv){
         if(engine.rootObjects().isEmpty())return 1;
         const int index=app.arguments().indexOf("--smoke-test");
         if(index+1>=app.arguments().size())return 2;
-        library.setSetting("scanOnOpen",false);library.addFolder(QUrl::fromLocalFile(app.arguments()[index+1]),"AUTO");
+        library.setSetting("scanOnOpen",false);library.setSetting("decoder","SOFTWARE");library.addFolder(QUrl::fromLocalFile(app.arguments()[index+1]),"AUTO");
         auto phase=std::make_shared<int>(0);auto stageTicks=std::make_shared<int>(0);auto busDone=std::make_shared<bool>(false);auto step=std::make_shared<int>(0);auto ticks=std::make_shared<int>(0);
         auto timer=new QTimer(&app);timer->setInterval(250);
         QObject::connect(timer,&QTimer::timeout,&app,[&,step,ticks,issues,phase,stageTicks,busDone]{
@@ -73,7 +73,7 @@ int main(int argc,char **argv){
                 if(!check(player->audioTracks().size()==2&&player->subtitleTracks().size()==1,"Faltan las pistas de audio o ASS"))return;
                 if(!check(player->activeAudioTrack()==1&&player->activeSubtitleTrack()==0,"No se aplicaron las preferencias de idioma y forzados"))return;
                 const auto frame=qobject_cast<QQuickWindow*>(window)->grabWindow();int colors=0;for(int y=2;y<8;++y)for(int x=1;x<10;++x){const auto pixel=frame.pixelColor(frame.width()*x/10,frame.height()*y/10);if(pixel.saturation()>150&&pixel.value()>120)++colors;}
-                if(colors<=12){if(++*stageTicks<8)return;check(false,"La superficie no contiene la imagen de vídeo");return;}
+                if(colors<=12){if(++*stageTicks<8)return;frame.save("/tmp/arca-failed-frame.png");qCritical()<<"Píxeles de color:"<<colors<<"tamaño:"<<frame.size()<<"posición:"<<player->position()<<"frames:"<<player->renderedFrames()<<"hardware:"<<player->hardware();check(false,"La superficie no contiene la imagen de vídeo");return;}
                 if(!screenshotDir.isEmpty())frame.save(screenshotDir+"/Reproductor.png");
                 auto message=QDBusMessage::createMethodCall("org.mpris.MediaPlayer2.arca.instance"+QString::number(app.applicationPid()),"/org/mpris/MediaPlayer2","org.mpris.MediaPlayer2.Player","Pause");
                 auto watcher=new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(message),&app);

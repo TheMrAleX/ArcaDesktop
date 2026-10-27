@@ -4,18 +4,21 @@
 #include <mpv/client.h>
 #include <mpv/render_gl.h>
 #include <QOpenGLContext>
+#include <QOpenGLExtraFunctions>
 #include <QOpenGLFramebufferObject>
 #include <QQuickOpenGLUtils>
 #include <QQuickWindow>
 #include <QPointer>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QtGui/qguiapplication_platform.h>
 #include <QScreen>
 #include <QTimer>
 #include <QDebug>
 
 struct MpvState {
     mpv_handle *handle=nullptr;
+    void *x11Display=nullptr,*waylandDisplay=nullptr;
     std::atomic_bool renderReady{false};
     ~MpvState(){if(handle)mpv_terminate_destroy(handle);}
 };
@@ -37,23 +40,34 @@ public:
     VideoRenderer(NativeVideo *item,std::shared_ptr<MpvState> state):m_item(item),m_state(std::move(state)){}
     ~VideoRenderer()override{m_state->renderReady=false;if(m_context){mpv_render_context_set_update_callback(m_context,nullptr,nullptr);mpv_render_context_free(m_context);}}
     QOpenGLFramebufferObject *createFramebufferObject(const QSize &size)override{
-        QOpenGLFramebufferObjectFormat format;format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
+        QOpenGLFramebufferObjectFormat format;format.setInternalTextureFormat(GL_RGBA8);format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
         return new QOpenGLFramebufferObject(size,format);
     }
     void render()override{
         if(!m_state->handle)return;
         QQuickOpenGLUtils::resetOpenGLState();
+        // Qt Quick's texture uploads leave pixel-store state outside its reset helper.
+        // libmpv uploads YUV planes assuming the OpenGL defaults.
+        auto glState=QOpenGLContext::currentContext()->extraFunctions();
+        glState->glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        glState->glPixelStorei(GL_UNPACK_ROW_LENGTH,0);
+        glState->glPixelStorei(GL_UNPACK_SKIP_PIXELS,0);
+        glState->glPixelStorei(GL_UNPACK_SKIP_ROWS,0);
+        glState->glBindBuffer(GL_PIXEL_UNPACK_BUFFER,0);
         if(!m_context){
             mpv_opengl_init_params gl{};
             gl.get_proc_address=[](void *,const char *name)->void*{auto context=QOpenGLContext::currentContext();return context?reinterpret_cast<void*>(context->getProcAddress(QByteArray(name))):nullptr;};
-            mpv_render_param params[]{{MPV_RENDER_PARAM_API_TYPE,const_cast<char*>(MPV_RENDER_API_TYPE_OPENGL)},{MPV_RENDER_PARAM_OPENGL_INIT_PARAMS,&gl},{MPV_RENDER_PARAM_INVALID,nullptr}};
-            const int result=mpv_render_context_create(&m_context,m_state->handle,params);
+            QList<mpv_render_param> params{{MPV_RENDER_PARAM_API_TYPE,const_cast<char*>(MPV_RENDER_API_TYPE_OPENGL)},{MPV_RENDER_PARAM_OPENGL_INIT_PARAMS,&gl}};
+            if(m_state->x11Display)params.append({MPV_RENDER_PARAM_X11_DISPLAY,m_state->x11Display});
+            if(m_state->waylandDisplay)params.append({MPV_RENDER_PARAM_WL_DISPLAY,m_state->waylandDisplay});
+            params.append({MPV_RENDER_PARAM_INVALID,nullptr});
+            const int result=mpv_render_context_create(&m_context,m_state->handle,params.data());
             if(result<0){qWarning()<<"No puedo crear la superficie de vídeo:"<<mpv_error_string(result);return;}
             mpv_render_context_set_update_callback(m_context,[](void *opaque){auto renderer=static_cast<VideoRenderer*>(opaque);if(renderer->m_item)QMetaObject::invokeMethod(renderer->m_item,"update",Qt::QueuedConnection);},this);
             m_state->renderReady=true;if(m_item)QMetaObject::invokeMethod(m_item,"rendererReady",Qt::QueuedConnection);
         }
         auto fbo=framebufferObject();
-        mpv_opengl_fbo target{int(fbo->handle()),fbo->width(),fbo->height(),0};int flip=0;
+        mpv_opengl_fbo target{int(fbo->handle()),fbo->width(),fbo->height(),GL_RGBA8};int flip=0;
         mpv_render_param params[]{{MPV_RENDER_PARAM_OPENGL_FBO,&target},{MPV_RENDER_PARAM_FLIP_Y,&flip},{MPV_RENDER_PARAM_INVALID,nullptr}};
         mpv_render_context_update(m_context);mpv_render_context_render(m_context,params);
         QQuickOpenGLUtils::resetOpenGLState();
@@ -67,13 +81,21 @@ private:
 
 NativeVideo::NativeVideo(QQuickItem *parent):QQuickFramebufferObject(parent),m_state(std::make_shared<MpvState>()){
     setMirrorVertically(false);
+#if QT_CONFIG(xcb)
+    if(auto native=qGuiApp->nativeInterface<QNativeInterface::QX11Application>())m_state->x11Display=native->display();
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(6,5,0)
+#if QT_CONFIG(wayland)
+    if(auto native=qGuiApp->nativeInterface<QNativeInterface::QWaylandApplication>())m_state->waylandDisplay=native->display();
+#endif
+#endif
     new Mpris(this);
     m_state->handle=mpv_create();
     if(!m_state->handle){m_error="No puedo iniciar el motor de vídeo.";return;}
     const auto handle=m_state->handle;
-    for(const auto &option:QList<QPair<QByteArray,QByteArray>>{{"config","no"},{"vo","libmpv"},{"hwdec","auto-safe"},{"terminal","no"},{"input-default-bindings","no"},{"input-vo-keyboard","no"},{"osc","no"},{"idle","yes"},{"keep-open","yes"},{"sub-auto","fuzzy"},{"audio-file-auto","no"},{"ytdl","no"},{"volume","80"}})
+    for(const auto &option:QList<QPair<QByteArray,QByteArray>>{{"config","no"},{"vo","libmpv"},{"hwdec","auto-safe"},{"terminal","no"},{"input-default-bindings","no"},{"input-vo-keyboard","no"},{"osc","no"},{"idle","yes"},{"keep-open","yes"},{"sub-auto","fuzzy"},{"audio-file-auto","no"},{"ytdl","no"},{"volume","80"},{"dither-depth","8"}})
         mpv_set_option_string(handle,option.first.constData(),option.second.constData());
-    if(qEnvironmentVariableIsSet("ARCA_TEST_AUDIO_NULL"))mpv_set_option_string(handle,"ao","null");
+    if(qEnvironmentVariableIsSet("ARCA_TEST_AUDIO_NULL")){mpv_set_option_string(handle,"ao","null");mpv_set_option_string(handle,"hwdec","no");m_hardware=false;}
     int result=mpv_initialize(handle);
     if(result<0){m_error=QString::fromUtf8(mpv_error_string(result));return;}
     mpv_request_log_messages(handle,"error");
@@ -93,7 +115,7 @@ QSize NativeVideo::videoSize()const{auto parameters=get(m_state->handle,"video-p
 void NativeVideo::play(){if(m_status==NoMedia&&!m_source.isEmpty())load();if(m_status==EndOfMedia){setStatus(LoadedMedia);setPosition(0);}property("pause",false);m_paused=false;emit playbackStateChanged();}
 void NativeVideo::pause(){property("pause",true);m_paused=true;emit playbackStateChanged();}
 void NativeVideo::stop(){command({"stop"});setStatus(NoMedia);}
-void NativeVideo::setPosition(qint64 milliseconds){command({"seek",QString::number(qMax<qint64>(0,milliseconds)/1000.0,'f',3),"absolute+exact"});}
+void NativeVideo::setPosition(qint64 milliseconds){if(m_status==EndOfMedia&&milliseconds<m_duration)setStatus(LoadedMedia);command({"seek",QString::number(qMax<qint64>(0,milliseconds)/1000.0,'f',3),"absolute+exact"});}
 void NativeVideo::setVolume(double value){value=qBound(0.0,value,1.0);if(qFuzzyCompare(value,m_volume))return;m_volume=value;property("volume",value*100);emit volumeChanged();}
 void NativeVideo::setPlaybackRate(double value){value=qBound(0.25,value,4.0);if(qFuzzyCompare(value,m_rate))return;m_rate=value;property("speed",value);emit playbackRateChanged();}
 void NativeVideo::setHardware(bool enabled){if(m_hardware==enabled)return;m_hardware=enabled;property("hwdec",enabled?"auto-safe":"no");emit hardwareChanged();}
